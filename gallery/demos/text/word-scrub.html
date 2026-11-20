@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaydırdıkça koyulaşan kelimeler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #17120e; --cream: #f1e6d3; --rust: #d2703f; --quiet: #8c7d6c; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--cream); font: 400 15px/1.5 Manrope, system-ui, sans-serif; overflow: hidden; }
+  .page { position: absolute; inset: 0; display: grid; grid-template-columns: 300px 1fr; gap: 64px; padding: 0 120px 0 72px; will-change: transform; }
+  aside { padding-top: 176px; display: flex; flex-direction: column; gap: 28px; }
+  .tag { color: var(--quiet); letter-spacing: .12em; text-transform: uppercase; font-size: 12px; font-weight: 600; }
+  .tag b { color: var(--rust); font-weight: 600; }
+  figure { width: 260px; }
+  figure img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; filter: saturate(.85); }
+  figcaption { color: var(--quiet); font-size: 13px; margin-top: 10px; }
+  .text { padding-top: 168px; }
+  p.manifesto { font-family: Newsreader, Georgia, serif; font-size: clamp(28px, 4.3vw, 60px); line-height: 1.16; letter-spacing: -.015em; max-width: 880px; }
+  .w { opacity: .16; transition: none; }
+  .w.em { font-style: italic; color: var(--rust); }
+  .sign { margin-top: 40px; color: var(--quiet); font-size: 14px; display: flex; gap: 24px; }
+  /* scroll indicator */
+  .rail { position: fixed; right: 40px; top: 80px; bottom: 80px; width: 2px; background: rgba(241,230,211,.12); }
+  .thumb { position: absolute; left: -2px; width: 6px; height: 90px; border-radius: 3px; background: var(--cream); }
+  .hint { position: fixed; right: 30px; bottom: 36px; font-size: 11px; letter-spacing: .14em; color: var(--quiet); text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+  @media (max-width: 700px) {
+    .page { grid-template-columns: 1fr; padding: 0 48px 0 20px; gap: 0; }
+    aside { padding-top: 40px; } figure { display: none; } .text { padding-top: 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <span class="tag"><b>02</b> — Neden Lodos</span>
+      <figure>
+        <img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler">
+        <figcaption>Bu sabahın kavrumu, Lodos harmanı</figcaption>
+      </figure>
+    </aside>
+    <div class="text">
+      <p class="manifesto" aria-label="Lodos'u 2019'da iskeleye 90 saniye mesafede açtık. Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Vapurun kalkışına 6 dakika kala gelen sırada beklemez; kahvesi, halatlar çözülmeden elinde olur."></p>
+      <div class="sign"><span>Kemankeş Cd. 12, Karaköy</span><span>2019'dan beri</span></div>
+    </div>
+  </div>
+  <div class="rail"><div class="thumb"></div></div>
+  <span class="hint">kaydır</span>
+<script>
+  const src = "Lodos'u 2019'da iskeleye *90 saniye* mesafede açtık. Her sabah *07.00'de,* 12 kg'lık tek kazanla kavuruyoruz. Vapurun kalkışına 6 dakika kala gelen sırada beklemez; kahvesi, halatlar çözülmeden *elinde* olur.";
+  const p = document.querySelector(".manifesto");
+  let em = false;
+  const words = [];
+  src.split(" ").forEach((tok, i, arr) => {
+    let t = tok;
+    const start = t.startsWith("*"), end = t.endsWith("*");
+    if (start) { em = true; t = t.slice(1); }
+    if (end) t = t.slice(0, -1);
+    const s = document.createElement("span");
+    s.className = "w" + (em ? " em" : "");
+    s.textContent = t;
+    s.setAttribute("aria-hidden", "true");
+    p.appendChild(s);
+    if (i < arr.length - 1) p.appendChild(document.createTextNode(" "));
+    words.push(s);
+    if (end) em = false;
+  });
+  const page = document.querySelector(".page");
+  const thumb = document.querySelector(".thumb");
+  const rail = document.querySelector(".rail");
+  const N = words.length;
+  window.demo = {
+    duration: 4200,
+    render(q) {
+      // reading front moves through the words as the visitor scrolls
+      const front = gl.seg(q, 0.04, 0.92) * (N + 2);
+      words.forEach((w, i) => {
+        const t = gl.clamp((front - i) / 2.2);
+        w.style.opacity = (0.16 + 0.84 * t).toFixed(3);
+      });
+      // the page itself scrolls a little, so it reads as scrolling
+      page.style.transform = `translateY(${gl.lerp(90, -30, gl.easeInOutCubic(q))}px)`;
+      const h = rail.clientHeight - 90;
+      thumb.style.top = `${q * h}px`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

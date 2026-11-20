@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stil seçimi · ghostless</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f3f1ec; --surface: #fffdf8; --ink: #151412; --quiet: #6e6a62; --rule: #dcd8cf;
+    --like: #d8452b; --like-ink: #fff; --never: #151412; --focus: #2457d6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.5 "Instrument Sans", system-ui, sans-serif; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; margin: 0; letter-spacing: -.01em; }
+  button { font: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+  aside { position: sticky; top: 0; height: 100vh; padding: 28px 22px; border-right: 1px solid var(--rule);
+          display: flex; flex-direction: column; gap: 22px; background: var(--bg); }
+  .brand small { display: block; color: var(--quiet); }
+  .brand h1 { font-size: 26px; line-height: 1.05; margin-top: 4px; }
+  nav a { display: flex; justify-content: space-between; padding: 7px 10px; margin: 0 -10px; color: var(--ink);
+          text-decoration: none; border-radius: 6px; }
+  nav a:hover { background: #e8e4dc; }
+  nav a span { color: var(--quiet); font-variant-numeric: tabular-nums; }
+  .tally { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tally div { padding: 10px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+  .tally b { display: block; font: 700 24px/1 "Bricolage Grotesque", sans-serif; }
+  .tally .l b { color: var(--like); }
+  textarea { width: 100%; min-height: 90px; resize: vertical; padding: 10px; border: 1px solid var(--rule); border-radius: 6px;
+             background: var(--surface); font: inherit; color: var(--ink); }
+  .send { margin-top: auto; padding: 14px; border: 0; border-radius: 6px; background: var(--ink); color: #fff; font-weight: 600; }
+  .send:disabled { opacity: .5; cursor: default; }
+  .status { min-height: 1.5em; color: var(--quiet); font-size: 14px; }
+
+  main { padding: 34px 40px 120px; }
+  .intro { max-width: 780px; margin-bottom: 34px; }
+  .intro h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.02; }
+  .intro p { color: var(--quiet); font-size: 17px; margin: 12px 0 0; }
+  .intro ol { margin: 14px 0 0; padding-left: 20px; color: var(--quiet); }
+  section.group { margin: 0 0 56px; scroll-margin-top: 20px; }
+  .group-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;
+                padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .group-head h3 { font-size: 26px; }
+  .group-head p { margin: 0; color: var(--quiet); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+          display: flex; flex-direction: column; transition: border-color .2s; }
+  .card.like { border-color: var(--like); box-shadow: 0 0 0 2px var(--like); }
+  .card.never { opacity: .55; }
+  .card.never .thumb { filter: grayscale(1); }
+  .thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #ddd8cf; border: 0; padding: 0; width: 100%; display: block; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; pointer-events: none; }
+  .thumb .live { position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(21,20,18,.78);
+                 color: #fff; font-size: 12px; }
+  .meta { padding: 14px 16px 6px; flex: 1; }
+  .meta h4 { margin: 0; font: 600 17px/1.25 "Instrument Sans", sans-serif; }
+  .meta .en { color: var(--quiet); font-size: 13px; }
+  .meta p { margin: 6px 0 0; font-size: 14px; }
+  .meta .fits { color: var(--quiet); font-size: 13px; }
+  .warn { display: inline-block; margin-left: 6px; padding: 0 6px; border: 1px solid #b4532a; color: #b4532a; border-radius: 4px; font-size: 12px; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px 16px 16px; }
+  .actions button { padding: 9px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); }
+  .actions button[aria-pressed="true"].b-like { background: var(--like); border-color: var(--like); color: var(--like-ink); }
+  .actions button[aria-pressed="true"].b-never { background: var(--never); border-color: var(--never); color: #fff; }
+
+  dialog { width: min(1180px, 94vw); max-height: 94vh; padding: 0; border: 0; border-radius: 10px; background: var(--surface); color: var(--ink); }
+  dialog::backdrop { background: rgba(21,20,18,.72); }
+  .dlg { display: grid; grid-template-columns: 1fr 300px; }
+  .stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #111; }
+  .stage iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; }
+  .side { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+  .side h3 { font-size: 24px; }
+  .side .strip { width: 100%; border-radius: 4px; }
+  .side .close { margin-top: auto; padding: 10px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; }
+  .hint { color: var(--quiet); font-size: 13px; }
+
+  .dir-grid { display: grid; gap: 28px; }
+  .dir { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+  .dir.chosen { box-shadow: 0 0 0 3px var(--like); border-color: var(--like); }
+  .dir .stage { aspect-ratio: 16 / 10; }
+  .dir .stage iframe { pointer-events: auto; }
+  .dir-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 18px; }
+  .dir-bar h4 { margin: 0 auto 0 0; font: 600 19px/1.2 "Instrument Sans", sans-serif; }
+  .dir-bar a { color: var(--focus); }
+  .pick { padding: 10px 16px; border-radius: 6px; border: 1px solid var(--ink); background: transparent; }
+  .dir.chosen .pick { background: var(--like); border-color: var(--like); color: #fff; }
+  .why { padding: 0 18px 18px; display: none; }
+  .has-choice .dir:not(.chosen) .why { display: block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .chips button { padding: 5px 10px; border: 1px solid var(--rule); border-radius: 999px; background: transparent; font-size: 13px; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    aside { position: fixed; z-index: 5; top: auto; bottom: 0; left: 0; right: 0; height: auto; padding: 12px 16px;
+            flex-direction: row; align-items: center; border-right: 0; border-top: 1px solid var(--rule); }
+    aside .brand, aside nav, aside label, aside textarea { display: none; }
+    .tally { flex: 1; } .send { margin: 0; }
+    main { padding: 24px 16px 120px; }
+    .dlg { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><small>ghostless · stil seçimi</small><h1 id="project">Proje</h1></div>
+    <nav id="nav" aria-label="Bölümler"></nav>
+    <div class="tally"><div class="l"><b id="nLike">0</b>beğendim</div><div><b id="nNever">0</b>asla</div></div>
+    <label for="notes" class="hint">Eklemek istediğin bir şey (isteğe bağlı)</label>
+    <textarea id="notes" placeholder="ör. renkli olsun ama çocukça olmasın; vapur fotoğrafları çok iyi"></textarea>
+    <button class="send" id="send">Seçimi gönder</button>
+    <div class="status" id="status" role="status"></div>
+  </aside>
+  <main>
+    <div class="intro">
+      <h2>Neyi sevdiğini göster, gerisini biz düşünelim.</h2>
+      <p>Her kart aynı hayali kahve dükkânının (Lodos) farklı bir stilde ya da farklı bir hareketle hazırlanmış hali. Kod bilmene gerek yok: bak, beğen, ele.</p>
+      <ol>
+        <li>Karta tıkla: büyük ve canlı açılır. Hareketli kartlarda kare kare şerit de görünür.</li>
+        <li><b>Beğendim</b> ya da <b>Asla</b> ile işaretle. Kararsız kaldıklarını boş bırak.</li>
+        <li>İstersen sol alta not yaz, sonra <b>Seçimi gönder</b>. Sonra sohbete dön.</li>
+      </ol>
+    </div>
+    <div id="groups"></div>
+  </main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg">
+    <div class="stage" id="dlgStage"></div>
+    <div class="side">
+      <h3 id="dlgTitle"></h3>
+      <div class="hint" id="dlgEn"></div>
+      <p id="dlgDesc" style="margin:0"></p>
+      <div class="hint" id="dlgFits"></div>
+      <div class="hint" id="dlgLibs"></div>
+      <img class="strip" id="dlgStrip" alt="">
+      <div class="actions" style="padding:0" id="dlgActions"></div>
+      <span class="hint">Görsele tıklayınca hareket baştan oynar.</span>
+      <button class="close" id="dlgClose">Kapat</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const KEY = "ghostless-gallery-draft";
+let state = { items: {}, notes: "", direction: null, reasons: {} };
+try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else if (v !== false && v != null) e.setAttribute(k, v === true ? "" : v); } kids.flat().forEach((k) => e.append(k)); return e; };
+
+function fit(frameHost) {
+  const f = frameHost.querySelector("iframe");
+  if (f) f.style.transform = `scale(${frameHost.clientWidth / 1280})`;
+}
+const ro = new ResizeObserver((es) => es.forEach((e) => fit(e.target)));
+
+function setMark(id, v) {
+  state.items[id] = state.items[id] === v ? undefined : v;
+  if (!state.items[id]) delete state.items[id];
+  save(); paintMarks();
+}
+function paintMarks() {
+  document.querySelectorAll("[data-card]").forEach((c) => {
+    const v = state.items[c.dataset.card];
+    c.classList.toggle("like", v === "like"); c.classList.toggle("never", v === "never");
+  });
+  document.querySelectorAll("[data-mark]").forEach((b) => b.setAttribute("aria-pressed", String(state.items[b.dataset.id] === b.dataset.mark)));
+  const vals = Object.values(state.items);
+  $("#nLike").textContent = vals.filter((v) => v === "like").length;
+  $("#nNever").textContent = vals.filter((v) => v === "never").length;
+}
+const markButtons = (id) => [
+  el("button", { class: "b-like", "data-mark": "like", "data-id": id, "aria-pressed": "false", onclick: (e) => { e.stopPropagation(); setMark(id, "like"); } }, "Beğendim"),
+  el("button", { class: "b-never", "data-mark": "never", "data-id": id, "aria-pressed": "false", onclick: (e) => { e.stopPropagation(); setMark(id, "never"); } }, "Asla"),
+];
+
+function liveFrame(src) { return el("iframe", { src, title: "Canlı önizleme", tabindex: "-1" }); }
+
+function card(it) {
+  const src = `demos/${it.group}/${it.id}.html`;
+  const thumb = el("button", { class: "thumb", "aria-label": `${it.name_tr}: büyük aç` });
+  // local server, ~2.5 MB in total: load eagerly (native lazy loading stalls in some embedded browsers)
+  const img = el("img", { src: `shots/${it.id}.webp`, alt: "", decoding: "async" });
+  img.onerror = () => { img.remove(); const f = liveFrame(src); thumb.prepend(f); ro.observe(thumb); fit(thumb); };
+  thumb.append(img);
+  if (it.group !== "styles") thumb.append(el("span", { class: "live" }, "hareketli"));
+  let hoverFrame = null;
+  thumb.addEventListener("mouseenter", () => { if (it.group === "styles" || !img.isConnected) return; hoverFrame = liveFrame(src); thumb.append(hoverFrame); ro.observe(thumb); fit(thumb); });
+  thumb.addEventListener("mouseleave", () => { hoverFrame?.remove(); hoverFrame = null; });
+  thumb.addEventListener("click", () => openDialog(it));
+  return el("article", { class: "card", "data-card": it.id },
+    thumb,
+    el("div", { class: "meta" },
+      el("h4", {}, it.name_tr, it.warn ? el("span", { class: "warn", title: "Sık reddedilen ya da çok kullanılmış" }, "dikkat") : ""),
+      el("div", { class: "en" }, it.name_en),
+      el("p", {}, it.desc_tr),
+      it.fits_tr ? el("div", { class: "fits" }, "Uyar: " + it.fits_tr) : ""),
+    el("div", { class: "actions" }, markButtons(it.id)));
+}
+
+function openDialog(it) {
+  const d = $("#dlg"), stage = $("#dlgStage");
+  stage.replaceChildren(liveFrame(`demos/${it.group}/${it.id}.html`));
+  stage.querySelector("iframe").style.pointerEvents = "auto";
+  $("#dlgTitle").textContent = it.name_tr;
+  $("#dlgEn").textContent = it.name_en;
+  $("#dlgDesc").textContent = it.desc_tr;
+  $("#dlgFits").textContent = it.fits_tr ? "Uyar: " + it.fits_tr : "";
+  $("#dlgLibs").textContent = it.libs ? "Araç: " + it.libs : "";
+  const strip = $("#dlgStrip");
+  strip.hidden = it.group === "styles";
+  if (!strip.hidden) { strip.src = `shots/${it.id}-strip.webp`; strip.alt = "Hareketin dört karesi"; strip.onerror = () => (strip.hidden = true); }
+  $("#dlgActions").replaceChildren(...markButtons(it.id));
+  paintMarks();
+  d.showModal(); ro.observe(stage); requestAnimationFrame(() => fit(stage));
+}
+$("#dlgClose").onclick = () => $("#dlg").close();
+$("#dlg").addEventListener("close", () => $("#dlgStage").replaceChildren());
+$("#dlg").addEventListener("click", (e) => { if (e.target === $("#dlg")) $("#dlg").close(); });
+
+const REASONS = ["Renkler", "Yazı tipi", "Görseller", "Hareket", "Fazla sakin", "Fazla kalabalık", "Bize uymuyor", "Çocukça", "Ucuz duruyor"];
+function directionsSection(dirs) {
+  const wrap = el("div", { class: "dir-grid", id: "dirGrid" });
+  for (const d of dirs) {
+    const stage = el("div", { class: "stage" }, el("iframe", { src: d.url, title: d.title, loading: "lazy" }));
+    ro.observe(stage);
+    const r = (state.reasons[d.id] ||= { chips: [], text: "" });
+    const chips = el("div", { class: "chips" }, REASONS.map((c) => el("button", { "aria-pressed": String(r.chips.includes(c)), onclick: (e) => {
+      const i = r.chips.indexOf(c); i >= 0 ? r.chips.splice(i, 1) : r.chips.push(c);
+      e.target.setAttribute("aria-pressed", String(i < 0)); save(); } }, c)));
+    const ta = el("textarea", { placeholder: "Kendi sözlerinle, neden olmadı? (isteğe bağlı)" });
+    ta.value = r.text; ta.oninput = () => { r.text = ta.value; save(); };
+    wrap.append(el("article", { class: "dir", "data-dir": d.id },
+      stage,
+      el("div", { class: "dir-bar" }, el("h4", {}, d.title), el("a", { href: d.url, target: "_blank" }, "Tam ekran aç"),
+        el("button", { class: "pick", onclick: () => { state.direction = state.direction === d.id ? null : d.id; save(); paintDirs(); } }, "Bu yönü seçiyorum")),
+      el("div", { class: "why" }, el("div", { class: "hint" }, "Bu yön neden olmadı?"), chips, ta)));
+  }
+  return wrap;
+}
+function paintDirs() {
+  const g = $("#dirGrid"); if (!g) return;
+  g.classList.toggle("has-choice", !!state.direction);
+  g.querySelectorAll("[data-dir]").forEach((a) => {
+    a.classList.toggle("chosen", a.dataset.dir === state.direction);
+    a.querySelector(".pick").textContent = a.dataset.dir === state.direction ? "Seçildi" : "Bu yönü seçiyorum";
+  });
+}
+
+async function boot() {
+  const [catalog, info] = await Promise.all([fetch("catalog.json").then((r) => r.json()), fetch("api/info").then((r) => r.json()).catch(() => ({}))]);
+  if (info.project) { $("#project").textContent = info.project; document.title = `${info.project} · stil seçimi`; }
+  const groups = $("#groups"), nav = $("#nav");
+  const dirs = info.directions || [];
+  if (dirs.length) {
+    groups.append(el("section", { class: "group", id: "g-yonler" },
+      el("div", { class: "group-head" }, el("h3", {}, "Tasarım yönleri"), el("p", {}, "Sitenin üç olası hali. Birini seç, diğerleri için neden olmadığını kısaca işaretle.")),
+      directionsSection(dirs)));
+    nav.append(el("a", { href: "#g-yonler" }, "Tasarım yönleri", el("span", {}, String(dirs.length))));
+  }
+  for (const g of catalog.groups) {
+    const items = catalog.items.filter((i) => i.group === g.id);
+    groups.append(el("section", { class: "group", id: "g-" + g.id },
+      el("div", { class: "group-head" }, el("h3", {}, g.title_tr), g.note_tr ? el("p", {}, g.note_tr) : ""),
+      el("div", { class: "grid" }, items.map(card))));
+    nav.append(el("a", { href: "#g-" + g.id }, g.title_tr, el("span", {}, String(items.length))));
+  }
+  $("#notes").value = state.notes || "";
+  $("#notes").oninput = (e) => { state.notes = e.target.value; save(); };
+  paintMarks(); paintDirs();
+}
+
+$("#send").onclick = async () => {
+  const btn = $("#send"), st = $("#status");
+  btn.disabled = true; st.textContent = "Gönderiliyor…";
+  const reasons = {};
+  if (state.direction) for (const [k, v] of Object.entries(state.reasons)) if (k !== state.direction && (v.chips.length || v.text.trim())) reasons[k] = v;
+  try {
+    const r = await fetch("api/secim", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ items: state.items, notes: state.notes, direction: state.direction, reasons }) });
+    if (!r.ok) throw new Error(await r.text());
+    st.textContent = "Gönderildi. Sohbete dönebilirsin.";
+  } catch (e) { st.textContent = "Gönderilemedi: " + e.message; }
+  btn.disabled = false;
+};
+boot();
+</script>
+</body>
+</html>

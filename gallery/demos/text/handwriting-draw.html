@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kendini yazan el yazısı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Courier+Prime&display=swap" rel="stylesheet">
+<style>
+  :root { --kraft: #e6d2b0; --ink: #2a1d14; --blue: #23407a; --quiet: #7a6346; --red: #a63a22; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--kraft); color: var(--ink); font: 500 18px/1.4 "Cormorant Garamond", Georgia, serif; overflow: hidden;
+         display: grid; grid-template-columns: 0.85fr 1.25fr; }
+  figure { position: relative; overflow: hidden; }
+  figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+  .label { padding: 52px 64px 44px; display: flex; flex-direction: column; position: relative; }
+  .top { display: flex; justify-content: space-between; font-family: "Courier Prime", monospace; font-size: 13px; color: var(--quiet); letter-spacing: .06em; text-transform: uppercase; }
+  .kicker { margin-top: auto; font-style: italic; color: var(--quiet); font-size: 24px; }
+  svg { width: 100%; height: auto; margin-top: 4px; overflow: visible; }
+  svg path { fill: none; stroke: var(--blue); stroke-width: 6.5; stroke-linecap: round; stroke-linejoin: round; }
+  .nib { fill: var(--blue); }
+  .rule { margin-bottom: auto; border-top: 1px solid rgba(42,29,20,.35); margin-top: 28px; padding-top: 16px; display: grid; grid-template-columns: 1fr auto; gap: 8px 24px; }
+  .rule h2 { font-weight: 600; font-size: 34px; line-height: 1; letter-spacing: -.01em; }
+  .rule .price { font-weight: 600; font-size: 34px; line-height: 1; }
+  .rule p { color: var(--quiet); font-size: 19px; }
+  .stamp { position: absolute; right: 64px; bottom: 44px; font-family: "Courier Prime", monospace; color: var(--red); border: 2px solid var(--red);
+           padding: 6px 10px; font-size: 14px; letter-spacing: .08em; transform: rotate(-4deg); opacity: .85; }
+  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: 28vh 1fr; } .label { padding: 20px; } .stamp { display: none; } }
+</style>
+</head>
+<body>
+  <figure><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler"></figure>
+  <section class="label">
+    <div class="top"><span>Lodos Kahve Kavurma Evi</span><span>Karaköy · 2019'dan beri</span></div>
+    <p class="kicker">bu sabah kavuran:</p>
+    <svg viewBox="0 0 520 230" role="img" aria-label="Lodos (el yazısı)">
+      <path id="word" d="M 62 60 C 76 32, 112 30, 104 56 C 96 84, 72 128, 60 158 C 52 178, 74 184, 88 170 C 100 160, 112 158, 124 164
+        C 136 168, 142 150, 150 134 C 154 124, 162 118, 170 118 C 150 106, 126 122, 130 148 C 134 172, 164 172, 170 146 C 174 130, 172 118, 166 116
+        C 178 120, 190 122, 204 118 C 214 114, 226 116, 232 122 C 210 108, 188 128, 194 150 C 198 172, 228 170, 236 146 C 242 120, 248 70, 252 34
+        C 254 70, 246 128, 244 158 C 242 176, 258 178, 268 166 C 278 152, 288 126, 304 118 C 284 108, 262 124, 268 150 C 272 174, 304 170, 308 144
+        C 310 128, 306 118, 300 118 C 314 124, 328 126, 336 120 C 342 114, 348 106, 354 100 C 350 116, 338 128, 352 140 C 368 152, 368 174, 344 175 C 330 176, 321 169, 323 161" />
+      <path id="swash" d="M 46 206 C 150 190, 300 186, 410 196 C 446 199, 470 194, 486 178" />
+      <circle class="nib" r="5" cx="62" cy="60" />
+    </svg>
+    <div class="rule">
+      <h2>Lodos harmanı, 250 g</h2><span class="price">₺420</span>
+      <p>Her sabah 07.00'de, 12 kg'lık tek kazanda kavrulur. Paketi kavuran imzalar.</p>
+    </div>
+    <span class="stamp">KAVRUM 07.00</span>
+  </section>
+<script>
+  const paths = [document.getElementById("word"), document.getElementById("swash")];
+  const lens = paths.map((p) => p.getTotalLength());
+  paths.forEach((p, i) => { p.style.strokeDasharray = `${lens[i]} ${lens[i]}`; });
+  const nib = document.querySelector(".nib");
+  const total = lens[0] + lens[1];
+  window.demo = {
+    duration: 3400,
+    render(p) {
+      // the pen travels at an even pace along the word, then the underline
+      const d = gl.easeInOutCubic(gl.seg(p, 0.02, 0.9)) * total;
+      let rest = d, tip = null;
+      paths.forEach((path, i) => {
+        const drawn = gl.clamp(rest, 0, lens[i]);
+        path.style.strokeDashoffset = (lens[i] - drawn).toFixed(2);
+        if (rest > 0 && rest <= lens[i]) tip = path.getPointAtLength(drawn);
+        rest -= lens[i];
+      });
+      if (!tip) tip = d <= 0 ? paths[0].getPointAtLength(0) : paths[1].getPointAtLength(lens[1]);
+      nib.setAttribute("cx", tip.x.toFixed(2)); nib.setAttribute("cy", tip.y.toFixed(2));
+      nib.style.opacity = p >= 0.96 ? 0 : 1;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

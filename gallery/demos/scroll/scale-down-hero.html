@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Küçülerek yerine oturan görsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --dusk: #f3e5dd; --ink: #2a1c22; --red: #c23b44; --quiet: #85707a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--dusk); color: var(--ink); font: 400 16px/1.5 "Work Sans", system-ui, sans-serif; overflow: hidden; }
+  .page { position: absolute; inset: 0; will-change: transform; }
+  nav { height: 76px; padding: 0 56px; display: flex; align-items: center; justify-content: space-between; }
+  nav b { font: 400 26px/1 Gloock, Georgia, serif; }
+  nav ul { list-style: none; display: flex; gap: 32px; padding: 0; font-size: 15px; font-weight: 500; }
+  nav li:last-child { color: var(--red); }
+  .grid { display: grid; grid-template-columns: 1fr 600px; gap: 56px; padding: 70px 56px 0; align-items: start; }
+  .kick { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); font-weight: 600; }
+  h1 { font: 400 64px/1.02 Gloock, Georgia, serif; letter-spacing: -.015em; margin-top: 18px; }
+  .lead { margin-top: 22px; font-size: 18px; color: #5d4a53; max-width: 36ch; }
+  .facts { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid rgba(42,28,34,.2); }
+  .facts div { padding: 14px 0; border-bottom: 1px solid rgba(42,28,34,.2); }
+  .facts div:nth-child(odd) { padding-right: 16px; }
+  .facts small { display: block; color: var(--quiet); font-size: 13px; }
+  .facts span { font-weight: 500; }
+  .slot { height: 450px; border-radius: 6px; }
+  .slotcap { margin-top: 12px; font-size: 13px; color: var(--quiet); display: flex; justify-content: space-between; }
+  .menu { margin: 64px 56px 0; padding-top: 18px; border-top: 1px solid rgba(42,28,34,.25); display: flex; justify-content: space-between; gap: 18px; font-size: 15px; }
+  .menu b { font: 400 22px/1 Gloock, serif; }
+  .menu i { font-style: normal; color: var(--red); font-weight: 600; margin-left: 6px; }
+  .hero { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: 5; will-change: left, top, width, height; }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  .over { position: absolute; left: 56px; right: 56px; bottom: 48px; color: #fff7f1; display: flex; justify-content: space-between; align-items: end; z-index: 2; }
+  .over h2 { font: 400 152px/.85 Gloock, Georgia, serif; letter-spacing: -.02em; }
+  .over p { font-size: 15px; max-width: 26ch; text-align: right; }
+  .hero .tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(30,15,22,.55), rgba(30,15,22,0) 55%); }
+  .rail { position: fixed; right: 10px; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: rgba(0,0,0,.08); z-index: 20; }
+  .thumb { position: absolute; left: 0; width: 3px; height: 70px; border-radius: 2px; background: rgba(255,255,255,.85); box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; padding: 24px 20px; gap: 24px; } .slot { height: 220px; } h1 { font-size: 36px; } nav { padding: 0 20px; } nav ul { display: none; } .over h2 { font-size: 72px; } .over p { display: none; } .facts { display: none; } .menu { display: none; } }
+</style>
+</head>
+<body>
+  <div class="page">
+    <nav><b>Lodos</b><ul><li>Menü</li><li>Kavrum</li><li>Hakkımızda</li><li>Bizi bul</li></ul></nav>
+    <div class="grid">
+      <div>
+        <span class="kick">Karaköy · 2019'dan beri</span>
+        <h1>Boğaz'a karşı, her sabah taze kavrum.</h1>
+        <p class="lead">Kemankeş Caddesi'nde küçük bir kavurma evi. Her sabah 07.00'de 12 kg'lık tek kazanı dolduruyoruz.</p>
+        <div class="facts">
+          <div><small>İskeleye</small><span>90 saniye</span></div>
+          <div><small>Kalkışa 6 dakika kala</small><span>sıra yok</span></div>
+          <div><small>Hafta içi</small><span>07.00–19.00</span></div>
+          <div><small>Cumartesi</small><span>08.00–18.00</span></div>
+        </div>
+      </div>
+      <div><div class="slot"></div><div class="slotcap"><span>Boğaz, akşamüstü</span><span>Kemankeş Cd. 12</span></div></div>
+    </div>
+    <div class="menu"><b>Bugün tezgâhta</b><span>Lodos harmanı, 250 g <i>₺420</i></span><span>Etiyopya Guji, 250 g <i>₺560</i></span><span>Filtre kahve <i>₺95</i></span><span>Türk kahvesi <i>₺80</i></span><span>Espresso <i>₺75</i></span></div>
+  </div>
+  <div class="hero">
+    <img src="../../assets/kopru.webp" alt="Boğaz Köprüsü gün batımında">
+    <div class="tint"></div>
+    <div class="over"><h2>Lodos</h2><p>Kahve Kavurma Evi<br>Kemankeş Cd. 12, Karaköy</p></div>
+  </div>
+  <div class="rail"><div class="thumb"></div></div>
+<script>
+  const page = document.querySelector(".page"), slot = document.querySelector(".slot");
+  const hero = document.querySelector(".hero"), over = document.querySelector(".over"), tint = document.querySelector(".tint");
+  const thumb = document.querySelector(".thumb"), rail = document.querySelector(".rail");
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      const vw = innerWidth, vh = innerHeight;
+      const t = gl.easeInOutCubic(gl.seg(p, 0.04, 0.92));
+      // the page itself scrolls a little, and its content rises in
+      page.style.transform = `translateY(${gl.lerp(70, 0, t).toFixed(1)}px)`;
+      const r = slot.getBoundingClientRect();
+      // the full-bleed photo shrinks from the viewport into the slot's rectangle
+      hero.style.left = `${gl.lerp(0, r.left, t).toFixed(1)}px`;
+      hero.style.top = `${gl.lerp(0, r.top, t).toFixed(1)}px`;
+      hero.style.width = `${gl.lerp(vw, r.width, t).toFixed(1)}px`;
+      hero.style.height = `${gl.lerp(vh, r.height, t).toFixed(1)}px`;
+      hero.style.borderRadius = `${(6 * t).toFixed(1)}px`;
+      const o = 1 - gl.seg(p, 0.05, 0.35);
+      over.style.opacity = o; tint.style.opacity = o;
+      over.style.transform = `translateY(${(1 - o) * -30}px)`;
+      thumb.style.top = `${p * (rail.clientHeight - 70)}px`;
+      thumb.style.background = p > 0.5 ? "rgba(20,20,20,.5)" : "";
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

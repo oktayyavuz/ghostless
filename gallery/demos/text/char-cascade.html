@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harf harf dökülme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root { --sand: #f0dcbc; --ink: #2a1a10; --rust: #b3431c; --quiet: #7d6248; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--sand); color: var(--ink); font: 400 16px/1.5 "Bricolage Grotesque", system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 56px; right: 56px; top: 40px; display: flex; justify-content: space-between; font-size: 15px; }
+  header b { font-weight: 800; letter-spacing: -.01em; font-size: 20px; }
+  header span { color: var(--quiet); }
+  .obj { position: absolute; right: 40px; top: 70px; width: 440px; mix-blend-mode: multiply; filter: brightness(1.2) contrast(1.2);
+         -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 52%, #000 72%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 52%, #000 72%, transparent 100%); }
+  .obj img { width: 100%; display: block; }
+  .note { position: absolute; left: 56px; top: 150px; max-width: 30ch; font-size: 19px; line-height: 1.4; }
+  .note b { color: var(--rust); font-weight: 500; }
+  .stamp { position: absolute; left: 56px; top: 300px; font-size: 13px; color: var(--quiet); letter-spacing: .12em; text-transform: uppercase; }
+  h1 { position: absolute; left: 44px; bottom: 34px; font-weight: 800; font-variation-settings: "opsz" 96; font-size: clamp(72px, 17.4vw, 228px);
+       line-height: .9; letter-spacing: -.045em; color: var(--rust); white-space: nowrap; }
+  h1 .ch { display: inline-block; transform-origin: 50% 100%; will-change: transform; }
+  @media (max-width: 700px) { .obj { width: 60vw; top: 120px; } .note { top: 90px; font-size: 16px; } .stamp { display: none; } h1 { left: 16px; } }
+</style>
+</head>
+<body>
+  <header><b>Lodos</b><span>Kemankeş Cd. 12, Karaköy</span></header>
+  <figure class="obj"><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu"></figure>
+  <p class="note"><b>Bu sabah 07.00.</b> 12 kg'lık tek kazan doldu, boşaldı. Kalkışa 6 dakika kala gelene sıra yok.</p>
+  <span class="stamp">Lodos harmanı · 250 g · ₺420</span>
+  <h1 aria-label="Kavruldu.">Kavruldu.</h1>
+<script>
+  const h1 = document.querySelector("h1");
+  const chars = [...h1.textContent].map((c) => {
+    const s = document.createElement("span");
+    s.className = "ch"; s.textContent = c; s.setAttribute("aria-hidden", "true");
+    return s;
+  });
+  h1.textContent = ""; chars.forEach((s) => h1.appendChild(s));
+  // back-out curve: each letter overshoots, then settles on the baseline
+  const backOut = (x, s = 2.2) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+  let seed = 11; const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  const per = chars.map(() => ({ rot: (rnd() - 0.5) * 70, drop: 0.9 + rnd() * 0.7 }));
+  const note = document.querySelectorAll(".note, .stamp");
+  const obj = document.querySelector(".obj");
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      chars.forEach((el, i) => {
+        const t = gl.seg(p, 0.04 + i * 0.065, 0.42 + i * 0.065);
+        const e = backOut(t);
+        const y = (1 - e) * -130 * per[i].drop;          // falls from above
+        const r = (1 - e) * per[i].rot;                   // with its own tilt
+        el.style.transform = `translateY(${y}%) rotate(${r}deg)`;
+        el.style.opacity = gl.clamp(t * 5).toFixed(3);
+      });
+      const m = gl.easeOutQuart(gl.seg(p, 0.55, 1));
+      note.forEach((el) => { el.style.opacity = m; el.style.transform = `translateY(${(1 - m) * 14}px)`; });
+      const o = gl.easeOutQuart(gl.seg(p, 0, 0.7));
+      obj.style.opacity = o; obj.style.transform = `translateY(${(1 - o) * 30}px)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

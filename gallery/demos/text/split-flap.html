@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkış tabelası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --wall: #1a1917; --cell: #262523; --cell2: #2e2d2a; --ink: #efe6d2; --amber: #f2b42f; --quiet: #8b857a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--wall); color: var(--ink); font: 400 15px/1.45 Barlow, system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-columns: 1fr 270px; }
+  main { padding: 48px 40px 40px 56px; display: flex; flex-direction: column; gap: 26px; }
+  header { display: flex; justify-content: space-between; align-items: end; border-bottom: 1px solid #34322e; padding-bottom: 16px; }
+  header h1 { font: 600 30px/1 "Barlow Condensed", sans-serif; letter-spacing: .06em; }
+  header h1 span { color: var(--amber); }
+  header p { color: var(--quiet); font-size: 14px; }
+  .board { display: grid; gap: 12px; }
+  .row { display: flex; gap: 4px; align-items: center; }
+  .row .gap { width: 18px; }
+  .cur { font: 600 44px/1 "Barlow Condensed", sans-serif; color: var(--amber); width: 30px; text-align: center; }
+  .cell { --h: 92px; position: relative; width: 48px; height: var(--h); perspective: 360px; font: 600 72px/var(--h) "Barlow Condensed", sans-serif; text-align: center; }
+  .cell.am { color: var(--amber); }
+  .half { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; background: var(--cell); border-radius: 4px 4px 0 0; }
+  .half.b { top: 50%; background: var(--cell2); border-radius: 0 0 4px 4px; }
+  .half span { display: block; height: var(--h); }
+  .half.b span { margin-top: calc(var(--h) / -2); }
+  .flap { backface-visibility: hidden; z-index: 2; }
+  .flap.t { transform-origin: 50% 100%; }
+  .flap.b { transform-origin: 50% 0; }
+  .cell::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 1px); height: 2px; background: var(--wall); z-index: 3; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; color: var(--quiet); font-size: 14px; }
+  .foot b { color: var(--ink); font-weight: 600; }
+  aside { position: relative; }
+  aside img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; filter: saturate(.8); }
+  aside p { position: absolute; left: 16px; bottom: 16px; right: 16px; color: #fff; font: 600 18px/1.2 "Barlow Condensed", sans-serif; letter-spacing: .04em; }
+  @media (max-width: 900px) { body { grid-template-columns: 1fr; } aside { display: none; } .cell { --h: 40px; width: 24px; font-size: 30px; } main { padding: 20px; } }
+</style>
+</head>
+<body>
+  <main>
+    <header><h1>BUGÜN <span>TEZGÂHTA</span></h1><p>Lodos · Kemankeş Cd. 12, Karaköy</p></header>
+    <div class="board" role="table" aria-label="Lodos harmanı 250 g 420 lira, Etiyopya Guji 250 g 560 lira, Filtre kahve 95 lira, Türk kahvesi 80 lira, Espresso 75 lira"></div>
+    <div class="foot"><span><b>Kalkışa 6 dakika kala</b> sipariş verene sıra yok.</span><span>Hafta içi 07.00–19.00</span></div>
+  </main>
+  <aside><img src="../../assets/deniz.webp" alt="Boğaz, vapurdan şehir siluetine bakış"><p>İSKELEYE 90 SANİYE</p></aside>
+<script>
+  const A = " ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ0123456789";
+  const rows = [["LODOS HARMANI", "420"], ["ETİYOPYA GUJİ", "560"], ["FİLTRE KAHVE", "95"], ["TÜRK KAHVESİ", "80"], ["ESPRESSO", "75"]];
+  const NAME = 13, PRICE = 3;
+  const board = document.querySelector(".board");
+  let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  const cells = [];
+  const mk = (cls, txt) => { const d = document.createElement("div"); d.className = cls; const s = document.createElement("span"); s.textContent = txt; d.appendChild(s); return d; };
+  rows.forEach(([name, price], r) => {
+    const row = document.createElement("div"); row.className = "row"; row.setAttribute("aria-hidden", "true");
+    const text = name.padEnd(NAME, " ") + price.padStart(PRICE, " ");
+    [...text].forEach((ch, c) => {
+      if (c === NAME) { const g = document.createElement("div"); g.className = "gap"; row.appendChild(g); const cur = document.createElement("div"); cur.className = "cur"; cur.textContent = "₺"; row.appendChild(cur); }
+      const el = document.createElement("div"); el.className = "cell" + (c >= NAME ? " am" : "");
+      const top = mk("half t", " "), bot = mk("half b", " "), ft = mk("half t flap", " "), fb = mk("half b flap", " ");
+      el.append(top, bot, ft, fb); row.appendChild(el);
+      const ti = A.indexOf(ch);
+      const k = ch === " " ? 0 : 5 + Math.floor(rnd() * 9);           // how many flips before it lands
+      const seq = [" "]; for (let j = k - 1; j >= 0; j--) seq.push(A[((ti - j) % A.length + A.length) % A.length] === " " ? "Ö" : A[((ti - j) % A.length + A.length) % A.length]);
+      cells.push({ top, bot, ft, fb, seq, k, delay: 0.03 + r * 0.05 + c * 0.012 + rnd() * 0.03 });
+    });
+    board.appendChild(row);
+  });
+  const set = (el, t) => { const s = el.firstChild; if (s.textContent !== t) s.textContent = t; };
+  const DT = 0.034;  // one flip, in progress units
+  window.demo = {
+    duration: 3600,
+    render(p) {
+      cells.forEach((c) => {
+        const local = (p - c.delay) / DT;
+        let cur, next, f = 0;
+        if (local < 0 || c.k === 0) { cur = next = c.seq[0]; }
+        else if (local >= c.k) { cur = next = c.seq[c.k]; }
+        else { const st = Math.floor(local); cur = c.seq[st]; next = c.seq[st + 1]; f = local - st; }
+        set(c.top, next); set(c.bot, cur);
+        set(c.ft, cur); set(c.fb, next);
+        // first half: the top flap (old letter) falls; second half: the bottom flap (new letter) lands
+        const a1 = f < 0.5 ? -180 * f : -90;
+        const a2 = f < 0.5 ? 90 : 90 - 180 * (f - 0.5);
+        const flipping = cur !== next;
+        c.ft.style.display = flipping ? "" : "none";
+        c.fb.style.display = flipping ? "" : "none";
+        c.ft.style.transform = `rotateX(${a1}deg)`;
+        c.fb.style.transform = `rotateX(${a2}deg)`;
+        c.ft.style.filter = `brightness(${1 - Math.min(0.5, f)})`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

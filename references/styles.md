@@ -5,6 +5,25 @@ a way out, because each one comes with its own rules for type, colour, shape, im
 motion. Use them as **starting vocabularies for directions** in phase 3, never as costumes:
 the style has to be bent by the subject (dossier), or it's just a different template.
 
+
+<!-- gallery:start -->
+## See them
+
+Each style on the same demo client (live and selectable: `node scripts/gallery.mjs`; all of them: `gallery/GALLERY.md`).
+
+<table>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/editorial.webp" alt="Editorial / magazine"><br><b>Editorial / magazine</b><br><sub>Editoryal / dergi</sub></td><td width="33%" valign="top"><img src="../gallery/shots/swiss.webp" alt="Swiss / International"><br><b>Swiss / International</b><br><sub>İsviçre / uluslararası</sub></td><td width="33%" valign="top"><img src="../gallery/shots/industrial.webp" alt="Industrial / product manual"><br><b>Industrial / product manual</b><br><sub>Endüstriyel / kullanım kılavuzu</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/neo-brutalism.webp" alt="Neo-brutalism"><br><b>Neo-brutalism</b><br><sub>Neo-brütalizm</sub></td><td width="33%" valign="top"><img src="../gallery/shots/kinetic-type.webp" alt="Kinetic typographic"><br><b>Kinetic typographic</b><br><sub>Kinetik tipografi</sub></td><td width="33%" valign="top"><img src="../gallery/shots/scrollytelling.webp" alt="Scrollytelling"><br><b>Scrollytelling</b><br><sub>Kaydırarak anlatım</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/photo-documentary.webp" alt="Photo-led documentary"><br><b>Photo-led documentary</b><br><sub>Fotoğraf öncelikli belgesel</sub></td><td width="33%" valign="top"><img src="../gallery/shots/risograph.webp" alt="Risograph / print"><br><b>Risograph / print</b><br><sub>Risograf / baskı</sub></td><td width="33%" valign="top"><img src="../gallery/shots/dithered.webp" alt="Dithered / 1-bit"><br><b>Dithered / 1-bit</b><br><sub>Dither / 1-bit</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/pixel-art.webp" alt="Pixel art / 8-bit"><br><b>Pixel art / 8-bit</b><br><sub>Piksel art / 8-bit</sub></td><td width="33%" valign="top"><img src="../gallery/shots/terminal.webp" alt="Terminal / ASCII"><br><b>Terminal / ASCII</b><br><sub>Terminal / ASCII</sub></td><td width="33%" valign="top"><img src="../gallery/shots/retro-os.webp" alt="Retro OS"><br><b>Retro OS</b><br><sub>Eski işletim sistemi</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/skeuomorphic.webp" alt="Skeuomorphic revival"><br><b>Skeuomorphic revival</b><br><sub>Gerçek malzeme (skeuomorfik)</sub></td><td width="33%" valign="top"><img src="../gallery/shots/collage.webp" alt="Collage / scrapbook"><br><b>Collage / scrapbook</b><br><sub>Kolaj / karalama defteri</sub></td><td width="33%" valign="top"><img src="../gallery/shots/memphis.webp" alt="Memphis"><br><b>Memphis</b><br><sub>Memphis</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/maximalist.webp" alt="Maximalist"><br><b>Maximalist</b><br><sub>Maksimalist</sub></td><td width="33%" valign="top"><img src="../gallery/shots/organic.webp" alt="Organic / anti-design"><br><b>Organic / anti-design</b><br><sub>Organik / kuralsız</sub></td><td width="33%" valign="top"><img src="../gallery/shots/illustrated.webp" alt="Illustrated / mascot-led"><br><b>Illustrated / mascot-led</b><br><sub>İllüstrasyonlu / maskotlu</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/luxury-minimal.webp" alt="Luxury minimal"><br><b>Luxury minimal</b><br><sub>Lüks sade</sub></td><td width="33%" valign="top"><img src="../gallery/shots/bauhaus.webp" alt="Bauhaus"><br><b>Bauhaus</b><br><sub>Bauhaus</sub></td><td width="33%" valign="top"><img src="../gallery/shots/y2k-chrome.webp" alt="Y2K / chrome"><br><b>Y2K / chrome</b><br><sub>Y2K / krom</sub></td></tr>
+<tr><td width="33%" valign="top"><img src="../gallery/shots/bento.webp" alt="Bento grid"><br><b>Bento grid</b><br><sub>Bento ızgara</sub></td></tr>
+</table>
+
+<!-- gallery:end -->
+
 ## How to use
 
 1. For each of the three directions, consider one style from this list that fits the subject
@@ -36,6 +55,7 @@ the style has to be bent by the subject (dossier), or it's just a different temp
 | **Memphis** | squiggles, confetti shapes, clashing pastels and brights | bouncy springs, physics toys | kids, events, playful retail |
 | **Maximalist** | dense layering, pattern clashes, many faces | cursor image trail, kinetic type | fashion, culture, nightlife |
 | **Organic / anti-design** | irregular layout, hand-drawn, natural forms (not blurred blobs) | SVG mask wipe, noise dissolve | wellness, craft |
+| **Luxury minimal** | lots of space, thin serif, one large image, slow and calm | slow iris, long fades, scale-down hero | jewellery, hotels, perfume, real estate |
 | **Illustrated / mascot-led** | one illustrator's system, characters | Rive state machines | onboarding-heavy apps, kids |
 | **Bauhaus** ⚠ | primaries, circle/square/triangle, geometric sans | shape morph | design schools; ruler-drawn geometry is a common rejection |
 | **Y2K / chrome** ⚠ | liquid chrome, bubbly type, iridescence | liquid transitions | fashion, music; slides into glow and gradient |

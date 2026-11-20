@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riso üst baskı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f4eee2; --blue: #2b56a6; --orange: #ff6c2f; --ink: #1f2a44; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); font: 400 13px/1.5 "Space Mono", ui-monospace, monospace; overflow: hidden;
+         display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; padding: 34px 40px; isolation: isolate; }
+  .print { position: relative; isolation: isolate; background: var(--paper); }
+  .print > * { position: absolute; inset: 0; }
+  .print img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* each plate: greyscale photo screened onto an ink colour = ink where the photo is dark, paper where it's light */
+  .plate { isolation: isolate; mix-blend-mode: multiply; will-change: transform, opacity; }
+  .plate img { mix-blend-mode: screen; }
+  .p1 { background: var(--blue); } .p1 img { filter: grayscale(1) contrast(1.5) brightness(1.18); }
+  .p2 { background: var(--orange); } .p2 img { filter: url(#warm) contrast(1.15); }
+  .paper { mix-blend-mode: multiply; opacity: .5; background-size: 200px 200px; pointer-events: none; }
+  .copy { display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; text-transform: uppercase; letter-spacing: .06em; }
+  .two { position: relative; isolation: isolate; }
+  .two h1 { font: 900 clamp(54px, 7.4vw, 112px)/.86 Rubik, system-ui, sans-serif; text-transform: uppercase; letter-spacing: -.03em; mix-blend-mode: multiply; }
+  .two h1.b { color: var(--blue); }
+  .two h1.o { color: var(--orange); position: absolute; inset: 0; }
+  .tags { display: flex; gap: 10px; }
+  .tags span { border: 1.5px solid var(--ink); padding: 5px 9px; text-transform: uppercase; letter-spacing: .05em; opacity: .35; }
+  .tags span.on { opacity: 1; }
+  .tags i { display: inline-block; width: 10px; height: 10px; margin-right: 7px; vertical-align: -1px; }
+  ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; font-size: 14px; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; padding: 16px; gap: 16px; } ul { display: none; } }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- orange separation: ink only where the photo is warm (burlap, beans), none on the neutral cup -->
+    <filter id="warm" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="-2.2 0 2.2 0 1  -2.2 0 2.2 0 1  -2.2 0 2.2 0 1  0 0 0 1 0"/></filter>
+  </svg>
+  <div class="print" role="img" aria-label="Çuval bezi üstünde fincan ve çekirdekler, mavi ve turuncu iki riso mürekkebiyle basılmış">
+    <img id="orig" src="../../assets/cekirdek.webp" alt="">
+    <div class="plate p1" id="p1"><img src="../../assets/cekirdek.webp" alt=""></div>
+    <div class="plate p2" id="p2"><img src="../../assets/cekirdek.webp" alt=""></div>
+    <div class="paper" id="paper"></div>
+  </div>
+  <section class="copy">
+    <div class="top"><span>Lodos · fanzin no. 4</span><span>Karaköy</span></div>
+    <div class="two" aria-label="Haftada dört çekirdek">
+      <h1 class="b" id="tb" aria-hidden="true">Haftada<br>dört<br>çekirdek</h1>
+      <h1 class="o" id="to" aria-hidden="true">Haftada<br>dört<br>çekirdek</h1>
+    </div>
+    <ul><li>Lodos harmanı</li><li>Etiyopya Guji</li><li>Kolombiya Huila</li><li>Türk kahvesi kavrumu</li></ul>
+    <div class="tags"><span id="g1"><i style="background:var(--blue)"></i>1. kalıp · mavi</span><span id="g2"><i style="background:var(--orange)"></i>2. kalıp · turuncu</span></div>
+  </section>
+<script>
+  // paper speckle, seeded
+  const g = document.createElement("canvas"); g.width = g.height = 200;
+  const gx = g.getContext("2d"), id = gx.createImageData(200, 200);
+  let s = 77; const r = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+  for (let i = 0; i < id.data.length; i += 4) { const v = r() < 0.06 ? 200 + r() * 40 : 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+  gx.putImageData(id, 0, 0);
+  document.getElementById("paper").style.backgroundImage = `url(${g.toDataURL()})`;
+  const $ = (i) => document.getElementById(i);
+  const orig = $("orig"), p1 = $("p1"), p2 = $("p2"), paper = $("paper"), tb = $("tb"), to = $("to"), g1 = $("g1"), g2 = $("g2");
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      const a = gl.easeOutQuart(gl.seg(p, 0.06, 0.46));   // blue plate goes down
+      const b = gl.easeOutQuart(gl.seg(p, 0.46, 0.86));   // orange plate on top, a little off register
+      orig.style.opacity = 1 - gl.seg(p, 0.1, 0.42);
+      p1.style.opacity = a; p1.style.transform = `translate(${(1 - a) * -60}px, ${(1 - a) * 34}px)`;
+      p2.style.opacity = b; p2.style.transform = `translate(${gl.lerp(70, 7, b)}px, ${gl.lerp(-40, -5, b)}px) rotate(${gl.lerp(1.5, 0.35, b)}deg)`;
+      paper.style.opacity = 0.5 * a;
+      tb.style.opacity = gl.lerp(0.15, 1, a);
+      to.style.opacity = b; to.style.transform = `translate(${gl.lerp(30, 5, b)}px, ${gl.lerp(-18, -3, b)}px)`;
+      g1.className = a > 0.5 ? "on" : ""; g2.className = b > 0.5 ? "on" : "";
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

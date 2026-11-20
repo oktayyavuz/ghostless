@@ -6,6 +6,58 @@ entrance, the same easing. It reads as a template even when every other choice i
 Sites that feel crafted have a **motion language**: a small set of named moves, derived from the
 subject, each used where it means something, and no two neighbouring sections arriving the same way.
 
+
+<!-- gallery:start -->
+## See them
+
+Four frames of each move on the same demo client (live: `node scripts/gallery.mjs`; full list: `gallery/GALLERY.md`).
+
+**Text motion**
+
+<table>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/line-mask-rise-strip.webp" alt="Line mask rise"><br><b>Line mask rise</b><br><sub>Maskeli satır yükselişi</sub></td><td width="50%" valign="top"><img src="../gallery/shots/word-scrub-strip.webp" alt="Word scrub"><br><b>Word scrub</b><br><sub>Kaydırdıkça koyulaşan kelimeler</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/scramble-decode-strip.webp" alt="Scramble / decode"><br><b>Scramble / decode</b><br><sub>Karışık harflerden çözülme</sub></td><td width="50%" valign="top"><img src="../gallery/shots/char-cascade-strip.webp" alt="Character cascade"><br><b>Character cascade</b><br><sub>Harf harf dökülme</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/variable-weight-strip.webp" alt="Variable-font morph"><br><b>Variable-font morph</b><br><sub>Kalınlığı akan yazı</sub></td><td width="50%" valign="top"><img src="../gallery/shots/kinetic-sequence-strip.webp" alt="Kinetic sequence"><br><b>Kinetic sequence</b><br><sub>Kinetik sekans</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/split-flap-strip.webp" alt="Split-flap board"><br><b>Split-flap board</b><br><sub>Kalkış tabelası</sub></td><td width="50%" valign="top"><img src="../gallery/shots/handwriting-draw-strip.webp" alt="Handwriting draw"><br><b>Handwriting draw</b><br><sub>Kendini yazan el yazısı</sub></td></tr>
+</table>
+
+**Image reveals and forming**
+
+<table>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/strip-assemble-strip.webp" alt="Strip assemble"><br><b>Strip assemble</b><br><sub>Şeritlerden birleşme</sub></td><td width="50%" valign="top"><img src="../gallery/shots/shape-morph-logo-strip.webp" alt="Shape morph to mark"><br><b>Shape morph to mark</b><br><sub>Görselin logoya dönüşmesi</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/pixel-mosaic-strip.webp" alt="Pixel / mosaic resolve"><br><b>Pixel / mosaic resolve</b><br><sub>Piksellerden netleşme</sub></td><td width="50%" valign="top"><img src="../gallery/shots/dither-reveal-strip.webp" alt="Dithering reveal"><br><b>Dithering reveal</b><br><sub>Dither'dan açılma</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/halftone-build-strip.webp" alt="Halftone build"><br><b>Halftone build</b><br><sub>Noktalardan oluşma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/ascii-render-strip.webp" alt="ASCII render"><br><b>ASCII render</b><br><sub>Karakterlerden görsel</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/particle-assemble-strip.webp" alt="Particle assemble"><br><b>Particle assemble</b><br><sub>Parçacıklardan toplanma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/noise-dissolve-strip.webp" alt="Noise dissolve"><br><b>Noise dissolve</b><br><sub>Gürültüyle belirme</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/iris-expand-strip.webp" alt="Iris / window expand"><br><b>Iris / window expand</b><br><sub>Pencereden açılma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/curtain-parallax-strip.webp" alt="Curtain + counter-parallax"><br><b>Curtain + counter-parallax</b><br><sub>Perde + ters hareket</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/svg-mask-wipe-strip.webp" alt="SVG mask wipe"><br><b>SVG mask wipe</b><br><sub>Fırça darbesiyle açılma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/liquid-transition-strip.webp" alt="Liquid / displacement transition"><br><b>Liquid / displacement transition</b><br><sub>Sıvı geçiş</sub></td></tr>
+</table>
+
+**Scroll and page transitions**
+
+<table>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/pinned-story-strip.webp" alt="Pinned story"><br><b>Pinned story</b><br><sub>Sabitlenmiş hikâye</sub></td><td width="50%" valign="top"><img src="../gallery/shots/sticky-stack-strip.webp" alt="Sticky stack"><br><b>Sticky stack</b><br><sub>Üst üste yığılan paneller</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/horizontal-rail-strip.webp" alt="Horizontal rail"><br><b>Horizontal rail</b><br><sub>Yatay ray</sub></td><td width="50%" valign="top"><img src="../gallery/shots/scale-down-hero-strip.webp" alt="Scale-down hero"><br><b>Scale-down hero</b><br><sub>Küçülerek yerine oturan görsel</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/rule-draw-count-strip.webp" alt="Rule draw + count"><br><b>Rule draw + count</b><br><sub>Çizgi çizilip sayı sayma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/flip-layout-strip.webp" alt="FLIP layout"><br><b>FLIP layout</b><br><sub>Yerine kayan düzen</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/motif-transition-strip.webp" alt="Motif page transition"><br><b>Motif page transition</b><br><sub>Motifli sayfa geçişi</sub></td><td width="50%" valign="top"><img src="../gallery/shots/shared-element-strip.webp" alt="Shared-element transition"><br><b>Shared-element transition</b><br><sub>Büyüyerek açılan kart</sub></td></tr>
+</table>
+
+**Interaction**
+
+<table>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/magnetic-strip.webp" alt="Magnetic control"><br><b>Magnetic control</b><br><sub>Mıknatıs buton</sub></td><td width="50%" valign="top"><img src="../gallery/shots/cursor-trail-strip.webp" alt="Cursor image trail"><br><b>Cursor image trail</b><br><sub>İmleç izinde görseller</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/drag-inertia-strip.webp" alt="Drag with inertia"><br><b>Drag with inertia</b><br><sub>Fırlatılabilen şerit</sub></td><td width="50%" valign="top"><img src="../gallery/shots/hover-distortion-strip.webp" alt="Hover distortion"><br><b>Hover distortion</b><br><sub>Dokununca dalgalanan görsel</sub></td></tr>
+</table>
+
+**Image treatments**
+
+<table>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/duotone-strip.webp" alt="Duotone"><br><b>Duotone</b><br><sub>Çift ton</sub></td><td width="50%" valign="top"><img src="../gallery/shots/film-grade-strip.webp" alt="Film grade + grain"><br><b>Film grade + grain</b><br><sub>Film tonu + gren</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/riso-overprint-strip.webp" alt="Riso overprint"><br><b>Riso overprint</b><br><sub>Riso üst baskı</sub></td><td width="50%" valign="top"><img src="../gallery/shots/cutout-strip.webp" alt="Cut-out object"><br><b>Cut-out object</b><br><sub>Kesilmiş nesne</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/type-image-mask-strip.webp" alt="Type × image"><br><b>Type × image</b><br><sub>Fotoğrafla dolu yazı</sub></td></tr>
+</table>
+
+<!-- gallery:end -->
+
 ## 1. Build a motion language, not a list of effects
 
 Take the shape for the motion from the subject or the brand mark, then reuse it everywhere.

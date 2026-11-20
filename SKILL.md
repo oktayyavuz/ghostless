@@ -64,6 +64,21 @@ Humans design from references. Models design from the average. Close that gap he
    say so and use your best knowledge of named studios and sites.
 2. **Ghost table:** write the autopilot design as a table, then plan to beat every row (see
    `references/subject.md`). Add a row for the *sterile escape* too, so you don't fall into it.
+3. **Taste check in the gallery.** Most people can't name styles or read component code, but
+   they know what they like when they see it. Start the bundled picker and let them choose:
+   ```bash
+   node <skill-dir>/scripts/gallery.mjs --project "<name>" --wait     # run in the background
+   ```
+   It serves a local page on a free port (from 5600, skipping busy and reserved ports) with ~60
+   live demos of one fictional client: visual styles, text motion, image reveals ("forming from
+   pixels"), scroll moves, interaction and image treatments. Open it where the person can see it
+   (browser pane / their browser), tell them in one line what to do, and wait. They mark
+   **Beğendim / Asla** and add a note; on "Seçimi gönder" the choice is written to
+   `tasarim/secimler.json` and the process prints it and exits.
+   Use it: liked styles and moves are the raw material for the three directions (spread them
+   across bold / refined / wildcard); every "Asla" goes into `DESIGN-LOG.md` as a rejection, with
+   its close relatives. Skip this only if the person has already shown clear taste (a DESIGN-LOG,
+   reference sites they chose) or asks to skip it.
 
 ## Phase 3 — Three directions that really differ
 
@@ -100,8 +115,15 @@ someone stop scrolling? If not, redo the weakest one.
 **Then show them. This step is mandatory, and it's the one most often forgotten.** Asking "which
 one?" about designs the person hasn't seen is a failure. Before any choice question:
 
-1. **Put each preview in front of the person**, using whatever this environment offers, in this
-   order of preference:
+1. **Put each preview in front of the person.** Best: the same gallery, with the directions on
+   top, where they can pick one and tick why the others didn't work:
+   ```bash
+   node <skill-dir>/scripts/gallery.mjs --directions tasarim/yonler --project "<name>" --wait
+   ```
+   (each `tasarim/yonler/<id>/index.html` is one direction; its `<title>` is the label). The
+   chosen direction and the reasons land in `tasarim/secimler.json`: copy the reasons into
+   `DESIGN-LOG.md` verbatim. Otherwise, using whatever this environment offers, in this order of
+   preference:
    - open it in a browser they can see (in Claude's desktop app: the browser pane, one tab per
      direction, via `preview_start` / `navigate`);
    - publish it as a viewable page if a page/artifact tool exists;
@@ -179,7 +201,8 @@ and any later "I don't like this". Phase 0 reads it every time.
 |---|---|
 | `references/ambition.md` | phases 2, 3, 6, 7: quality bar, reference sourcing, liveliness techniques, craft checklist, impact rubric |
 | `references/moves.md` | phase 3: additive moves + a few constraints |
-| `references/styles.md` | phase 3: named visual styles as starting vocabularies, with motion that suits each |
+| `references/styles.md` | phase 3: named visual styles as starting vocabularies, with motion that suits each (with screenshots) |
+| `gallery/` + `scripts/gallery.mjs` | phases 2–3: live picker for styles, motion and treatments; shows the directions and collects the choice |
 | `references/imagery.md` | phases 3, 4, 6: image density, source ladder, fetching openly licensed images, curation, treatment, credits |
 | `references/motion.md` | phases 3, 4, 6: motion language, ~50 named moves, verified libraries, component-kit warnings |
 | `references/tells.md` | phases 2, 7: template tells **and** sterile-escape tells |

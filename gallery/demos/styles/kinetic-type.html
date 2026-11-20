@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinetik tipografi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #121110; --cream: #f1e8d8; --hot: #ff5b1f; --mute: #8a8378; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--cream); overflow: hidden; font: 500 12px/1.3 "JetBrains Mono", monospace; letter-spacing: .02em; }
+  a { color: inherit; text-decoration: none; }
+  header { position: absolute; z-index: 5; left: 32px; right: 32px; top: 22px; display: flex; align-items: baseline; gap: 36px; text-transform: uppercase; }
+  .logo { font: 900 26px/1 "Big Shoulders Display", sans-serif; letter-spacing: .02em; }
+  header nav { display: flex; gap: 26px; margin-left: auto; }
+  header .cta { color: var(--hot); }
+
+  .stage { position: absolute; inset: 0; }
+  .w { position: absolute; left: 0; white-space: nowrap; font-family: "Big Shoulders Display", Impact, sans-serif; font-weight: 900;
+       text-transform: none; line-height: .78; letter-spacing: -.01em; transform-origin: 0 100%; }
+  .w1 { top: 74px; left: 26px; font-size: 250px; }
+  .w2 { top: 262px; left: 120px; font-size: 250px; color: transparent; -webkit-text-stroke: 3px var(--cream); }
+  .w3 { top: 452px; left: 26px; font-size: 240px; color: var(--hot); }
+  .w4 { top: 452px; left: 730px; font-size: 240px; }
+  .it { position: absolute; font: italic 400 64px/1 "Instrument Serif", Georgia, serif; color: var(--cream); white-space: nowrap; }
+  .it1 { top: 176px; left: 626px; font-size: 58px; }
+  .it2 { top: 662px; right: 36px; color: var(--hot); font-size: 54px; }
+
+  .ring { position: absolute; right: 34px; top: 66px; width: 200px; height: 200px; }
+  .ring text { font: 500 13.4px "JetBrains Mono", monospace; letter-spacing: .18em; fill: var(--cream); text-transform: uppercase; }
+  .ring .c { font: 900 64px "Big Shoulders Display", sans-serif; fill: var(--hot); letter-spacing: 0; }
+  .ring .c2 { font: 500 12px "JetBrains Mono", monospace; fill: var(--mute); letter-spacing: .1em; }
+
+  .next { position: absolute; left: 0; right: 0; bottom: 0; height: 62px; background: var(--hot); color: var(--bg);
+          display: flex; align-items: center; gap: 28px; padding: 0 32px; text-transform: uppercase; overflow: hidden; }
+  .next b { font: 900 46px/1 "Big Shoulders Display", sans-serif; letter-spacing: -.005em; white-space: nowrap; }
+  .next span { white-space: nowrap; }
+  .side { position: absolute; left: 32px; bottom: 82px; color: var(--mute); text-transform: uppercase; max-width: 34ch; z-index: 4; }
+
+  @media (max-width: 700px) {
+    header { left: 16px; right: 16px; } header nav { display: none; } .w1, .w2, .w3, .w4 { font-size: 72px; left: 16px; } .w1 { top: 90px; } .w2 { top: 160px; }
+    .w3 { top: 230px; } .w4 { top: 300px; } .side { left: 16px; } .next { padding: 0 16px; } .it, .ring { display: none; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="#">LODOS</a><span>Kahve kavurma evi · Karaköy</span>
+    <nav><a href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a class="cta" href="#">İskele →</a></nav>
+  </header>
+
+  <h1 class="stage" aria-label="Vapur kalkmadan kahven hazır.">
+    <span class="w w1" aria-hidden="true">VAPUR</span>
+    <span class="w w2" aria-hidden="true">KALKMADAN</span>
+    <span class="w w3" aria-hidden="true">KAHVEN</span>
+    <span class="w w4" aria-hidden="true">HAZIR.</span>
+  </h1>
+  <span class="it it1" aria-hidden="true">lodos eserken bile</span>
+  <span class="it it2" aria-hidden="true">sıcak.</span>
+
+  <svg class="ring" viewBox="0 0 210 210" aria-hidden="true">
+    <defs><path id="circ" d="M105,105 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/></defs>
+    <g id="spin"><text><textPath href="#circ">her sabah 07.00 · 12 kg tek kazan · iskeleye 90 sn ·</textPath></text></g>
+    <text class="c" x="105" y="118" text-anchor="middle">6 DK</text>
+    <text class="c2" x="105" y="140" text-anchor="middle">KALA SIRA YOK</text>
+  </svg>
+
+  <p class="side">Kemankeş Cd. 12 · Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</p>
+
+  <section class="next">
+    <b>DÖRT ÇEKİRDEK</b><span>Lodos harmanı ₺420</span><span>/</span><span>Etiyopya Guji ₺560</span><span>/</span><span>Kolombiya Huila</span><span>/</span><span>Türk kahvesi kavrumu</span>
+  </section>
+
+<script>
+  // Lodos is the south-west wind: the words are blown in from the left, stretched, then settle.
+  const ws = [...document.querySelectorAll(".w")];
+  const its = [...document.querySelectorAll(".it")];
+  const spin = document.getElementById("spin");
+  const next = document.querySelector(".next");
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      ws.forEach((el, i) => {
+        const t = gl.easeOutExpo(gl.seg(p, i * 0.1, 0.55 + i * 0.1));
+        const x = (1 - t) * -900;
+        const sx = 1 + (1 - t) * 1.6;      // stretched by the gust
+        const sk = (1 - t) * -24;
+        el.style.transform = `translateX(${x}px) skewX(${sk}deg) scaleX(${sx})`;
+        el.style.opacity = gl.clamp(t * 3);
+      });
+      its.forEach((el, i) => {
+        const t = gl.easeOutQuart(gl.seg(p, 0.55 + i * 0.12, 0.85 + i * 0.1));
+        el.style.opacity = t;
+        el.style.transform = `translateY(${(1 - t) * 30}px) rotate(${(1 - t) * -6}deg)`;
+      });
+      spin.setAttribute("transform", `rotate(${-120 + 120 * gl.easeOutQuart(p)} 105 105)`);
+      next.style.transform = `translateY(${(1 - gl.easeOutExpo(gl.seg(p, 0.6, 1))) * 100}%)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

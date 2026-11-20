@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İllüstrasyonlu / maskotlu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --cream: #fdf1d8; --ink: #2b2140; --coral: #ec5b45; --sea: #3d7fd1; --sky: #cfe7f3; --sun: #ffc845; --copper: #d9834b; --wood: #a8643a; --mint: #7fc8a9; --bean: #6e3b22; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--cream); color: var(--ink); font: 500 18px/1.5 "Nunito", system-ui, sans-serif; }
+  .abs { position: absolute; }
+  .fr { font-family: "Fredoka", "Nunito", sans-serif; }
+  svg .k { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+  svg .k3 { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+  svg .ln { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  svg g { transform-box: fill-box; transform-origin: center; }
+
+  header { left: 56px; right: 56px; top: 30px; height: 56px; display: flex; align-items: center; gap: 30px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 700 34px/1 "Fredoka", sans-serif; margin-right: auto; letter-spacing: -.01em; }
+  .logo svg { width: 54px; height: 40px; }
+  nav { display: flex; gap: 28px; font: 600 18px/1 "Fredoka", sans-serif; }
+  nav a:first-child { color: var(--coral); }
+  .order { padding: 12px 22px; border-radius: 40px; background: var(--ink); color: var(--cream); font: 600 17px/1 "Fredoka", sans-serif; }
+
+  h1 { left: 56px; top: 152px; width: 560px; font: 700 76px/1.0 "Fredoka", sans-serif; letter-spacing: -.02em; }
+  h1 .c { color: var(--coral); position: relative; display: inline-block; }
+  h1 .c svg { position: absolute; left: -4px; right: -4px; bottom: -10px; width: calc(100% + 8px); height: 18px; }
+  .lede { left: 58px; top: 418px; width: 470px; font-size: 20px; line-height: 1.5; }
+  .lede b { font-weight: 800; }
+  .ctas { left: 58px; top: 528px; display: flex; gap: 14px; align-items: center; }
+  .btn { padding: 15px 28px; border-radius: 40px; font: 600 19px/1 "Fredoka", sans-serif; border: 3px solid var(--ink); }
+  .btn.p { background: var(--coral); color: #fff; box-shadow: 0 5px 0 var(--ink); }
+  .btn.s { background: #fff; }
+  .hours { left: 60px; top: 610px; font-size: 15px; color: #5d5470; }
+
+  .scene { left: 616px; top: 108px; width: 620px; height: 560px; }
+
+  .sec { left: 0; right: 0; top: 694px; bottom: 0; background: var(--ink); color: var(--cream); padding: 22px 56px; display: flex; align-items: center; gap: 40px; border-radius: 36px 36px 0 0; }
+  .sec h2 { font: 700 34px/1.05 "Fredoka", sans-serif; width: 300px; letter-spacing: -.01em; }
+  .steps { display: flex; gap: 34px; }
+  .step { display: flex; align-items: center; gap: 14px; font: 600 19px/1.1 "Fredoka", sans-serif; }
+  .step small { display: block; font: 500 14px/1.3 "Nunito", sans-serif; color: #cfc6dd; }
+  .step svg { width: 78px; height: 78px; flex: none; }
+
+  @media (max-width: 700px) {
+    nav, .scene, .sec, .hours { display: none; }
+    header { left: 16px; right: 16px; }
+    h1 { left: 16px; width: 340px; font-size: 46px; top: 120px; } .lede { left: 16px; width: 340px; top: 330px; } .ctas { left: 16px; top: 500px; }
+  }
+</style>
+</head>
+<body>
+  <header class="abs">
+    <div class="logo">
+      <svg viewBox="0 0 54 40"><path class="k3" d="M4 26 H50 L44 36 H10 Z" fill="#fff"/><rect class="k3" x="14" y="16" width="26" height="10" rx="3" fill="#fff"/><rect class="k3" x="23" y="5" width="9" height="11" fill="#6e3b22"/><path class="k3" d="M6 30 H48" fill="none" stroke="#ec5b45"/></svg>
+      lodos
+    </div>
+    <nav><a>Menü</a><a>Çekirdekler</a><a>İskele</a></nav>
+    <span class="order">Sipariş ver</span>
+  </header>
+
+  <h1 class="abs" aria-label="Vapur kalkmadan kahven hazır.">Vapur kalkmadan <span class="c">kahven<svg viewBox="0 0 200 18" preserveAspectRatio="none"><path d="M4 12 C 50 2, 120 4, 196 10" fill="none" stroke="#2b2140" stroke-width="5" stroke-linecap="round"/></svg></span> hazır.</h1>
+  <p class="abs lede">Cezvemiz her sabah 07.00'de 12 kg'lık tek kazanla kavrulan çekirdekle ısınır. <b>İskeleye 90 saniye</b>; kalkışa 6 dakika kala gelene sıra yok.</p>
+  <div class="abs ctas"><span class="btn p">Menüye bak</span><span class="btn s">Yol tarifi</span></div>
+  <p class="abs hours">Kemankeş Cd. 12, Karaköy · Hafta içi 07.00–19.00</p>
+
+  <svg class="abs scene" viewBox="0 0 620 560" aria-label="Vapur gülümseyerek iskeleye yaklaşıyor, cezve iskelede el sallıyor">
+    <defs><clipPath id="win"><rect x="2" y="2" width="616" height="556" rx="38"/></clipPath></defs>
+    <g clip-path="url(#win)">
+      <rect x="0" y="0" width="620" height="560" fill="#cfe7f3"/>
+      <!-- sun + clouds -->
+      <g data-pop=".05"><circle class="k" cx="500" cy="104" r="48" fill="#ffc845"/></g>
+      <g data-drift="1"><path class="k" d="M70 120 h96 a20 20 0 0 0 -16 -32 a28 28 0 0 0 -52 -6 a22 22 0 0 0 -28 38 z" fill="#fff"/></g>
+      <g data-drift="-1"><path class="k" d="M360 186 h70 a16 16 0 0 0 -12 -26 a22 22 0 0 0 -42 -4 a17 17 0 0 0 -16 30 z" fill="#fff"/></g>
+      <!-- far shore: domes and a tower, flat -->
+      <path d="M0 330 V292 h40 v-20 a26 26 0 0 1 52 0 v20 h30 v-56 l8 -16 l8 16 v56 h46 v-30 a34 34 0 0 1 68 0 v30 h40 l0 -40 h28 v40 h60 v-18 a20 20 0 0 1 40 0 v18 h44 v-70 l7 -14 l7 14 v70 h50 v-24 h40 v24 h52 v38 z" fill="#a9cfe2"/>
+      <!-- sea -->
+      <path class="k" d="M-10 330 C 40 318, 80 342, 130 330 S 220 318, 270 330 S 360 342, 410 330 S 500 318, 550 330 S 610 340, 640 330 V 580 H -10 Z" fill="#3d7fd1"/>
+      <path class="ln" d="M330 420 q 16 -10 32 0 M470 470 q 16 -10 32 0 M180 500 q 16 -10 32 0 M520 390 q 12 -8 24 0" stroke="#e8f3fb" stroke-width="4"/>
+
+      <!-- the ferry -->
+      <g id="ferry">
+        <g data-puff="0"><path class="k" d="M306 150 a16 16 0 0 1 30 -8 a14 14 0 0 1 22 14 a12 12 0 0 1 -6 22 h-40 a14 14 0 0 1 -6 -28 z" fill="#fff"/></g>
+        <g data-puff="1"><path class="k" d="M338 104 a12 12 0 0 1 22 -6 a10 10 0 0 1 16 10 a9 9 0 0 1 -4 16 h-30 a10 10 0 0 1 -4 -20 z" fill="#fff"/></g>
+        <path class="ln" d="M432 256 V 206" /><path class="k3" d="M434 208 l 26 8 l -26 8 z" fill="#ec5b45"/>
+        <rect class="k" x="296" y="198" width="42" height="64" rx="4" fill="#6e3b22"/>
+        <rect x="298" y="214" width="38" height="10" fill="#fdf1d8"/>
+        <rect class="k" x="290" y="190" width="54" height="12" rx="4" fill="#2b2140"/>
+        <rect class="k" x="196" y="252" width="250" height="56" rx="14" fill="#fffaf0"/>
+        <rect class="k3" x="216" y="266" width="24" height="20" rx="6" fill="#9fd0ec"/>
+        <rect class="k3" x="250" y="266" width="24" height="20" rx="6" fill="#9fd0ec"/>
+        <rect class="k3" x="284" y="266" width="24" height="20" rx="6" fill="#9fd0ec"/>
+        <!-- face -->
+        <ellipse class="k3" cx="372" cy="276" rx="12" ry="14" fill="#fff"/><ellipse class="k3" cx="406" cy="276" rx="12" ry="14" fill="#fff"/>
+        <circle cx="375" cy="279" r="5.5" fill="#2b2140"/><circle cx="409" cy="279" r="5.5" fill="#2b2140"/>
+        <circle cx="358" cy="296" r="6" fill="#f59b8c"/><circle cx="422" cy="296" r="6" fill="#f59b8c"/>
+        <path class="k" d="M150 304 H500 L466 362 H186 Z" fill="#fffaf0"/>
+        <path d="M160 318 H490 L482 332 H170 Z" fill="#ec5b45"/>
+        <path class="ln" d="M374 296 q 16 12 32 0"/>
+        <circle class="k3" cx="230" cy="344" r="7" fill="#9fd0ec"/><circle class="k3" cx="262" cy="344" r="7" fill="#9fd0ec"/>
+        <path class="ln" d="M180 372 q 20 -10 40 0 q 20 10 40 0" stroke="#e8f3fb"/>
+      </g>
+
+      <!-- seagull -->
+      <g data-drift="1.5"><path class="k" d="M150 210 q 18 -22 34 -2 q 16 -20 34 2 q -18 -6 -34 8 q -16 -14 -34 -8 z" fill="#fff"/><path class="k3" d="M184 214 l 6 4 l -6 3 z" fill="#ffc845"/></g>
+
+      <!-- pier -->
+      <rect class="k" x="-10" y="454" width="250" height="26" rx="4" fill="#a8643a"/>
+      <path class="ln" d="M40 456 v22 M100 456 v22 M160 456 v22" stroke-width="3"/>
+      <rect class="k" x="30" y="480" width="18" height="90" fill="#8a4f2c"/><rect class="k" x="180" y="480" width="18" height="90" fill="#8a4f2c"/>
+
+      <!-- cezve -->
+      <g transform="translate(-29.5 -113.5) scale(1.25)" style="transform-box:view-box;transform-origin:0 0"><g id="cezve">
+        <path d="M180 406 L 246 376" stroke="#2b2140" stroke-width="22" stroke-linecap="round"/>
+        <path d="M180 406 L 246 376" stroke="#a8643a" stroke-width="13" stroke-linecap="round"/>
+        <path class="k" d="M64 454 C 56 432, 66 408, 84 392 C 90 386, 90 380, 84 370 L 70 362 L 92 358 H 150 C 158 360, 160 366, 152 372 C 144 382, 146 390, 154 398 C 172 414, 178 434, 172 454 Z" fill="#d9834b"/>
+        <ellipse class="k3" cx="120" cy="362" rx="32" ry="8" fill="#e9c9a0"/>
+                <ellipse cx="104" cy="410" rx="6" ry="8" fill="#2b2140"/><ellipse cx="136" cy="410" rx="6" ry="8" fill="#2b2140"/>
+        <circle cx="106" cy="407" r="2" fill="#fff"/><circle cx="138" cy="407" r="2" fill="#fff"/>
+        <circle cx="92" cy="424" r="6" fill="#f59b8c"/><circle cx="150" cy="424" r="6" fill="#f59b8c"/>
+        <path class="ln" d="M108 423 q 12 13 24 0" stroke-width="3.5"/>
+        <g id="arm"><path class="ln" d="M70 414 C 52 404, 44 392, 40 376"/><circle class="k3" cx="40" cy="370" r="9" fill="#d9834b"/></g>
+        <path class="ln" d="M110 346 c -8 -12 6 -18 0 -30 M132 344 c -6 -10 6 -14 0 -24" stroke-width="3"/>
+      </g></g>
+      <!-- speech bubble -->
+      <g transform="translate(-6 -64)"><g data-pop=".6">
+        <path class="k" d="M30 248 h178 a18 18 0 0 1 18 18 v34 a18 18 0 0 1 -18 18 h-96 l -22 22 l 2 -22 h-62 a18 18 0 0 1 -18 -18 v-34 a18 18 0 0 1 18 -18 z" fill="#fff"/>
+        <text x="119" y="292" text-anchor="middle" font-family="Fredoka" font-weight="600" font-size="23" fill="#2b2140">6 dakikan var!</text>
+      </g></g>
+    </g>
+    <rect class="k" x="2" y="2" width="616" height="556" rx="38" fill="none"/>
+  </svg>
+
+  <section class="abs sec">
+    <h2>Kazandan fincana, üç adım</h2>
+    <div class="steps">
+      <div class="step">
+        <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="37" fill="#ffc845"/><ellipse class="k3" cx="39" cy="42" rx="20" ry="26" fill="#6e3b22" transform="rotate(-18 39 42)"/><path d="M44 18 C 30 32, 50 50, 34 66" fill="none" stroke="#2b2140" stroke-width="3" stroke-linecap="round"/><circle cx="31" cy="38" r="3" fill="#fff"/><circle cx="46" cy="36" r="3" fill="#fff"/></svg>
+        <div>Kavur<small>her sabah 07.00</small></div>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="37" fill="#7fc8a9"/><rect class="k3" x="22" y="34" width="34" height="30" rx="5" fill="#d9834b"/><path class="k3" d="M26 34 l 4 -10 h18 l 4 10 z" fill="#fffaf0"/><path d="M39 24 V14 h14" fill="none" stroke="#2b2140" stroke-width="3" stroke-linecap="round"/><circle class="k3" cx="55" cy="14" r="4" fill="#a8643a"/><circle cx="33" cy="46" r="2.6" fill="#2b2140"/><circle cx="45" cy="46" r="2.6" fill="#2b2140"/><path d="M34 53 q 5 4 10 0" fill="none" stroke="#2b2140" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div>Öğüt<small>siparişe göre</small></div>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 78 78"><circle cx="39" cy="39" r="37" fill="#ec5b45"/><path class="k3" d="M20 36 h34 v8 a17 17 0 0 1 -34 0 z" fill="#fffaf0"/><path d="M54 40 a7 7 0 0 1 0 12" fill="none" stroke="#2b2140" stroke-width="3"/><circle cx="31" cy="44" r="2.6" fill="#2b2140"/><circle cx="43" cy="44" r="2.6" fill="#2b2140"/><path d="M32 51 q 5 4 10 0" fill="none" stroke="#2b2140" stroke-width="2.6" stroke-linecap="round"/><path d="M30 28 c -4 -6 4 -8 0 -14 M42 28 c -4 -6 4 -8 0 -14" fill="none" stroke="#fffaf0" stroke-width="3" stroke-linecap="round"/></svg>
+        <div>Demle<small>vapur kalkmadan</small></div>
+      </div>
+    </div>
+  </section>
+
+<script>
+  const ferry = document.getElementById("ferry"), arm = document.getElementById("arm");
+  const pops = [...document.querySelectorAll("[data-pop]")], drifts = [...document.querySelectorAll("[data-drift]")], puffs = [...document.querySelectorAll("[data-puff]")];
+  arm.style.transformBox = "view-box"; arm.style.transformOrigin = "70px 414px";
+  const back = (x) => 1 + 2.7 * Math.pow(x - 1, 3) + 1.7 * Math.pow(x - 1, 2);
+  window.demo = {
+    duration: 2600, hold: 4000,
+    render(p) {
+      // ferry sails in from the right and settles with a little bob
+      const f = gl.easeOutQuart(gl.seg(p, 0, 0.75));
+      const bob = Math.sin(p * Math.PI * 4) * 4 * (1 - gl.seg(p, 0.6, 1));
+      ferry.style.translate = `${(1 - f) * 380}px ${bob}px`;
+      // cezve waves
+      const w = gl.seg(p, 0.3, 1);
+      arm.style.rotate = `${Math.sin(w * Math.PI * 3) * 22 * (1 - w)}deg`;
+      pops.forEach((el) => { const a = +el.dataset.pop, t = gl.seg(p, a, a + 0.3); el.style.scale = t <= 0 ? 0 : back(t); });
+      drifts.forEach((el) => { el.style.translate = `${(1 - gl.easeOutQuart(p)) * 60 * +el.dataset.drift}px 0`; });
+      puffs.forEach((el, i) => { const t = gl.seg(p, 0.35 + i * 0.15, 0.75 + i * 0.15); el.style.scale = t <= 0 ? 0 : back(t); });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

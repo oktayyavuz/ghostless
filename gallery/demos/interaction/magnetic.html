@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mıknatıs buton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --mustard: #efb52f; --ink: #1d1a14; --rust: #b9431f; --cream: #fbf3df; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--mustard); color: var(--ink); font: 500 20px/1.3 "Darker Grotesque", system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 56px; right: 56px; top: 34px; display: flex; justify-content: space-between; font-weight: 700; }
+  header b { font-weight: 900; font-size: 30px; letter-spacing: -.01em; line-height: 1; }
+  h1 { position: absolute; left: 56px; top: 150px; font-weight: 900; font-size: clamp(64px, 9.4vw, 132px); line-height: .82; letter-spacing: -.035em; max-width: 7.5ch; }
+  h1 em { font-style: normal; color: var(--cream); }
+  .sub { position: absolute; left: 60px; bottom: 56px; max-width: 34ch; font-size: 22px; }
+  .sub b { font-weight: 900; }
+  .home { position: absolute; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; border: 2px dashed rgba(29,26,20,.35); }
+  .btn { text-decoration: none; position: absolute; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; background: var(--ink); color: var(--cream);
+         display: grid; place-items: center; text-align: center; will-change: transform; }
+  .btn .lab { font-weight: 900; font-size: 36px; line-height: .9; will-change: transform; }
+  .btn .lab small { display: block; font-weight: 700; font-size: 19px; margin-top: 8px; opacity: .75; }
+  .zone { position: absolute; width: 560px; height: 560px; margin: -280px 0 0 -280px; border-radius: 50%; border: 1px solid rgba(29,26,20,.14); }
+  .cursor { position: absolute; left: 0; top: 0; width: 24px; height: 30px; z-index: 30; pointer-events: none; }
+  @media (max-width: 760px) { h1 { top: 100px; left: 20px; } .sub { left: 20px; font-size: 18px; } header { left: 20px; right: 20px; } }
+</style>
+</head>
+<body>
+  <header><b>Lodos</b><span>Kemankeş Cd. 12, Karaköy</span></header>
+  <h1>Vapura <em>6 dakika</em> mı var?</h1>
+  <p class="sub"><b>Sıra beklemeden.</b> Kalkışa 6 dakika kala sipariş verene sıra yok; iskele 90 saniye ötede.</p>
+  <div class="zone"></div>
+  <div class="home"></div>
+  <a class="btn" href="#" aria-label="Sipariş ver"><span class="lab">Sipariş<br>ver<small>sıra beklemeden</small></span></a>
+  <svg class="cursor" viewBox="0 0 22 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17 L11 25.5 L14.5 24 L11 15.8 L18.5 15.8 Z" fill="#fbf3df" stroke="#1d1a14" stroke-width="1.8" stroke-linejoin="round"/></svg>
+<script>
+  const btn = document.querySelector(".btn"), lab = btn.querySelector(".lab"), home = document.querySelector(".home"), zone = document.querySelector(".zone");
+  const cursor = document.querySelector(".cursor");
+  // scripted pointer path, relative to the button's resting centre
+  const KEYS = [[-620, 300], [-380, 190], [-190, -30], [10, -170], [175, -40], [90, 150], [-70, 80], [24, 16], [24, 16]];
+  const cr = (a, b, c, d, t) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+  function pathAt(t) {
+    const n = KEYS.length - 1, f = Math.min(n - 1e-6, t * n), i = Math.floor(f), u = f - i;
+    const P = (k) => KEYS[Math.max(0, Math.min(n, k))];
+    return [0, 1].map((ax) => cr(P(i - 1)[ax], P(i)[ax], P(i + 1)[ax], P(i + 2)[ax], u));
+  }
+  const R = 280;  // magnetic field radius
+  window.demo = {
+    duration: 4200,
+    render(p) {
+      const cx = innerWidth * (innerWidth > 760 ? 0.7 : 0.5), cy = innerHeight * 0.52;
+      [btn, home].forEach((el) => { el.style.left = cx + "px"; el.style.top = cy + "px"; });
+      zone.style.left = cx + "px"; zone.style.top = cy + "px";
+      const [dx, dy] = pathAt(gl.easeInOutCubic(gl.seg(p, 0, 0.92)));
+      cursor.style.transform = `translate(${cx + dx}px, ${cy + dy}px)`;
+      // inside the field the button leans toward the pointer; the label leans further
+      const d = Math.hypot(dx, dy);
+      const k = gl.clamp((R - d) / (R * 0.55));
+      const pull = 0.42 * k * k * (3 - 2 * k);
+      btn.style.transform = `translate(${(dx * pull).toFixed(1)}px, ${(dy * pull).toFixed(1)}px) scale(${(1 + 0.06 * pull / 0.42).toFixed(3)})`;
+      lab.style.transform = `translate(${(dx * pull * 0.45).toFixed(1)}px, ${(dy * pull * 0.45).toFixed(1)}px)`;
+      const over = d * (1 - pull) < 120 ? 1 : 0;
+      btn.style.background = over ? "#b9431f" : "";
+      zone.style.borderColor = `rgba(29,26,20,${(0.1 + 0.25 * k).toFixed(3)})`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

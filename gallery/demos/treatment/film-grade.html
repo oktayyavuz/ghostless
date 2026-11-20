@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Film tonu + gren</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #1b1815; --bone: #efe6d6; --mute: #93897b; --amber: #e2a15f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--bone); font: 400 14px/1.45 "Libre Franklin", system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-rows: auto 1fr auto; gap: 22px; padding: 28px 40px 30px; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
+  h1 { font: 400 clamp(38px, 4.6vw, 66px)/1 Newsreader, Georgia, serif; letter-spacing: -.02em; }
+  h1 i { color: var(--amber); }
+  .head span { color: var(--mute); font-size: 13px; text-align: right; }
+  .head span b { color: var(--bone); font-weight: 600; display: block; font-size: 15px; }
+  .row { position: relative; display: grid; grid-template-columns: 1.7fr 1.15fr 0.75fr; gap: 14px; min-height: 0; }
+  .ph { position: relative; overflow: hidden; }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .graded { position: absolute; inset: 0; will-change: clip-path; }
+  /* the grade: softer contrast, warmer, less saturation, blacks lifted to a warm brown, fine grain */
+  .graded img { filter: contrast(.9) saturate(.7) sepia(.22) brightness(1.03); }
+  .graded .tone { position: absolute; inset: 0; background: #d89a5c; mix-blend-mode: soft-light; opacity: .45; }
+  .graded .lift { position: absolute; inset: 0; background: #2d231c; mix-blend-mode: lighten; }
+  .graded .grain { position: absolute; inset: 0; mix-blend-mode: overlay; opacity: .34; background-size: 256px 256px; }
+  .line { position: absolute; top: -10px; bottom: -10px; width: 2px; background: var(--bone); will-change: left; }
+  .line b { position: absolute; top: 50%; transform: translate(-50%, -50%); left: 1px; background: var(--bone); color: var(--bg); font: 600 11px/1 "Libre Franklin"; letter-spacing: .08em; text-transform: uppercase; padding: 7px 9px; white-space: nowrap; }
+  footer { display: grid; grid-template-columns: 1.7fr 1.15fr 0.75fr; gap: 14px; font-size: 13px; color: var(--mute); }
+  footer b { color: var(--bone); font-weight: 600; }
+  @media (max-width: 760px) { body { padding: 16px; } .head span { display: none; } .row, footer { grid-template-columns: 1fr 1fr; } .ph:last-child, footer span:last-child { display: none; } }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>Aynı ışık, <i>aynı sabah.</i></h1>
+    <span><b>Lodos tonu</b>sıcak gölge, yumuşak kontrast, ince gren</span>
+  </div>
+  <div class="row" id="row">
+    <div class="ph"><img src="../../assets/deniz.webp" alt="Vapurdan Boğaz ve şehir silueti"></div>
+    <div class="ph"><img src="../../assets/barista.webp" alt="Barista portafiltreyi tutuyor"></div>
+    <div class="ph"><img src="../../assets/fincan.webp" alt="Beyaz masada tek küçük fincan"></div>
+    <div class="line" id="line"><b id="lab">tonlu ◂ ▸ ham</b></div>
+  </div>
+  <footer><span><b>İskele, 06.50.</b> İlk vapur kalkmadan.</span><span><b>Bar, 07.20.</b> İlk shot.</span><span><b>Masa, 07.30.</b></span></footer>
+<script>
+  // one seeded grain tile, shared by every graded photo
+  const g = document.createElement("canvas"); g.width = g.height = 256;
+  const gx = g.getContext("2d"), id = gx.createImageData(256, 256), r = ((s) => () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646)(91);  // gl isn't loaded yet here
+  for (let i = 0; i < id.data.length; i += 4) { const v = 128 + (r() - 0.5) * 150; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+  gx.putImageData(id, 0, 0);
+  const grain = `url(${g.toDataURL()})`;
+  const phs = [...document.querySelectorAll(".ph")], layers = [];
+  for (const ph of phs) {
+    const d = document.createElement("div"); d.className = "graded";
+    d.innerHTML = `<img src="${ph.querySelector("img").getAttribute("src")}" alt=""><i class="tone"></i><i class="lift"></i><i class="grain"></i>`;
+    d.querySelector(".grain").style.backgroundImage = grain;
+    ph.appendChild(d); layers.push({ ph, d });
+  }
+  const row = document.getElementById("row"), line = document.getElementById("line"), lab = document.getElementById("lab");
+  window.demo = {
+    duration: 3200,
+    render(p) {
+      // a comparison line crosses the whole spread: left of it graded, right of it still raw
+      const t = gl.easeInOutCubic(gl.seg(p, 0.06, 0.92));
+      const W = row.clientWidth, X = t * (W + 40) - 20;
+      line.style.left = X + "px"; line.style.opacity = t > 0 && t < 1 ? 1 : 0;
+      for (const { ph, d } of layers) {
+        const left = ph.offsetLeft, w = ph.clientWidth;
+        const cut = gl.clamp((X - left) / w) * 100;
+        d.style.clipPath = `inset(0 ${(100 - cut).toFixed(2)}% 0 0)`;
+      }
+      lab.style.transform = `translate(${X > W - 70 ? "-100%" : X < 70 ? "0%" : "-50%"}, -50%)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

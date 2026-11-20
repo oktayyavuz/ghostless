@@ -31,6 +31,22 @@ ghostless works upstream of the pixels:
 8. **Design log.** It asks why the other directions lost and records the answer in the person's words, so the next session
    doesn't bring them back.
 
+## Gallery: choose by looking
+
+Most people can't name design styles or read component code, but they know what they like when they
+see it. ghostless ships a local picker, like a site builder:
+
+```bash
+node ~/.claude/skills/ghostless/scripts/gallery.mjs            # opens on a free port, from 5600
+```
+
+~60 live demos of one fictional client (a coffee roastery by a ferry pier): 22 visual styles, text
+motion, image reveals (pixels, dithering, halftone, strips, particles), scroll moves, interaction and
+image treatments. Mark **Beğendim** (like) or **Asla** (never), add a note, press send: the choice is
+saved to `tasarim/secimler.json` and the agent builds the three directions from it. With
+`--directions tasarim/yonler` the same page shows the three direction previews, so the person picks
+one and ticks why the others didn't work. Screenshots of every demo: [`gallery/GALLERY.md`](gallery/GALLERY.md).
+
 ## Images
 
 Template sites are image-poor. ghostless plans for a lot of imagery: the client's photos first, then
@@ -87,6 +103,8 @@ references/system.md      tokens with roles, hierarchy scales, DESIGN.md / DESIG
 references/copy.md        copy rules + EN/TR filler lexicon
 references/critique.md    visual tests, report format
 scripts/slop-scan.mjs     scanner
+scripts/gallery.mjs       local picker server (styles, motion, treatments, directions)
+gallery/                  demos, catalog, screenshots (GALLERY.md), shots.mjs, build-docs.mjs
 scripts/fetch-images.mjs  finds openly licensed images (Openverse, Wikimedia Commons, NASA, Pexels), downloads them, writes credits
 ```
 

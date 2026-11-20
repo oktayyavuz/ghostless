@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perde + ters hareket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Schibsted+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --sand: #e8e1d3; --ink: #231c16; --mute: #7a6f62; --olive: #5b5a2e; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--sand); color: var(--ink); font: 400 15px/1.5 "Schibsted Grotesk", system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 0.85fr); gap: 44px; padding: 34px 44px; }
+  .col { display: flex; flex-direction: column; justify-content: space-between; min-height: 0; }
+  .top { font-size: 13px; color: var(--mute); display: flex; gap: 18px; }
+  .top b { color: var(--ink); font: 400 20px/1 "Young Serif", Georgia, serif; margin-right: auto; }
+  .num { font: 400 13px/1 "Schibsted Grotesk"; letter-spacing: .14em; text-transform: uppercase; color: var(--olive); }
+  h1 { font: 400 clamp(36px, 4.2vw, 60px)/1.0 "Young Serif", Georgia, serif; letter-spacing: -.02em; margin-top: 14px; }
+  .col p { color: var(--mute); max-width: 34ch; }
+  .frame { position: relative; overflow: hidden; will-change: clip-path; }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .big { height: calc(100vh - 68px); aspect-ratio: 3 / 4; }
+  .small { width: 100%; aspect-ratio: 4 / 5; }
+  figcaption { font-size: 13px; color: var(--mute); margin-top: 10px; display: flex; justify-content: space-between; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; padding: 16px; gap: 14px; }
+    .col:first-child { grid-column: 1 / -1; } .col:first-child p { display: none; } .big { height: auto; width: 100%; } }
+</style>
+</head>
+<body>
+  <section class="col">
+    <div class="top"><b>Lodos</b><span>Hikâyemiz</span><span>Kahveler</span></div>
+    <div>
+      <span class="num">02 · Kavurma evi</span>
+      <h1>Kemankeş Caddesi'nde tek bir kazan.</h1>
+    </div>
+    <p>2019'dan beri her sabah 07.00'de aynı 12 kg'lık kazanı yakıyoruz. Haftada dört çekirdek kavruluyor; ne kadar kavrulduysa o kadar satılıyor.</p>
+  </section>
+  <figure class="frame big" id="f1"><img src="../../assets/barista.webp" alt="Barista portafiltreyi tutuyor, fincana espresso akıyor"></figure>
+  <section class="col">
+    <p class="num" style="margin-top:4px">Bu hafta kazanda</p>
+    <div style="width:100%">
+      <figure class="frame small" id="f2"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler"></figure>
+      <figcaption><span>Etiyopya Guji, 250 g</span><span>₺560</span></figcaption>
+    </div>
+  </section>
+<script>
+  const frames = [["f1", 0.0, 0.66], ["f2", 0.24, 0.92]].map(([id, a, b]) => {
+    const f = document.getElementById(id); return { f, img: f.querySelector("img"), a, b };
+  });
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      for (const { f, img, a, b } of frames) {
+        const t = gl.easeInOutCubic(gl.seg(p, a, b));
+        // the frame opens from the bottom edge upwards …
+        f.style.clipPath = `inset(${((1 - t) * 100).toFixed(2)}% 0 0 0)`;
+        // … while the photo inside travels the other way, downwards, and settles
+        img.style.transform = `translateY(${(-(1 - t) * 34).toFixed(2)}%) scale(${(1.3 - 0.3 * t).toFixed(4)})`;
+      }
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

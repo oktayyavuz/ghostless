@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karakterlerden görsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0e0d0b; --cream: #f0e2c4; --mute: #7f7666; --line: #2a2620; --hot: #e9a24a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--cream); font: 400 14px/1.6 "JetBrains Mono", ui-monospace, monospace;
+         overflow: hidden; display: grid; grid-template-columns: 1.8fr 1fr; }
+  .stage { position: relative; border-right: 1px solid var(--line); }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  aside { padding: 30px 32px; display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; color: var(--mute); font-size: 12px; }
+  .top b { color: var(--cream); font-weight: 700; letter-spacing: .1em; }
+  h1 { font-weight: 700; font-size: clamp(30px, 3.3vw, 46px); line-height: 1.08; letter-spacing: -.03em; }
+  h1 span { color: var(--hot); }
+  .menu { list-style: none; padding: 0; }
+  .menu li { display: flex; gap: 8px; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+  .menu li span:first-child { flex: none; }
+  .menu li i { flex: 1; overflow: hidden; color: var(--line); font-style: normal; white-space: nowrap; }
+  .menu li i::before { content: "................................................................"; }
+  .menu li span:last-child { color: var(--hot); }
+  .foot { color: var(--mute); font-size: 12px; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; } aside { padding: 18px; } .foot { display: none; } }
+</style>
+</head>
+<body>
+  <!-- small greyscale copy of espresso.webp: canvas can read its pixels even from file:// -->
+  <script>var THUMB = "data:image/webp;base64,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";</script>
+  <div class="stage"><canvas id="c" role="img" aria-label="Makineden iki fincana akan espresso, önce karakterlerle çizilir"></canvas></div>
+  <aside>
+    <div class="top"><b>LODOS</b><span>menü / karaköy</span></div>
+    <div>
+      <h1>Bugün bardan<br><span>ne çıkıyor?</span></h1>
+      <ul class="menu" style="margin-top:26px">
+        <li><span>Espresso</span><i></i><span>₺75</span></li>
+        <li><span>Türk kahvesi</span><i></i><span>₺80</span></li>
+        <li><span>Filtre kahve</span><i></i><span>₺95</span></li>
+        <li><span>Lodos harmanı, 250 g</span><i></i><span>₺420</span></li>
+        <li><span>Etiyopya Guji, 250 g</span><i></i><span>₺560</span></li>
+      </ul>
+    </div>
+    <p class="foot">Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</p>
+  </aside>
+<script>
+  const c = document.getElementById("c"), x = c.getContext("2d");
+  const RAMP = " .`:-=+*cox%#&@";
+  const FONT = '700 12px "JetBrains Mono", ui-monospace, monospace', CH = 13;
+  const photo = new Image(); photo.src = "../../assets/espresso.webp";
+  const thumb = new Image(); thumb.src = THUMB;
+  const g = document.createElement("canvas"), gx = g.getContext("2d");
+  let cols, rows, cw, lum, ok = false, last = 1;
+  const cover = (iw, ih, w, h) => { const s = Math.max(w / iw, h / ih), sw = w / s, sh = h / s; return [(iw - sw) / 2, (ih - sh) / 2, sw, sh]; };
+  function setup() {
+    const r = c.getBoundingClientRect(); c.width = Math.round(r.width); c.height = Math.round(r.height);
+    x.font = FONT; cw = x.measureText("M").width;
+    cols = Math.ceil(c.width / cw); rows = Math.ceil(c.height / CH);
+    g.width = cols; g.height = rows;
+    gx.drawImage(thumb, ...cover(thumb.naturalWidth, thumb.naturalHeight, cols * cw, rows * CH), 0, 0, cols, rows);
+    const d = gx.getImageData(0, 0, cols, rows).data;
+    lum = new Float32Array(cols * rows);
+    for (let i = 0; i < lum.length; i++) lum[i] = Math.min(1, Math.max(0, (d[i * 4] / 255 - 0.04) * 1.4));
+  }
+  window.demo = {
+    duration: 3200,
+    render(p) {
+      last = p; if (!ok) return;
+      const W = c.width, H = c.height;
+      x.clearRect(0, 0, W, H);
+      const fade = gl.easeInOutCubic(gl.seg(p, 0.55, 0.92));
+      if (fade > 0) { x.globalAlpha = fade; x.drawImage(photo, ...cover(photo.naturalWidth, photo.naturalHeight, cols * cw, rows * CH), 0, 0, cols * cw, rows * CH); }
+      x.globalAlpha = 1 - fade;
+      if (fade >= 1) { x.globalAlpha = 1; return; }
+      x.font = FONT; x.textBaseline = "top";
+      const front = gl.seg(p, 0, 0.45) * (rows + 8);   // rows are typed in from the top, last few still scrambling
+      const tick = Math.floor(p * 60);
+      for (let y = 0; y < rows; y++) {
+        if (y > front) break;
+        const scramble = front - y < 8 && p < 0.45;
+        for (let i = 0; i < cols; i++) {
+          const l = lum[y * cols + i];
+          let ch = RAMP[Math.min(RAMP.length - 1, Math.floor(l * RAMP.length))];
+          if (scramble && ch !== " ") ch = RAMP[1 + (((i * 73856093) ^ (y * 19349663) ^ (tick * 83492791)) >>> 0) % (RAMP.length - 1)];
+          if (ch === " ") continue;
+          x.fillStyle = scramble ? "#e9a24a" : `rgba(240,226,196,${0.35 + 0.65 * l})`;
+          x.fillText(ch, i * cw, y * CH);
+        }
+      }
+      x.globalAlpha = 1;
+    },
+  };
+  Promise.all([photo.decode(), thumb.decode(), document.fonts.load(FONT).catch(() => {})])
+    .then(() => { setup(); ok = true; demo.render(last); });
+  addEventListener("resize", () => { if (ok) { setup(); demo.render(last); } });
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

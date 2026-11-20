@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fırça darbesiyle açılma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --cream: #f1e8d8; --ink: #2b1d14; --mute: #85735f; --rust: #b4532a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--cream); color: var(--ink); font: 400 15px/1.5 Karla, system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-columns: 1fr 1.55fr; gap: 48px; padding: 36px 40px 36px 48px; }
+  .copy { display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; font-size: 14px; color: var(--mute); }
+  .top b { font: 400 24px/1 "DM Serif Display", Georgia, serif; color: var(--ink); }
+  h1 { font: 400 clamp(46px, 5.6vw, 84px)/.96 "DM Serif Display", Georgia, serif; letter-spacing: -.01em; }
+  h1 i { color: var(--rust); }
+  ol { list-style: none; padding: 0; margin-top: 26px; counter-reset: k; }
+  ol li { counter-increment: k; display: flex; gap: 14px; padding: 8px 0; border-bottom: 1px solid #d9cbb4; font-size: 16px; }
+  ol li::before { content: "0" counter(k); color: var(--rust); font-weight: 600; font-size: 13px; padding-top: 2px; }
+  .foot { font-size: 13px; color: var(--mute); }
+  svg { width: 100%; height: 100%; display: block; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; padding: 16px; gap: 14px; } ol, .foot { display: none; } }
+</style>
+</head>
+<body>
+  <section class="copy">
+    <div class="top"><b>Lodos</b><span>Kavurma evi · Karaköy</span></div>
+    <div>
+      <h1>Haftada<br><i>dört</i> çekirdek.</h1>
+      <ol><li>Lodos harmanı</li><li>Etiyopya Guji</li><li>Kolombiya Huila</li><li>Türk kahvesi kavrumu</li></ol>
+    </div>
+    <p class="foot">Her sabah 07.00'de, 12 kg'lık tek kazanla.</p>
+  </section>
+  <svg viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler, fırça darbesiyle açılır">
+    <defs>
+      <!-- roughens the stroke edges so the mask reads as a dry brush, not a vector line -->
+      <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.08" numOctaves="3" seed="7"/>
+        <feDisplacementMap in="SourceGraphic" scale="70" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <mask id="brush" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="760">
+        <g filter="url(#rough)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+          <path id="s1" pathLength="1" stroke-width="230" d="M -90 110 C 260 50 700 170 1090 90 C 1150 170 1120 240 1050 270 C 700 330 300 220 -70 300 C -120 360 -90 430 -30 450 C 300 510 700 400 1080 480 C 1130 550 1100 610 1040 640 C 700 700 320 640 -80 720"/>
+          <path id="s2" pathLength="1" stroke-width="70" d="M -90 20 C 300 0 700 60 1090 10 C 1130 120 1100 330 1060 370 C 700 400 300 340 -70 390 C -120 520 -90 560 -30 560 C 300 600 700 520 1080 580 C 1120 700 1100 720 1040 740"/>
+        </g>
+        <rect id="fill" x="0" y="0" width="1000" height="760" fill="#fff" opacity="0"/>
+      </mask>
+    </defs>
+    <g mask="url(#brush)">
+      <image id="img" href="../../assets/cekirdek.webp" x="0" y="0" width="1000" height="760" preserveAspectRatio="xMidYMid slice"/>
+    </g>
+  </svg>
+<script>
+  const fill = document.getElementById("fill"), s1 = document.getElementById("s1"), s2 = document.getElementById("s2"), img = document.getElementById("img");
+  window.demo = {
+    duration: 2800,
+    render(p) {
+      const a = 0.5 - 0.5 * Math.cos(Math.PI * gl.seg(p, 0.0, 0.96));
+      const b = 0.5 - 0.5 * Math.cos(Math.PI * gl.seg(p, -0.04, 0.84));          // a thinner bristle stroke runs slightly ahead
+      s1.style.strokeDasharray = `${a.toFixed(4)} 2`;
+      s2.style.strokeDasharray = `${b.toFixed(4)} 2`;
+      s1.style.visibility = a > 0 ? "visible" : "hidden"; s2.style.visibility = b > 0 ? "visible" : "hidden";
+      fill.setAttribute("opacity", gl.seg(p, 0.9, 1));            // closes the last pinholes at rest
+      const k = gl.easeOutQuart(gl.seg(p, 0, 1));
+      img.setAttribute("transform", `translate(${500 - 500 * (1.08 - 0.08 * k)} ${380 - 380 * (1.08 - 0.08 * k)}) scale(${1.08 - 0.08 * k})`);
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

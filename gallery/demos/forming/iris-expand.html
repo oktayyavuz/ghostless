@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pencereden açılma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #ece4d6; --ink: #1b2733; --mute: #6e6a62; --cream: #f6f0e6; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); font: 400 15px/1.45 "Hanken Grotesk", system-ui, sans-serif; overflow: hidden; }
+  .win { position: absolute; inset: 0; overflow: hidden; will-change: clip-path; }
+  .win img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 62%; will-change: transform; }
+  .win::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,18,28,.62), rgba(10,18,28,0) 52%); opacity: var(--s, 1); }
+  header { position: absolute; top: 26px; left: 40px; right: 40px; display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; }
+  header b { font: 400 24px/1 Gloock, Georgia, serif; }
+  header nav { display: flex; gap: 26px; }
+  .copy { position: absolute; left: 40px; right: 40px; bottom: 34px; display: flex; justify-content: space-between; align-items: end; gap: 30px; }
+  h1 { font: 400 clamp(46px, 6.6vw, 98px)/.95 Gloock, Georgia, serif; letter-spacing: -.02em; }
+  .copy p { max-width: 30ch; font-size: 15px; }
+  .copy p b { font-weight: 600; }
+  @media (max-width: 700px) { header, .copy { left: 16px; right: 16px; } header nav { display: none; } .copy { flex-direction: column; align-items: start; } }
+</style>
+</head>
+<body>
+  <div class="win" id="win"><img id="img" src="../../assets/deniz.webp" alt="Vapurdan Boğaz'a ve şehir siluetine bakış"></div>
+  <header><b>Lodos</b><nav><span>Kahveler</span><span>Kavurma</span><span>İskele</span></nav></header>
+  <div class="copy" id="copy">
+    <h1>Karaköy iskelesine<br>90 saniye.</h1>
+    <p><b>Vapurun kalkışına 6 dakika kala</b> sipariş verene sıra yok. Kahven elinde, sen güvertede.</p>
+  </div>
+<script>
+  const win = document.getElementById("win"), img = document.getElementById("img"), copy = document.getElementById("copy");
+  const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+  const INK = [27, 39, 51], CREAM = [246, 240, 230];
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      const W = innerWidth, H = innerHeight;
+      const t = gl.easeInOutCubic(gl.seg(p, 0.04, 0.9));
+      const w0 = Math.min(300, W * 0.5), h0 = w0 * 0.64, cy0 = H * 0.4;   // the small window, a little above centre
+      const w = gl.lerp(w0, W, t), h = gl.lerp(h0, H, t), cy = gl.lerp(cy0, H / 2, t);
+      const top = cy - h / 2, left = (W - w) / 2, rad = gl.lerp(w0 / 2, 0, t);
+      win.style.clipPath = `inset(${top.toFixed(1)}px ${left.toFixed(1)}px ${(H - top - h).toFixed(1)}px ${left.toFixed(1)}px round ${rad.toFixed(1)}px)`;
+      // the window opens on the skyline: inside it the photo is zoomed in, and it scales down as the window grows
+      img.style.transform = `translateY(${(-22 * (1 - t)).toFixed(2)}%) scale(${gl.lerp(1.7, 1, t)})`;
+      const k = gl.seg(t, 0.55, 0.9);                      // type turns light once the photo is under it
+      copy.style.color = `rgb(${mix(INK, CREAM, k)})`;
+      win.style.setProperty("--s", k);
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

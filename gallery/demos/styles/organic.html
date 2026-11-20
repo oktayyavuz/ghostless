@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organik / kuralsız</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root { --oat: #efe7d7; --moss: #4f5a2e; --sage: #a8b08a; --clay: #b65d38; --bark: #33261b; --sand: #dccdb0; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--oat); color: var(--bark); font: 400 17px/1.55 "DM Sans", system-ui, sans-serif; }
+  .abs { position: absolute; }
+  .serif { font-family: "Young Serif", Georgia, serif; font-weight: 400; }
+  svg.draw { overflow: visible; }
+  svg.draw path, svg.draw ellipse { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* header: loose, not on a line */
+  .logo { left: 54px; top: 34px; display: flex; align-items: center; gap: 10px; font-size: 34px; letter-spacing: -.01em; }
+  .logo svg { width: 38px; height: 38px; }
+  nav a { position: absolute; font-size: 17px; }
+  .n1 { left: 520px; top: 46px; rotate: -3deg; }
+  .n2 { left: 640px; top: 38px; rotate: 2deg; }
+  .n3 { left: 790px; top: 50px; }
+  .n4 { left: 1080px; top: 34px; rotate: -2deg; font-family: "Young Serif", serif; font-size: 19px; }
+  .n4 svg { position: absolute; left: -22px; top: -14px; width: calc(100% + 44px); height: 54px; }
+  .side { left: 20px; top: 330px; writing-mode: vertical-rl; rotate: 180deg; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
+
+  /* headline: words set by hand, each on its own baseline */
+  h1 { font-weight: 400; }
+  h1 span { position: absolute; display: block; white-space: nowrap; letter-spacing: -.035em; line-height: 1; }
+  .w1 { left: 64px; top: 128px; font-size: 128px; }
+  .w2 { left: 150px; top: 246px; font-size: 82px; color: var(--moss); rotate: -2deg; }
+  .w3 { left: 72px; top: 356px; font-size: 104px; color: var(--clay); }
+  .w4 { left: 498px; top: 398px; font-size: 58px; rotate: 5deg; }
+  .ring { left: 46px; top: 346px; width: 452px; height: 146px; }
+
+  .lede { left: 300px; top: 528px; width: 300px; font-size: 17px; }
+  .lede em { font-family: "Young Serif", serif; font-style: normal; color: var(--clay); }
+  .visit { left: 96px; top: 560px; width: 170px; font-size: 14px; line-height: 1.45; color: var(--moss); rotate: -3deg; }
+
+  /* photos in pebble shapes */
+  .pebble { left: 682px; top: 104px; width: 528px; height: 462px; clip-path: url(#peb1); }
+  .pebble img, .pebble2 img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pebble img { object-position: 50% 40%; }
+  .pebble2 { left: 1028px; top: 446px; width: 220px; height: 250px; clip-path: url(#peb2); }
+  .pebble2 img { object-position: 50% 45%; }
+  .branch { left: 600px; top: 56px; width: 210px; height: 266px; }
+  .steam { left: 860px; top: 600px; width: 120px; height: 90px; }
+  .cap { left: 676px; top: 588px; width: 180px; font-size: 14px; font-style: italic; rotate: -2deg; }
+
+  /* second section: hand-cut moss edge */
+  .sec { left: -10px; right: -10px; top: 676px; bottom: -20px; }
+  .sec svg.edge { position: absolute; left: 0; top: -36px; width: 100%; height: 40px; }
+  .sec .body { position: absolute; inset: 0; background: var(--moss); color: var(--oat); padding: 26px 70px; display: flex; align-items: flex-start; gap: 60px; }
+  .sec h2 { font-size: 40px; line-height: 1.05; letter-spacing: -.02em; width: 420px; }
+  .beans { display: flex; gap: 44px; padding-top: 10px; font-size: 16px; }
+  .beans div { display: flex; align-items: center; gap: 10px; }
+  .beans svg { width: 26px; height: 32px; }
+
+  @media (max-width: 700px) {
+    nav, .pebble, .pebble2, .branch, .steam, .cap, .sec, .side, .ring { display: none; }
+    .w1 { left: 16px; font-size: 72px; } .w2 { left: 40px; top: 210px; font-size: 52px; } .w3 { left: 16px; top: 280px; font-size: 64px; } .w4 { left: 200px; top: 340px; font-size: 40px; }
+    .lede { left: 16px; top: 440px; width: 340px; } .visit { left: 16px; top: 600px; }
+  }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <clipPath id="peb1" clipPathUnits="objectBoundingBox"><path d="M.52 .02 C.74 .0 .93 .1 .98 .33 C1.02 .55 .95 .78 .79 .9 C.63 1.02 .37 1.0 .2 .9 C.04 .8 -.02 .58 .03 .38 C.08 .16 .3 .04 .52 .02 Z"/></clipPath>
+      <clipPath id="peb2" clipPathUnits="objectBoundingBox"><path d="M.44 .03 C.7 -.01 .97 .16 .98 .46 C.99 .76 .8 .99 .5 .99 C.22 .99 .02 .82 .02 .55 C.02 .28 .2 .07 .44 .03 Z"/></clipPath>
+      <filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+    </defs>
+  </svg>
+
+  <div class="abs logo serif">
+    <svg class="draw" viewBox="0 0 40 40" filter="url(#rough)"><path d="M20 4 C 8 10, 6 26, 20 36 C 34 26, 32 10, 20 4 Z" stroke="#4f5a2e" stroke-width="2.6"/><path d="M20 8 C 18 18, 22 26, 20 34" stroke="#4f5a2e" stroke-width="2.2"/></svg>
+    lodos
+  </div>
+  <nav>
+    <a class="n1">menü</a><a class="n2">çekirdekler</a><a class="n3">iskeleye nasıl gelinir</a>
+    <a class="n4">sipariş ver
+      <svg class="draw" viewBox="0 0 160 54" preserveAspectRatio="none" filter="url(#rough)"><path d="M14 30 C 10 10, 70 4, 130 10 C 160 16, 156 44, 96 48 C 46 52, 6 46, 10 24 C 14 12, 40 8, 60 9" stroke="#b65d38" stroke-width="2.4"/></svg>
+    </a>
+  </nav>
+  <div class="abs side">Kemankeş Cd. 12 — Karaköy — 2019'dan beri</div>
+
+  <svg class="abs draw branch" viewBox="0 0 260 330" filter="url(#rough)" aria-hidden="true" data-draw=".25,.75">
+    <path d="M30 320 C 70 250, 110 190, 210 30" stroke="#4f5a2e" stroke-width="2.6"/>
+    <path d="M86 236 C 40 230, 20 196, 28 170 C 62 178, 84 206, 86 236 Z M86 236 C 60 214 44 196 30 174" stroke="#4f5a2e" stroke-width="2.2"/>
+    <path d="M120 180 C 160 166, 194 180, 204 206 C 170 214, 136 204, 120 180 Z M120 180 C 150 188 176 196 202 205" stroke="#4f5a2e" stroke-width="2.2"/>
+    <path d="M166 104 C 130 86, 120 56, 128 34 C 156 46, 170 74, 166 104 Z" stroke="#4f5a2e" stroke-width="2.2"/>
+    <path d="M101 152 m -11 0 a 11 12 0 1 0 22 0 a 11 12 0 1 0 -22 0 M119 140 m -10 0 a 10 11 0 1 0 20 0 a 10 11 0 1 0 -20 0 M152 126 m -10 0 a 10 11 0 1 0 20 0 a 10 11 0 1 0 -20 0" stroke="#b65d38" stroke-width="2.4"/>
+  </svg>
+
+  <div class="abs pebble" data-in=".05,.55"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler"></div>
+  <div class="abs pebble2" data-in=".2,.7"><img src="../../assets/fincan.webp" alt="Beyaz masada tek küçük fincan"></div>
+  <svg class="abs draw steam" viewBox="0 0 120 90" filter="url(#rough)" aria-hidden="true" data-draw=".5,.95">
+    <path d="M20 84 C 6 64, 34 52, 20 30 C 10 16, 24 6, 30 2" stroke="#33261b" stroke-width="2.2"/>
+    <path d="M52 84 C 38 62, 66 50, 52 26" stroke="#33261b" stroke-width="2.2"/>
+  </svg>
+  <p class="abs cap">sabah ilk kavrum, çuvalın üstünde soğuyor</p>
+
+  <h1 class="serif" aria-label="Vapur kalkmadan kahven hazır.">
+    <span class="w1" data-in="0,.4">vapur</span>
+    <span class="w2" data-in=".08,.48">kalkmadan</span>
+    <span class="w3" data-in=".16,.56">kahven</span>
+    <span class="w4" data-in=".24,.64">hazır.</span>
+  </h1>
+  <svg class="abs draw ring" viewBox="0 0 390 150" preserveAspectRatio="none" filter="url(#rough)" aria-hidden="true" data-draw=".45,.9">
+    <path d="M30 80 C 24 30, 150 12, 280 20 C 380 28, 386 110, 250 130 C 140 146, 26 132, 20 86 C 16 58, 60 40, 110 32" stroke="#b65d38" stroke-width="2.6"/>
+  </svg>
+
+  <p class="abs lede" data-in=".3,.7">Her sabah 07.00'de, <em>12 kg'lık tek kazanla</em> kavuruyoruz. Karaköy iskelesine 90 saniye; kalkışa 6 dakika kala gelene sıra yok.</p>
+  <p class="abs visit" data-in=".36,.76">hafta içi 07.00–19.00<br>cumartesi 08.00–18.00</p>
+
+  <section class="abs sec">
+    <svg class="edge" viewBox="0 0 1300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 L0 24 C 90 6, 160 30, 250 18 C 350 4, 420 28, 520 22 C 640 14, 700 2, 820 16 C 930 30, 1010 8, 1110 14 C 1190 20, 1250 30, 1300 18 L1300 40 Z" fill="#4f5a2e"/></svg>
+    <div class="body">
+      <h2 class="serif">Bu hafta kazanda dört çekirdek</h2>
+      <div class="beans">
+        <div><svg class="draw" viewBox="0 0 26 32" filter="url(#rough)"><ellipse cx="13" cy="16" rx="10" ry="14" stroke="#efe7d7" stroke-width="2"/><path d="M13 3 C 7 12, 19 20, 13 29" stroke="#efe7d7" stroke-width="2"/></svg>Lodos harmanı</div>
+        <div><svg class="draw" viewBox="0 0 26 32" filter="url(#rough)"><ellipse cx="13" cy="16" rx="10" ry="14" stroke="#efe7d7" stroke-width="2"/><path d="M13 3 C 7 12, 19 20, 13 29" stroke="#efe7d7" stroke-width="2"/></svg>Etiyopya Guji</div>
+        <div><svg class="draw" viewBox="0 0 26 32" filter="url(#rough)"><ellipse cx="13" cy="16" rx="10" ry="14" stroke="#efe7d7" stroke-width="2"/><path d="M13 3 C 7 12, 19 20, 13 29" stroke="#efe7d7" stroke-width="2"/></svg>Kolombiya Huila</div>
+      </div>
+    </div>
+  </section>
+
+<script>
+  const items = [...document.querySelectorAll("[data-in]")];
+  const draws = [...document.querySelectorAll("[data-draw]")].map((svg) => {
+    const paths = [...svg.querySelectorAll("path")];
+    paths.forEach((pa) => { const L = pa.getTotalLength(); pa.style.strokeDasharray = L; pa.dataset.len = L; });
+    return { svg, paths };
+  });
+  window.demo = {
+    duration: 2600, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.easeOutQuart(gl.seg(p, a, b));
+        el.style.opacity = t;
+        el.style.translate = `0 ${(1 - t) * 20}px`;
+      });
+      draws.forEach(({ svg, paths }) => {
+        const [a, b] = svg.dataset.draw.split(",").map(Number);
+        const t = gl.easeInOutCubic(gl.seg(p, a, b));
+        paths.forEach((pa) => (pa.style.strokeDashoffset = pa.dataset.len * (1 - t)));
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

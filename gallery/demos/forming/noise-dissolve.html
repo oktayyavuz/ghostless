@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gürültüyle belirme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --soot: #120d0b; --bone: #eee3d3; --mute: #8a7c6c; --ember: #ef6a2c; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--soot); color: var(--bone); font: 400 14px/1.5 Jost, system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-columns: 1fr auto; gap: 56px; padding: 40px 64px 40px 56px; }
+  .copy { display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; text-transform: uppercase; letter-spacing: .22em; font-size: 12px; color: var(--mute); }
+  .top b { color: var(--bone); font-weight: 500; }
+  h1 { font: italic 400 clamp(56px, 7.4vw, 112px)/.92 "Cormorant Garamond", Georgia, serif; letter-spacing: -.01em; }
+  h1 em { font-style: normal; font-weight: 500; color: var(--ember); }
+  .copy p { color: var(--mute); max-width: 36ch; margin-top: 24px; font-size: 15px; }
+  .credits { display: flex; gap: 40px; text-transform: uppercase; letter-spacing: .18em; font-size: 11px; color: var(--mute); }
+  .credits b { display: block; color: var(--bone); font-weight: 400; letter-spacing: .08em; }
+  .frame { position: relative; height: calc(100vh - 80px); aspect-ratio: 2 / 3; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; padding: 18px; gap: 16px; }
+    .frame { height: auto; width: 100%; aspect-ratio: auto; } .credits { display: none; } .copy p { display: none; } }
+</style>
+</head>
+<body>
+  <section class="copy">
+    <div class="top"><b>Lodos</b><span>Karaköy · 07.00</span></div>
+    <div>
+      <h1>Sabahın<br><em>ilk</em> fincanı.</h1>
+      <p>Kazan ısınırken iskele daha uyanmamıştır. İlk kavrumdan ilk fincan, beyaz masada, tek başına.</p>
+    </div>
+    <div class="credits"><span>Kavrum<b>Lodos harmanı</b></span><span>Saat<b>07.00</b></span><span>Yer<b>Kemankeş Cd. 12</b></span></div>
+  </section>
+  <div class="frame"><canvas id="c" role="img" aria-label="Beyaz masada tek küçük fincan, görüntü yanarak belirir"></canvas></div>
+<script>
+  const c = document.getElementById("c"), x = c.getContext("2d");
+  const photo = new Image(); photo.src = "../../assets/fincan.webp";
+  const mask = document.createElement("canvas"), mx = mask.getContext("2d");
+  const ember = document.createElement("canvas"), ex = ember.getContext("2d");
+  const DS = 3;                                     // noise field is computed at 1/3 resolution
+  let N, mw, mh, mImg, eImg, ok = false, last = 1;
+  // seeded value noise, 5 octaves
+  function hash(i, j) { let h = (i * 374761393 + j * 668265263) ^ 0x5bd1e995; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967295; }
+  function vnoise(x, y) {
+    const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy);
+    const a = hash(i, j), b = hash(i + 1, j), c2 = hash(i, j + 1), d = hash(i + 1, j + 1);
+    return a + (b - a) * u + (c2 - a) * v + (a - b - c2 + d) * u * v;
+  }
+  function setup() {
+    const r = c.getBoundingClientRect(); c.width = Math.round(r.width); c.height = Math.round(r.height);
+    mw = Math.ceil(c.width / DS); mh = Math.ceil(c.height / DS);
+    mask.width = ember.width = mw; mask.height = ember.height = mh;
+    N = new Float32Array(mw * mh);
+    let lo = 1e9, hi = -1e9;
+    for (let y = 0; y < mh; y++) for (let xx = 0; xx < mw; xx++) {
+      let n = 0, amp = 0.55, f = 0.018 * DS, tot = 0;
+      for (let o = 0; o < 5; o++) { n += vnoise(xx * f + o * 17.3, y * f - o * 9.1) * amp; tot += amp; amp *= 0.5; f *= 2.1; }
+      n = n / tot * 0.72 + (1 - y / mh) * 0.28;       // burns in from the bottom of the print upwards
+      N[y * mw + xx] = n; lo = Math.min(lo, n); hi = Math.max(hi, n);
+    }
+    for (let i = 0; i < N.length; i++) N[i] = (N[i] - lo) / (hi - lo);
+    mImg = mx.createImageData(mw, mh); eImg = ex.createImageData(mw, mh);
+  }
+  function cover(w, h) { const iw = photo.naturalWidth, ih = photo.naturalHeight, s = Math.max(w / iw, h / ih); return [(iw - w / s) / 2, (ih - h / s) / 2, w / s, h / s]; }
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      last = p; if (!ok) return;
+      const W = c.width, H = c.height, th = gl.lerp(0.05, 1.14, p), EDGE = 0.045;
+      const m = mImg.data, e = eImg.data;
+      for (let i = 0; i < N.length; i++) {
+        const n = N[i], o = i * 4;
+        const show = gl.clamp((th - EDGE - n) / 0.012);           // fully burnt through: photo
+        const band = gl.clamp((th - n) / 0.012) * (1 - show);     // the burning edge
+        m[o + 3] = show * 255;
+        const hot = gl.clamp((th - n) / EDGE);                     // inner edge is hotter
+        e[o] = 120 + 135 * hot; e[o + 1] = 40 + 120 * hot * hot; e[o + 2] = 18 + 40 * hot * hot; e[o + 3] = band * 255;
+      }
+      mx.putImageData(mImg, 0, 0); ex.putImageData(eImg, 0, 0);
+      x.clearRect(0, 0, W, H);
+      x.globalCompositeOperation = "source-over";
+      x.drawImage(photo, ...cover(W, H), 0, 0, W, H);
+      x.globalCompositeOperation = "destination-in";
+      x.imageSmoothingEnabled = true;
+      x.drawImage(mask, 0, 0, mw * DS, mh * DS);
+      x.globalCompositeOperation = "source-over";
+      x.drawImage(ember, 0, 0, mw * DS, mh * DS);
+    },
+  };
+  photo.decode().then(() => { setup(); ok = true; demo.render(last); });
+  addEventListener("resize", () => { if (ok) { setup(); demo.render(last); } });
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Şeritlerden birleşme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #101112; --bone: #ede6d8; --mute: #8f8a80; --red: #d9432b; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--ink); color: var(--bone); font: 400 15px/1.45 Archivo, system-ui, sans-serif;
+         overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; padding: 22px 32px 26px; gap: 18px; }
+  header { display: flex; justify-content: space-between; align-items: baseline; color: var(--mute); font-size: 13px; letter-spacing: .02em; }
+  header b { color: var(--bone); font: 800 22px/1 "Big Shoulders Display", Impact, sans-serif; letter-spacing: .08em; }
+  header nav { display: flex; gap: 28px; }
+  .panel { position: relative; min-height: 0; overflow: hidden; }
+  .strip { position: absolute; top: 0; bottom: 0; overflow: hidden; will-change: transform; }
+  .strip img { position: absolute; top: 0; height: 100%; object-fit: cover; will-change: transform; }
+  footer { display: flex; justify-content: space-between; align-items: end; gap: 32px; }
+  h1 { font: 800 clamp(40px, 6.6vw, 92px)/.86 "Big Shoulders Display", Impact, sans-serif; text-transform: uppercase; letter-spacing: .005em; }
+  h1 span { display: block; }
+  h1 em { font-style: normal; color: var(--red); }
+  footer p { max-width: 34ch; color: var(--mute); }
+  footer p b { color: var(--bone); font-weight: 500; }
+  .rise { will-change: transform, opacity; }
+  @media (max-width: 700px) { body { padding: 16px; } header nav { display: none; } footer { flex-direction: column; align-items: start; gap: 10px; } }
+</style>
+</head>
+<body>
+  <header><b>LODOS</b><nav><span>Kahveler</span><span>Kavurma</span><span>İskele</span></nav><span>Kemankeş Cd. 12, Karaköy</span></header>
+  <div class="panel" id="panel" role="img" aria-label="Gün batımında Boğaz Köprüsü ve şehir ışıkları"></div>
+  <footer>
+    <h1 class="rise"><span>Köprünün bu yakası,</span><span><em>her sabah</em> 07.00</span></h1>
+    <p class="rise"><b>12 kg'lık tek kazan.</b> Kavrulan çekirdek öğlene paketlenir, akşam vapuruyla Kadıköy'e geçer.</p>
+  </footer>
+<script>
+  const N = 7, panel = document.getElementById("panel"), strips = [];
+  for (let i = 0; i < N; i++) {
+    const s = document.createElement("div"); s.className = "strip";
+    const img = document.createElement("img"); img.src = "../../assets/kopru.webp"; img.alt = "";
+    s.appendChild(img); panel.appendChild(s); strips.push({ s, img });
+  }
+  function layout() {
+    const w = panel.clientWidth, sw = w / N;
+    strips.forEach(({ s, img }, i) => {
+      s.style.left = i * sw + "px"; s.style.width = sw + 1 + "px";
+      img.style.width = w + "px"; img.style.left = -i * sw + "px";
+    });
+  }
+  layout(); addEventListener("resize", layout);
+  const rises = document.querySelectorAll(".rise");
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      strips.forEach(({ s, img }, i) => {
+        const rank = Math.abs(i - (N - 1) / 2);            // centre first, then outwards
+        const t = gl.easeOutQuart(gl.seg(p, rank * 0.1, rank * 0.1 + 0.5));
+        const dir = i % 2 ? 1 : -1;                       // alternate: from below / from above
+        s.style.transform = `translateY(${dir * (1 - t) * 104}%)`;
+        img.style.transform = `translateY(${-dir * (1 - t) * 62}%) scale(${1.28 - 0.28 * t})`;
+      });
+      rises.forEach((el, i) => {
+        const t = gl.easeOutQuart(gl.seg(p, 0.66 + i * 0.06, 1));
+        el.style.opacity = t; el.style.transform = `translateY(${(1 - t) * 26}px)`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

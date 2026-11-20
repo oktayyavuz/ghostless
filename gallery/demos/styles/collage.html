@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolaj / karalama defteri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Caveat:wght@500;700&family=Archivo+Black&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #ece2cf; --kraft: #c9a979; --news: #f3eee2; --ink: #1c1915; --red: #c8341f; --blue: #2b4fa3; --pen: #23357a;
+    --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.15 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; color: var(--ink); font: 400 16px/1.4 "Courier Prime", monospace;
+         background: var(--fibre), radial-gradient(120% 90% at 30% 20%, #f1e8d6, #e2d4ba); }
+  .hand { font-family: "Caveat", cursive; color: var(--pen); }
+  .abs { position: absolute; }
+  .shadow { filter: drop-shadow(0 2px 1px rgba(40,25,10,.35)) drop-shadow(0 10px 12px rgba(40,25,10,.22)); }
+  .paper { background: var(--fibre), var(--bg, var(--news)); }
+  .tape { position: absolute; width: 120px; height: 34px; background: rgba(236,226,180,.72); z-index: 5;
+          clip-path: polygon(0 8%, 4% 0, 8% 10%, 12% 0, 100% 0, 96% 12%, 100% 26%, 96% 44%, 100% 62%, 96% 80%, 100% 100%, 6% 100%, 2% 88%, 5% 70%, 0 52%, 4% 34%); }
+  .tape.pink { background: rgba(232,150,150,.72); } .tape.blue { background: rgba(150,180,220,.7); }
+
+  /* header */
+  .logo { left: 48px; top: 26px; display: flex; gap: 4px; align-items: center; }
+  .logo span { display: grid; place-items: center; height: 54px; padding: 0 10px; font-size: 38px; line-height: 1; }
+  .logo span:nth-child(1) { font: 400 44px/1 "DM Serif Display", serif; background: var(--ink); color: var(--news); rotate: -4deg; }
+  .logo span:nth-child(2) { font: 400 40px/1 "Archivo Black", sans-serif; background: #f1c84a; rotate: 3deg; }
+  .logo span:nth-child(3) { font: italic 400 46px/1 "DM Serif Display", serif; background: var(--news); color: var(--red); rotate: -2deg; height: 60px; }
+  .logo span:nth-child(4) { font: 700 50px/1 "Caveat", cursive; background: #9fc2d9; rotate: 5deg; }
+  .logo span:nth-child(5) { font: 400 36px/1 "Archivo Black", sans-serif; background: var(--red); color: var(--news); rotate: -3deg; }
+  .logo em { font: 600 22px/1 "Caveat", cursive; color: var(--ink); margin-left: 16px; font-style: normal; rotate: -4deg; }
+  nav { right: 56px; top: 34px; display: flex; gap: 34px; font: 700 30px/1 "Caveat", cursive; color: var(--ink); }
+  nav a { position: relative; }
+  nav a.on svg { position: absolute; left: -16px; top: -12px; width: calc(100% + 32px); height: 56px; overflow: visible; }
+
+  /* headline strips */
+  .strip { display: inline-block; padding: 8px 22px 14px; font: 400 80px/.95 "DM Serif Display", serif; letter-spacing: -.01em; white-space: nowrap; }
+  .s1 { left: 44px; top: 140px; rotate: -2.2deg; }
+  .s2 { left: 92px; top: 244px; rotate: 1.4deg; }
+  .s2 .strip { --bg: var(--ink); color: var(--news); font-style: italic; font-size: 92px; }
+  .s3 { left: 418px; top: 262px; rotate: -3.5deg; }
+  .s3 .strip { --bg: var(--red); color: var(--news); font-family: "Archivo Black", sans-serif; font-size: 66px; padding: 12px 22px 16px; }
+  .note { left: 64px; top: 392px; width: 470px; font-size: 33px; line-height: 1.05; rotate: -1.5deg; }
+  .note u { text-decoration: none; background: linear-gradient(transparent 58%, rgba(241,200,74,.75) 58% 90%, transparent 90%); }
+
+  /* ferry ticket */
+  .ticket { left: 70px; top: 520px; width: 360px; rotate: 2.5deg; }
+  .ticket .t { --bg: #f4d9a4; display: grid; grid-template-columns: 1fr 92px; font-size: 14px; }
+  .ticket .main { padding: 14px 18px; border-right: 2px dashed rgba(28,25,21,.45); }
+  .ticket b { font: 400 20px/1.1 "Archivo Black", sans-serif; letter-spacing: .02em; display: block; margin-bottom: 6px; }
+  .ticket .stub { display: grid; place-items: center; text-align: center; font: 400 13px/1.1 "Archivo Black", sans-serif; }
+  .ticket .stub strong { font-size: 30px; display: block; }
+  .ticket .t { -webkit-mask: radial-gradient(circle 7px at 268px 0, transparent 98%, #000) , radial-gradient(circle 7px at 268px 100%, transparent 98%, #000);
+               mask: radial-gradient(circle 7px at 268px 0, transparent 98%, #000), radial-gradient(circle 7px at 268px 100%, transparent 98%, #000); mask-composite: intersect; }
+
+  /* photos */
+  .polar { left: 676px; top: 118px; width: 352px; rotate: 3.2deg; }
+  .polar .f { background: #fbf8f1; padding: 14px 14px 46px; }
+  .polar img { display: block; width: 100%; height: 236px; object-fit: cover; }
+  .polar .cap { position: absolute; left: 22px; bottom: 8px; font-size: 27px; }
+  .torn { left: 966px; top: 268px; width: 300px; rotate: -6deg; }
+  .torn img { display: block; width: 300px; height: 230px; object-fit: cover; object-position: 45% 50%; }
+  .cutwrap { left: 652px; top: 404px; rotate: -5deg; }
+  .cut { width: 300px; height: 226px; background: #fff; clip-path: polygon(104px 8px,160px 8px,163px 18px,202px 22px,202px 94px,228px 96px,292px 110px,298px 156px,202px 152px,204px 218px,64px 220px,64px 130px,38px 128px,38px 90px,64px 90px,64px 20px,102px 16px); }
+  .cut img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; filter: brightness(1.14) contrast(1.2); }
+  .cut-note { left: 640px; top: 636px; font-size: 28px; rotate: -3deg; }
+  .stain { left: 1060px; top: 100px; width: 170px; height: 170px; opacity: .55; }
+  .arrow { left: 470px; top: 370px; width: 200px; height: 150px; overflow: visible; }
+  .menu-card { left: 1012px; top: 520px; width: 230px; rotate: 4deg; }
+  .menu-card .paper { --bg: #fffdf7; padding: 16px 18px 10px; font-size: 14px;
+                      background: var(--fibre), repeating-linear-gradient(#fffdf7 0 25px, #b9cbe0 25px 26px), #fffdf7; background-position: 0 0, 0 12px; }
+  .menu-card .row { display: flex; justify-content: space-between; height: 26px; align-items: end; font: 700 24px/1 "Caveat", cursive; color: var(--pen); }
+  .menu-card h3 { font: 400 18px/1 "Archivo Black", sans-serif; height: 26px; }
+
+  /* second section: kraft strip with label-maker tape */
+  .sec { left: -20px; right: -20px; top: 690px; height: 160px; }
+  .sec .paper { --bg: var(--kraft); height: 100%; padding: 26px 76px; }
+  .sec h2 { font: 400 40px/1 "DM Serif Display", serif; display: inline-block; }
+  .sec h2 + .hand { display: inline-block; font-size: 28px; margin-left: 18px; rotate: -2deg; color: #3b2a14; }
+  .dymo { display: flex; gap: 16px; margin-top: 16px; }
+  .dymo span { background: #1d1d1d; color: #f2f2ee; padding: 6px 14px 7px; font: 400 15px/1 "Archivo Black", sans-serif; letter-spacing: .14em; text-transform: uppercase;
+               box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 2px 2px rgba(0,0,0,.35); }
+  .dymo span:nth-child(2) { background: var(--red); rotate: -1.5deg; } .dymo span:nth-child(3) { background: var(--blue); rotate: 1deg; }
+
+  @media (max-width: 700px) {
+    .polar, .torn, .cut, .cut-note, .stain, .arrow, .menu-card, nav, .sec { display: none; }
+    .s1, .s2, .s3, .note, .ticket { left: 12px; }
+    .strip { font-size: 44px !important; }
+    .s2 { top: 210px; } .s3 { top: 280px; } .note { top: 370px; width: 340px; } .ticket { top: 520px; width: 340px; }
+  }
+</style>
+</head>
+<body>
+  <div class="abs logo shadow" data-in="0,.3"><span>L</span><span>o</span><span>d</span><span>o</span><span>s</span><em>kahve kavurma evi · Karaköy</em></div>
+  <nav class="abs" data-in=".05,.35">
+    <a class="on">menü
+      <svg viewBox="0 0 120 56" preserveAspectRatio="none"><path d="M10 30 C 8 10, 60 4, 104 14 C 124 20, 116 46, 70 50 C 30 54, 4 44, 14 22 C 20 12, 40 8, 52 8" fill="none" stroke="#c8341f" stroke-width="3" stroke-linecap="round"/></svg>
+    </a>
+    <a>çekirdekler</a><a>iskele</a><a>bize yaz</a>
+  </nav>
+
+  <svg class="abs stain" viewBox="0 0 170 170" aria-hidden="true"><path d="M85 14c40 1 70 30 70 70s-28 72-70 72-72-30-71-72 30-71 71-70z" fill="none" stroke="#8a5a2b" stroke-width="9" stroke-opacity=".35"/><path d="M85 22c34 0 62 27 62 62s-26 64-62 64" fill="none" stroke="#6d4220" stroke-width="3" stroke-opacity=".35"/></svg>
+
+  <div class="abs polar shadow" data-in=".2,.5">
+    <i class="tape" style="left:116px;top:-16px;rotate:-4deg"></i>
+    <div class="f"><img src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso"></div>
+    <div class="cap hand">ilk shot, 07.12</div>
+  </div>
+
+  <div class="abs torn shadow" data-in=".3,.6">
+    <i class="tape pink" style="left:-30px;top:30px;rotate:-38deg;width:100px"></i>
+    <div class="tear" data-seed="11"><img src="../../assets/kopru.webp" alt="Gün batımında Boğaz Köprüsü"></div>
+  </div>
+
+  <div class="abs cutwrap shadow" data-in=".38,.66"><div class="cut"><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu"></div></div>
+  <div class="abs cut-note hand" data-in=".5,.75">↑ kazandan önce böyleydi</div>
+
+  <div class="abs menu-card shadow" data-in=".45,.72">
+    <i class="tape blue" style="left:60px;top:-14px;rotate:3deg;width:100px"></i>
+    <div class="paper">
+      <h3>Menü</h3>
+      <div class="row"><span>Türk kahvesi</span><span>₺80</span></div>
+      <div class="row"><span>Espresso</span><span>₺75</span></div>
+      <div class="row"><span>Filtre kahve</span><span>₺95</span></div>
+    </div>
+  </div>
+
+  <h1 aria-label="Vapur kalkmadan kahven hazır.">
+    <span class="abs s1 shadow" data-in=".06,.36"><span class="strip paper tear" data-seed="3">Vapur kalkmadan</span></span>
+    <span class="abs s2 shadow" data-in=".12,.42"><span class="strip paper tear" data-seed="5">kahven</span></span>
+    <span class="abs s3 shadow" data-in=".18,.48"><span class="strip paper tear" data-seed="8">hazır.</span></span>
+  </h1>
+
+  <p class="abs note hand" data-in=".3,.6">Her sabah <u>07.00'de</u> kavuruyoruz, 12 kg'lık tek kazanla. Kalkışa 6 dakika kala gelene sıra yok!</p>
+  <svg class="abs arrow" viewBox="0 0 200 150" aria-hidden="true" data-in=".5,.8"><path d="M6 120 C 50 136, 120 120, 150 64 M 132 74 L 152 60 L 158 86" fill="none" stroke="#23357a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+  <div class="abs ticket shadow" data-in=".36,.66">
+    <div class="t paper tear-x" data-seed="21">
+      <div class="main"><b>VAPUR BİLETİ</b>Lodos → Karaköy iskelesi<br>Kemankeş Cd. 12 · 07.00–19.00</div>
+      <div class="stub"><div><strong>90</strong>saniye</div></div>
+    </div>
+  </div>
+
+  <section class="abs sec shadow">
+    <div class="paper tear-top" data-seed="31">
+      <h2>Bu hafta kazanda</h2><span class="hand">dört çekirdek, haftada bir değişir</span>
+      <div class="dymo"><span>Lodos harmanı</span><span>Etiyopya Guji</span><span>Kolombiya Huila</span><span>Türk kahvesi kavrumu</span></div>
+    </div>
+  </section>
+
+<script>
+  // deterministic torn-paper edges: jagged clip-path polygons
+  function rng(seed) { return () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646; }
+  function torn(el, seed, sides) {
+    const r = rng(seed), pts = [], n = 22, j = (a) => (r() * a).toFixed(2);
+    const top = sides.includes("t"), right = sides.includes("r"), bot = sides.includes("b"), left = sides.includes("l");
+    for (let i = 0; i <= n; i++) pts.push(`${(i / n * 100).toFixed(2)}% ${top ? j(5) : 0}%`);
+    for (let i = 1; i <= 8; i++) pts.push(`${right ? 100 - j(3) : 100}% ${(i / 8 * 100).toFixed(2)}%`);
+    for (let i = n; i >= 0; i--) pts.push(`${(i / n * 100).toFixed(2)}% ${bot ? 100 - j(5) : 100}%`);
+    for (let i = 7; i >= 1; i--) pts.push(`${left ? j(3) : 0}% ${(i / 8 * 100).toFixed(2)}%`);
+    el.style.clipPath = `polygon(${pts.join(",")})`;
+  }
+  document.querySelectorAll(".tear").forEach((el) => torn(el, +el.dataset.seed, "trbl"));
+  document.querySelectorAll(".tear-x").forEach((el) => torn(el, +el.dataset.seed, "rl"));
+  document.querySelectorAll(".tear-top").forEach((el) => torn(el, +el.dataset.seed, "t"));
+
+  const items = [...document.querySelectorAll("[data-in]")];
+  window.demo = {
+    duration: 2000, hold: 5000,
+    render(p) {
+      items.forEach((el, i) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.seg(p, a, b), e = 1 - Math.pow(1 - t, 3);
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.scale = gl.lerp(1.12, 1, e);
+        el.style.translate = `0 ${(1 - e) * -18}px`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

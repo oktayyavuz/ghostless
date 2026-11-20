@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yerine kayan düzen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --sage: #dde4d3; --card: #f5f2ea; --ink: #1f2a22; --rust: #bf5527; --quiet: #66705f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--sage); color: var(--ink); font: 400 15px/1.45 "Hanken Grotesk", system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 56px; right: 56px; top: 34px; display: flex; justify-content: space-between; align-items: baseline; }
+  header h1 { font: 400 40px/1 "Young Serif", Georgia, serif; }
+  header span { color: var(--quiet); }
+  .bar { position: absolute; left: 56px; right: 56px; top: 104px; display: flex; gap: 10px; align-items: center; }
+  .chip { padding: 9px 18px; border-radius: 999px; border: 1.5px solid var(--ink); font-weight: 500; background: transparent; }
+  .chip.on { background: var(--ink); color: var(--card); }
+  .bar .n { margin-left: auto; color: var(--quiet); font-variant-numeric: tabular-nums; }
+  .item { position: absolute; background: var(--card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; will-change: transform; }
+  .item .ph { position: relative; flex: 1; overflow: hidden; background: #cfd3c7; }
+  .item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .item .tx { height: 64px; flex: none; padding: 0 18px; display: flex; justify-content: space-between; align-items: center; }
+  .item h3 { font: 400 20px/1.1 "Young Serif", serif; }
+  .item h3 small { display: block; font: 400 13px/1.3 "Hanken Grotesk", sans-serif; color: var(--quiet); margin-top: 3px; }
+  .item b { font-weight: 600; color: var(--rust); font-size: 17px; }
+  .ghost { position: absolute; border: 2px dashed rgba(31,42,34,.6); border-radius: 10px; pointer-events: none; }
+  .cursor { position: absolute; left: 0; top: 0; width: 22px; height: 28px; z-index: 30; pointer-events: none; will-change: transform; }
+  .ring { position: absolute; left: 0; top: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px; border: 2px solid var(--ink); border-radius: 50%; z-index: 29; opacity: 0; }
+</style>
+</head>
+<body>
+  <header><h1>Dükkân</h1><span>Lodos · Kemankeş Cd. 12, Karaköy</span></header>
+  <div class="bar">
+    <span class="chip on" id="c0">Tümü</span><span class="chip">Paket çekirdek</span><span class="chip" id="c2">Fincanda</span>
+    <span class="n" id="n">5 ürün</span>
+  </div>
+  <div id="ghosts"></div>
+  <article class="item" data-k="paket"><div class="ph"><img src="../../assets/cekirdek.webp" alt=""></div><div class="tx"><h3>Lodos harmanı<small>250 g · ev harmanı</small></h3><b>₺420</b></div></article>
+  <article class="item" data-k="paket"><div class="ph"><img src="../../assets/kavurucu.webp" alt="" style="object-fit:contain;background:#e3e2de"></div><div class="tx"><h3>Etiyopya Guji<small>250 g · tek köken</small></h3><b>₺560</b></div></article>
+  <article class="item" data-k="fincan"><div class="ph"><img src="../../assets/barista.webp" alt=""></div><div class="tx"><h3>Filtre kahve<small>bugünün çekirdeğiyle</small></h3><b>₺95</b></div></article>
+  <article class="item" data-k="fincan"><div class="ph"><img src="../../assets/fincan.webp" alt=""></div><div class="tx"><h3>Türk kahvesi<small>kendi kavrumumuz</small></h3><b>₺80</b></div></article>
+  <article class="item" data-k="fincan"><div class="ph"><img src="../../assets/espresso.webp" alt=""></div><div class="tx"><h3>Espresso<small>Lodos harmanı</small></h3><b>₺75</b></div></article>
+  <div class="ring"></div>
+  <svg class="cursor" viewBox="0 0 22 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17 L11 25.5 L14.5 24 L11 15.8 L18.5 15.8 Z" fill="#1f2a22" stroke="#f5f2ea" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<script>
+  const items = [...document.querySelectorAll(".item")];
+  const chipAll = document.getElementById("c0"), chipCup = document.getElementById("c2"), count = document.getElementById("n");
+  const cursor = document.querySelector(".cursor"), ring = document.querySelector(".ring");
+  const ghostsEl = document.getElementById("ghosts");
+  const L = 56, TOP = 162, GAP = 22;
+  function layout() {
+    const W = innerWidth - L * 2, cw = (W - GAP * 2) / 3;
+    const avail = innerHeight - TOP - 34;
+    const h1 = (avail - GAP) / 2;                 // two rows: all five
+    const before = items.map((_, i) => ({ x: L + (i % 3) * (cw + GAP), y: TOP + Math.floor(i / 3) * (h1 + GAP), w: cw, h: h1 }));
+    const after = items.map((_, i) => ({ x: L + Math.max(0, i - 2) * (cw + GAP), y: TOP, w: cw, h: avail })); // one tall row: the three cups
+    return { before, after };
+  }
+  let geo = layout();
+  const ghosts = [2, 3, 4].map(() => { const g = document.createElement("div"); g.className = "ghost"; ghostsEl.appendChild(g); return g; });
+  const place = (el, r) => { el.style.left = r.x + "px"; el.style.top = r.y + "px"; el.style.width = r.w + "px"; el.style.height = r.h + "px"; };
+  addEventListener("resize", () => { geo = layout(); });
+  window.demo = {
+    duration: 3600,
+    render(p) {
+      const { before, after } = geo;
+      // pointer travels to the "Fincanda" chip and clicks
+      const cr = chipCup.getBoundingClientRect();
+      const tx = cr.left + cr.width * 0.55, ty = cr.top + cr.height * 0.6;
+      const m = gl.easeInOutCubic(gl.seg(p, 0, 0.2));
+      const sx = innerWidth * 0.62, sy = innerHeight * 0.72;
+      const cx = gl.lerp(sx, tx, m) - Math.sin(m * Math.PI) * 60, cy = gl.lerp(sy, ty, m);
+      const press = gl.seg(p, 0.2, 0.26);
+      cursor.style.transform = `translate(${cx}px, ${cy}px) scale(${1 - 0.15 * Math.sin(press * Math.PI)})`;
+      ring.style.transform = `translate(${tx}px, ${ty}px) scale(${0.4 + press * 1.1})`;
+      ring.style.opacity = press > 0 && press < 1 ? (1 - press).toFixed(2) : 0;
+      const on = p >= 0.23;
+      chipAll.classList.toggle("on", !on); chipCup.classList.toggle("on", on);
+      count.textContent = on ? "3 ürün" : "5 ürün";
+      items.forEach((el, i) => {
+        if (i < 2) {
+          // filtered-out items shrink and fade where they stand
+          const t = gl.easeOutQuart(gl.seg(p, 0.24, 0.42));
+          place(el, before[i]);
+          el.style.opacity = (1 - t).toFixed(3);
+          el.style.transform = `scale(${1 - 0.12 * t})`;
+          return;
+        }
+        // the rest glide from their old box to their new one (FLIP)
+        const s = 0.28 + (i - 2) * 0.06;
+        const t = gl.easeInOutCubic(gl.seg(p, s, s + 0.55));
+        const a = before[i], b = after[i];
+        place(el, { x: gl.lerp(a.x, b.x, t), y: gl.lerp(a.y, b.y, t), w: gl.lerp(a.w, b.w, t), h: gl.lerp(a.h, b.h, t) });
+        el.style.opacity = 1; el.style.transform = "";
+        el.style.zIndex = 5 + i;
+        const g = ghosts[i - 2];
+        place(g, a);
+        g.style.opacity = (Math.sin(Math.min(1, gl.seg(p, s - 0.04, s + 0.5)) * Math.PI) * 0.9).toFixed(3);
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

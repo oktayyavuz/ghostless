@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İsviçre / uluslararası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f1f0eb; --ink: #0d0d0d; --red: #e3120b; --mute: #77756f; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); overflow: hidden; font: 500 14px/1.3 "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+         padding: 0 40px; font-feature-settings: "tnum" 1, "ss01" 1; }
+  .g { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; }
+  a { color: inherit; text-decoration: none; }
+
+  header { padding: 22px 0 18px; border-bottom: 2px solid var(--ink); align-items: start; }
+  .logo { grid-column: 1 / 3; font-weight: 700; font-size: 22px; letter-spacing: -.03em; line-height: 1; }
+  .sub { grid-column: 3 / 6; color: var(--mute); line-height: 1.25; }
+  header nav { grid-column: 7 / 13; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; }
+  header nav a span { display: block; color: var(--red); font-size: 12px; margin-bottom: 3px; }
+
+  .hero { padding-top: 26px; height: 512px; }
+  .num { grid-column: 1 / 9; font-weight: 600; font-size: 292px; line-height: .74; letter-spacing: -.075em;
+         margin-left: -14px; white-space: nowrap; }
+  .num .dot { color: var(--red); }
+  h1 { grid-column: 1 / 7; font-weight: 600; font-size: 60px; line-height: .95; letter-spacing: -.045em; margin-top: 34px; }
+  .lede { grid-column: 7 / 9; align-self: end; color: var(--ink); font-size: 15px; line-height: 1.32; }
+  .lede b { display: block; color: var(--red); font-weight: 600; margin-bottom: 6px; }
+  .photo { grid-column: 9 / 13; grid-row: 1 / 3; position: relative; overflow: hidden; }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%;
+               filter: grayscale(1) contrast(1.6) brightness(.98); }
+  .photo figcaption { position: absolute; left: 0; bottom: 0; background: var(--red); padding: 10px 14px;
+                      font-size: 12px; color: #fff; }
+  .hero-left { grid-column: 1 / 9; display: grid; grid-template-columns: repeat(8, 1fr); column-gap: 20px; align-content: start; }
+  .hero-left .num { grid-column: 1 / 9; }
+  .hero-left h1 { grid-column: 1 / 7; }
+  .hero-left .lede { grid-column: 7 / 9; }
+
+  .facts { border-top: 2px solid var(--ink); margin-top: 26px; padding-top: 12px; row-gap: 0; }
+  .facts .label { grid-column: 1 / 3; font-weight: 600; }
+  .facts .label span { color: var(--red); display: block; }
+  .fact { grid-column: span 2; border-left: 1px solid var(--ink); padding-left: 12px; }
+  .fact .big { font-size: 86px; font-weight: 600; letter-spacing: -.06em; line-height: .9; }
+  .fact .big small { font-size: 26px; letter-spacing: -.03em; margin-left: 4px; }
+  .fact p { margin-top: 10px; color: var(--ink); max-width: 18ch; }
+  .fact.first { grid-column: 3 / 5; }
+
+  @media (max-width: 700px) {
+    body { padding: 0 16px; }
+    .g { grid-template-columns: repeat(4, 1fr); column-gap: 12px; }
+    .logo, .sub { grid-column: span 2; } header nav { display: none; }
+    .hero { height: auto; } .hero-left { grid-column: 1 / 5; display: block; }
+    .num { font-size: 120px; } h1 { font-size: 36px; } .photo { grid-column: 1 / 5; grid-row: auto; height: 220px; margin-top: 16px; }
+    .fact, .fact.first, .facts .label { grid-column: span 2; } .fact .big { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+  <header class="g">
+    <a class="logo" href="#">Lodos</a>
+    <div class="sub">Kahve Kavurma Evi<br>Kemankeş Cd. 12, Karaköy</div>
+    <nav>
+      <a href="#"><span>01</span>Kavurma</a>
+      <a href="#"><span>02</span>Çekirdekler</a>
+      <a href="#"><span>03</span>Menü</a>
+      <a href="#"><span>04</span>İskele</a>
+    </nav>
+  </header>
+
+  <section class="hero g">
+    <div class="hero-left">
+      <div class="num" aria-label="07.00">07<span class="dot">.</span>00</div>
+      <h1>Vapur kalkmadan<br>kahven hazır.</h1>
+      <p class="lede"><b>Her sabah</b>12 kg'lık tek kazanla kavuruyoruz. Kazan soğumadan ilk paket tezgâhta.</p>
+    </div>
+    <figure class="photo">
+      <img src="../../assets/deniz.webp" alt="Vapurdan İstanbul siluetine bakış">
+      <figcaption>Karaköy açıkları, sabah vapuru</figcaption>
+    </figure>
+  </section>
+
+  <section class="facts g">
+    <div class="label"><span>02</span>İskele ile<br>aramızda</div>
+    <div class="fact first"><div class="big">90<small>sn</small></div><p>Kavurma evinden Karaköy iskelesine yürüyüş.</p></div>
+    <div class="fact"><div class="big">6<small>dk</small></div><p>Kalkışa bu kadar kala sipariş verene sıra yok.</p></div>
+    <div class="fact"><div class="big">12<small>kg</small></div><p>Tek kazan, tek kavrum, her sabah.</p></div>
+    <div class="fact"><div class="big">4</div><p>Haftanın çekirdeği: harman, Guji, Huila, Türk kahvesi.</p></div>
+  </section>
+
+<script>
+  const num = document.querySelector(".num");
+  const rest = document.querySelectorAll("h1, .lede, .fact, .facts .label");
+  const photo = document.querySelector(".photo");
+  window.demo = {
+    duration: 1800,
+    render(p) {
+      const a = gl.easeOutExpo(gl.seg(p, 0, 0.6));
+      num.style.transform = `translateX(${(1 - a) * -60}px)`;
+      num.style.opacity = a;
+      photo.style.clipPath = `inset(0 0 ${(1 - gl.easeInOutCubic(gl.seg(p, 0.1, 0.7))) * 100}% 0)`;
+      rest.forEach((el, i) => {
+        const t = gl.easeOutExpo(gl.seg(p, 0.3 + i * 0.06, 0.75 + i * 0.05));
+        el.style.opacity = t;
+        el.style.transform = `translateY(${(1 - t) * 14}px)`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bauhaus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #eee6d3; --ink: #151412; --red: #d4372a; --yellow: #f1bd1f; --blue: #1f4c9c;
+          --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0 0.15 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23f)'/%3E%3C/svg%3E"); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--paper); color: var(--ink); font: 400 17px/1.5 "Jost", "Futura", sans-serif; }
+  body::after { content: ""; position: absolute; inset: 0; background: var(--grain); pointer-events: none; z-index: 20; mix-blend-mode: multiply; }
+  .abs { position: absolute; }
+  .mul { mix-blend-mode: multiply; }
+
+  header { left: 60px; right: 60px; top: 30px; height: 52px; display: flex; align-items: center; gap: 34px; z-index: 6; }
+  .logo { display: flex; align-items: center; gap: 12px; font: 900 26px/1 "Jost", sans-serif; letter-spacing: .14em; margin-right: auto; }
+  .logo svg { width: 64px; height: 26px; }
+  nav { display: flex; gap: 30px; font-weight: 500; font-size: 16px; text-transform: uppercase; letter-spacing: .08em; }
+  nav b { color: var(--red); font-weight: 700; margin-right: 6px; }
+  .order { display: flex; align-items: center; gap: 12px; background: var(--ink); color: var(--paper); padding: 12px 18px; font: 700 15px/1 "Jost", sans-serif; text-transform: uppercase; letter-spacing: .1em; }
+  .order svg { width: 12px; height: 14px; }
+
+  h1 { left: 60px; top: 132px; font: 900 92px/.9 "Jost", sans-serif; text-transform: uppercase; letter-spacing: -.02em; z-index: 5; }
+  h1 span { display: block; }
+  h1 .r { color: var(--red); }
+  h1 .ind { padding-left: 96px; }
+  .bar { left: 60px; top: 516px; width: 230px; height: 14px; background: var(--ink); }
+  .lede { left: 60px; top: 552px; width: 430px; font-size: 18px; }
+  .facts { left: 60px; top: 640px; display: flex; gap: 30px; font-weight: 500; font-size: 15px; text-transform: uppercase; letter-spacing: .06em; }
+  .facts span { display: flex; align-items: center; gap: 10px; }
+  .facts svg { width: 18px; height: 18px; }
+
+  /* poster */
+  .sq { left: 690px; top: 118px; width: 290px; height: 290px; background: var(--blue); }
+  .circ { left: 772px; top: 210px; width: 360px; height: 360px; border-radius: 50%; background: var(--red); }
+  .photo { left: 812px; top: 250px; width: 280px; height: 280px; border-radius: 50%; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15); }
+  .half { left: 960px; top: 540px; width: 300px; height: 150px; border-radius: 150px 150px 0 0; background: var(--yellow); }
+  .tri { left: 640px; top: 470px; width: 200px; height: 220px; }
+  .diag { left: 600px; top: 420px; width: 700px; height: 16px; background: var(--ink); rotate: -28deg; transform-origin: 0 50%; }
+  .ring { left: 1080px; top: 120px; width: 110px; height: 110px; border-radius: 50%; border: 14px solid var(--ink); }
+  .word { left: 1224px; top: 112px; writing-mode: vertical-rl; font: 900 64px/1 "Jost", sans-serif; letter-spacing: .1em; color: var(--ink); }
+  .tag { left: 690px; top: 90px; font: 700 13px/1 "Jost", sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+
+  /* second section */
+  .sec { left: 0; right: 0; top: 704px; bottom: 0; border-top: 6px solid var(--ink); display: grid; grid-template-columns: 240px repeat(4, 1fr); z-index: 6; background: var(--paper); }
+  .sec > div { padding: 22px 24px; border-right: 2px solid var(--ink); display: flex; align-items: flex-start; gap: 14px; font-weight: 500; font-size: 17px; line-height: 1.2; }
+  .sec h2 { font: 900 22px/1 "Jost", sans-serif; text-transform: uppercase; letter-spacing: .02em; }
+  .sec svg { width: 30px; height: 30px; flex: none; }
+
+  @media (max-width: 700px) {
+    nav, .sq, .circ, .photo, .half, .tri, .diag, .ring, .word, .tag, .sec, .facts { display: none; }
+    header { left: 16px; right: 16px; } h1 { left: 16px; font-size: 52px; } h1 .ind { padding-left: 40px; }
+    .bar { left: 16px; top: 380px; } .lede { left: 16px; top: 410px; width: 340px; }
+  }
+</style>
+</head>
+<body>
+  <header class="abs">
+    <div class="logo">
+      <svg viewBox="0 0 64 26"><circle cx="13" cy="13" r="12" fill="#d4372a"/><rect x="24" y="2" width="22" height="22" fill="#1f4c9c" class="mul"/><path d="M50 24 L57 2 L64 24 Z" fill="#f1bd1f"/></svg>
+      LODOS
+    </div>
+    <nav><a><b>01</b>Menü</a><a><b>02</b>Çekirdekler</a><a><b>03</b>İskele</a></nav>
+    <span class="order">Sipariş ver <svg viewBox="0 0 12 14"><path d="M0 0 L12 7 L0 14 Z" fill="#f1bd1f"/></svg></span>
+  </header>
+
+  <div class="abs tag">Kemankeş Cd. 12 — Karaköy</div>
+  <div class="abs sq" data-sh=".0"></div>
+  <div class="abs ring" data-sh=".1"></div>
+  <div class="abs circ mul" data-sh=".14"></div>
+  <div class="abs photo" data-sh=".22"><img src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso"></div>
+  <div class="abs half mul" data-sh=".3"></div>
+  <svg class="abs tri mul" viewBox="0 0 200 220" data-sh=".36"><path d="M0 220 L100 0 L200 220 Z" fill="#151412"/></svg>
+  <div class="abs diag" data-bar></div>
+  <div class="abs word">LODOS</div>
+
+  <h1 class="abs" aria-label="Vapur kalkmadan kahven hazır.">
+    <span data-in="0,.35">Vapur</span>
+    <span data-in=".06,.41">kalkmadan</span>
+    <span class="r ind" data-in=".12,.47">kahven</span>
+    <span data-in=".18,.53">hazır.</span>
+  </h1>
+  <div class="abs bar" data-bar2></div>
+  <p class="abs lede" data-in=".3,.65">Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Kalkışa 6 dakika kala sipariş verene sıra yok.</p>
+  <div class="abs facts" data-in=".36,.7">
+    <span><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#d4372a"/></svg>07.00 kavrum</span>
+    <span><svg viewBox="0 0 18 18"><rect width="18" height="18" fill="#1f4c9c"/></svg>12 kg tek kazan</span>
+    <span><svg viewBox="0 0 18 18"><path d="M0 18 L9 0 L18 18 Z" fill="#f1bd1f"/></svg>İskeleye 90 sn</span>
+  </div>
+
+  <section class="abs sec">
+    <div><h2>Bu hafta<br>kazanda</h2></div>
+    <div><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="15" fill="#d4372a"/></svg>Lodos harmanı<br>₺420</div>
+    <div><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#1f4c9c"/></svg>Etiyopya Guji<br>₺560</div>
+    <div><svg viewBox="0 0 30 30"><path d="M0 30 L15 0 L30 30 Z" fill="#f1bd1f"/></svg>Kolombiya Huila</div>
+    <div style="border-right:0"><svg viewBox="0 0 30 30"><path d="M0 30 A15 15 0 0 1 30 30 Z M0 0 H30 V12 H0 Z" fill="#151412"/></svg>Türk kahvesi kavrumu</div>
+  </section>
+
+<script>
+  const items = [...document.querySelectorAll("[data-in]")];
+  const shapes = [...document.querySelectorAll("[data-sh]")];
+  const bar = document.querySelector("[data-bar]"), bar2 = document.querySelector("[data-bar2]");
+  window.demo = {
+    duration: 2200, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.easeOutQuart(gl.seg(p, a, b));
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.translate = `${(1 - t) * -70}px 0`;
+      });
+      // shapes are set like type blocks: each one drops into place
+      shapes.forEach((el) => {
+        const a = +el.dataset.sh, t = gl.easeOutQuart(gl.seg(p, a, a + 0.4));
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.scale = 0.4 + 0.6 * t;
+      });
+      bar.style.scale = `${gl.easeInOutCubic(gl.seg(p, 0.35, 0.8))} 1`;
+      bar2.style.scale = `${gl.easeInOutCubic(gl.seg(p, 0.25, 0.6))} 1`;
+      bar2.style.transformOrigin = "0 50%";
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

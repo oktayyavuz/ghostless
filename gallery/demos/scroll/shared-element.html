@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Büyüyerek açılan kart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ivory: #f6f1e6; --ink: #221d18; --wine: #7a2631; --quiet: #857b6f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--ivory); color: var(--ink); font: 400 15px/1.5 Karla, system-ui, sans-serif; overflow: hidden; }
+  .pg { position: absolute; inset: 0; }
+  nav { height: 80px; padding: 0 56px; display: flex; justify-content: space-between; align-items: center; }
+  nav b { font: 700 26px/1 "Bodoni Moda", serif; letter-spacing: -.01em; }
+  nav span { color: var(--quiet); }
+  .a .intro { padding: 30px 56px 0; display: flex; justify-content: space-between; align-items: end; }
+  .a h1 { font: 500 58px/1 "Bodoni Moda", serif; letter-spacing: -.02em; }
+  .a h1 em { color: var(--wine); }
+  .a .intro p { color: var(--quiet); max-width: 34ch; text-align: right; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; padding: 40px 56px 0; }
+  .card .ph { height: 380px; border-radius: 8px; overflow: hidden; position: relative; background: #e3ddd2; }
+  .card img, .fly img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .card h3 { font: 500 24px/1.1 "Bodoni Moda", serif; margin-top: 14px; display: inline-block; }
+  .card p { color: var(--quiet); display: flex; justify-content: space-between; margin-top: 4px; }
+  .card p b { color: var(--ink); font-weight: 700; }
+  .b { display: grid; grid-template-columns: 1fr 1fr; }
+  .b .slot { position: relative; }
+  .b .txt { padding: 80px 64px 48px; display: flex; flex-direction: column; }
+  .b .crumb { color: var(--quiet); font-size: 14px; }
+  .b h1 { font: 700 76px/.98 "Bodoni Moda", serif; letter-spacing: -.025em; margin-top: 54px; display: inline-block; align-self: start; }
+  .b .sub { margin-top: 18px; font: italic 500 22px/1.3 "Bodoni Moda", serif; color: var(--wine); }
+  .b .desc { margin-top: 22px; max-width: 40ch; font-size: 17px; color: #4f463d; }
+  .b .buy { margin-top: auto; display: flex; align-items: center; gap: 24px; border-top: 1px solid rgba(34,29,24,.2); padding-top: 22px; }
+  .b .buy strong { font: 700 40px/1 "Bodoni Moda", serif; }
+  .b .buy span { padding: 14px 26px; background: var(--ink); color: var(--ivory); border-radius: 999px; font-weight: 700; }
+  .b .buy small { color: var(--quiet); }
+  .fly { position: fixed; overflow: hidden; z-index: 5; }
+  .cursor { position: absolute; left: 0; top: 0; width: 22px; height: 28px; z-index: 30; pointer-events: none; }
+  @media (max-width: 800px) { .cards { grid-template-columns: 1fr 1fr; padding: 20px; } .card .ph { height: 180px; } .a .intro p { display: none; } .a h1 { font-size: 34px; } nav { padding: 0 20px; } .b .txt { padding: 30px 20px; } .b h1 { font-size: 40px; } }
+</style>
+</head>
+<body>
+  <section class="pg a" id="A">
+    <nav><b>Lodos</b><span>Dükkân · Karaköy</span></nav>
+    <div class="intro"><h1>Bu hafta <em>kavrulanlar</em></h1><p>Her sabah 07.00'de, 12 kg'lık tek kazanda. Haftada 4 çekirdek.</p></div>
+    <div class="cards">
+      <article class="card"><div class="ph"><img src="../../assets/fincan.webp" alt=""></div><h3>Etiyopya Guji</h3><p>250 g <b>₺560</b></p></article>
+      <article class="card" id="pick"><div class="ph"><img src="../../assets/cekirdek.webp" alt=""></div><h3>Lodos harmanı</h3><p>250 g <b>₺420</b></p></article>
+      <article class="card"><div class="ph"><img src="../../assets/barista.webp" alt=""></div><h3>Filtre kahve</h3><p>fincan <b>₺95</b></p></article>
+      <article class="card"><div class="ph"><img src="../../assets/espresso.webp" alt=""></div><h3>Espresso</h3><p>fincan <b>₺75</b></p></article>
+    </div>
+  </section>
+  <section class="pg b" id="B">
+    <div class="slot"></div>
+    <div class="txt">
+      <span class="crumb">Dükkân / Çekirdekler</span>
+      <h1 id="bt">Lodos harmanı</h1>
+      <p class="sub">ev harmanı, sütlüye de sadeye de</p>
+      <p class="desc">Her sabah 07.00'de, 12 kg'lık tek kazanda kavrulur. Paketi o sabah kavuran kapatır. Kemankeş Cd. 12'den alırsan iskeleye 90 saniye.</p>
+      <div class="buy"><strong>₺420</strong><small>250 g</small><span>Sepete ekle</span></div>
+    </div>
+  </section>
+  <div class="fly"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler"></div>
+  <svg class="cursor" viewBox="0 0 22 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17 L11 25.5 L14.5 24 L11 15.8 L18.5 15.8 Z" fill="#221d18" stroke="#f6f1e6" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<script>
+  const A = document.getElementById("A"), B = document.getElementById("B");
+  const pick = document.getElementById("pick"), ph = pick.querySelector(".ph");
+  const fly = document.querySelector(".fly"), bt = document.getElementById("bt");
+  const slot = B.querySelector(".slot"), cursor = document.querySelector(".cursor");
+  const bParts = [...B.querySelectorAll(".crumb, h1, .sub, .desc, .buy")];
+  window.demo = {
+    duration: 3200,
+    render(p) {
+      // measure both ends of the shared element (page B is laid out but hidden)
+      B.style.visibility = "hidden"; A.style.visibility = "visible";
+      const r0 = ph.getBoundingClientRect(), r1 = slot.getBoundingClientRect();
+      // 1) pointer goes to the card and clicks
+      const m = gl.easeInOutCubic(gl.seg(p, 0, 0.16));
+      const tx = r0.left + r0.width * 0.55, ty = r0.top + r0.height * 0.55;
+      cursor.style.transform = `translate(${gl.lerp(innerWidth * 0.8, tx, m)}px, ${gl.lerp(innerHeight * 0.2, ty, m)}px)`;
+      cursor.style.opacity = p < 0.26 ? 1 : 0;
+      const press = Math.sin(gl.seg(p, 0.16, 0.24) * Math.PI);
+      // 2) the card's photo grows into page B's hero
+      const t = gl.easeInOutCubic(gl.seg(p, 0.2, 0.62));
+      const k = 1 - press * 0.03;
+      const L = gl.lerp(r0.left, r1.left, t), T = gl.lerp(r0.top, r1.top, t), W = gl.lerp(r0.width, r1.width, t), H = gl.lerp(r0.height, r1.height, t);
+      fly.style.left = `${L + (W * (1 - k)) / 2}px`; fly.style.top = `${T + (H * (1 - k)) / 2}px`;
+      fly.style.width = `${W * k}px`; fly.style.height = `${H * k}px`;
+      fly.style.borderRadius = `${8 * (1 - t)}px`;
+      // the rest of page A steps back; page B fills in around the new hero
+      const fade = gl.seg(p, 0.24, 0.45);
+      A.style.opacity = (1 - fade).toFixed(3);
+      
+      const onB = p >= 0.45;
+      B.style.visibility = onB ? "visible" : "hidden";
+      bParts.forEach((el, i) => {
+        const s = gl.easeOutQuart(gl.seg(p, 0.5 + i * 0.06, 0.8 + i * 0.03));
+        el.style.opacity = s.toFixed(3); el.style.transform = `translateY(${(1 - s) * 16}px)`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

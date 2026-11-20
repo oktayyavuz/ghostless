@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Endüstriyel / kullanım kılavuzu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #e4e3df; --panel: #d3d3d1; --ink: #111; --mute: #6c6b67; --sig: #ff4d00; --line: #111; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); overflow: hidden; font: 400 15px/1.4 Archivo, Arial, sans-serif; }
+  .mono { font: 500 11px/1.3 "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .04em; text-transform: uppercase; }
+  a { color: inherit; text-decoration: none; }
+
+  header { height: 58px; display: grid; grid-template-columns: 300px 1fr auto; align-items: center; padding: 0 32px;
+           border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand b { font-weight: 800; font-size: 24px; font-variation-settings: "wdth" 125; letter-spacing: -.02em; }
+  header nav { display: flex; gap: 28px; }
+  header nav a span { color: var(--mute); margin-right: 6px; }
+  header nav a.on { color: var(--sig); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; height: 38px; padding: 0 16px; background: var(--sig);
+         color: #111; font: 500 12px/1 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .04em; }
+  .btn.ghost { background: transparent; border: 1px solid var(--ink); }
+
+  main { display: grid; grid-template-columns: 1fr 660px; height: 534px; border-bottom: 1px solid var(--line); }
+  .copy { padding: 30px 40px 0 32px; display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+  .tag { display: flex; gap: 10px; align-items: center; }
+  .tag i { width: 10px; height: 10px; background: var(--sig); }
+  h1 { font-weight: 700; font-size: 70px; line-height: .92; letter-spacing: -.035em; margin-top: 22px;
+       font-variation-settings: "wdth" 88; }
+  h1 span { color: var(--mute); }
+  .lede { margin-top: 18px; max-width: 40ch; color: #333; }
+  .spec { margin-top: auto; border-top: 1px solid var(--line); }
+  .spec div { display: grid; grid-template-columns: 130px 1fr; padding: 8px 0; border-bottom: 1px solid #b9b8b3; }
+  .spec dt { color: var(--mute); } .spec dd { font: 500 13px/1.3 "IBM Plex Mono", monospace; }
+  .ctas { display: flex; gap: 10px; padding: 18px 0 24px; }
+
+  figure { position: relative; background: var(--panel); overflow: hidden; }
+  figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;
+               filter: grayscale(1) brightness(1.12) contrast(1.08); }
+  figure svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .call { position: absolute; display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+  .call b { display: inline-grid; place-items: center; width: 18px; height: 18px; background: var(--ink); color: var(--bg);
+            font: 500 10px/1 "IBM Plex Mono", monospace; }
+  .fig { position: absolute; left: 16px; top: 14px; } .fig2 { position: absolute; right: 16px; bottom: 14px; text-align: right; }
+
+  .row { display: grid; grid-template-columns: 220px repeat(4, 1fr); height: 208px; }
+  .row > div { border-right: 1px solid var(--line); padding: 16px 20px; display: flex; flex-direction: column; }
+  .row > div:last-child { border-right: 0; }
+  .row h2 { font-weight: 700; font-size: 26px; line-height: 1; letter-spacing: -.02em; font-variation-settings: "wdth" 88; margin-top: 10px; }
+  .sku { display: flex; justify-content: space-between; }
+  .led { display: inline-block; width: 8px; height: 8px; background: var(--sig); margin-right: 6px; }
+  .led.off { background: transparent; border: 1px solid var(--ink); }
+  .name { font-weight: 600; font-size: 19px; line-height: 1.1; margin-top: 18px; font-variation-settings: "wdth" 96; }
+  .price { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; }
+  .price b { font: 500 26px/1 "IBM Plex Mono", monospace; letter-spacing: -.03em; }
+
+  @media (max-width: 700px) {
+    header { grid-template-columns: 1fr auto; padding: 0 16px; } header nav { display: none; }
+    main { grid-template-columns: 1fr; height: auto; } .copy { padding: 20px 16px 0; border-right: 0; }
+    h1 { font-size: 44px; } figure { height: 300px; } .row { grid-template-columns: 1fr 1fr; height: auto; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand"><b>LODOS</b><span class="mono">Kavurma evi / Karaköy</span></div>
+    <nav class="mono"><a class="on" href="#"><span>01</span>Kavurma</a><a href="#"><span>02</span>Çekirdekler</a><a href="#"><span>03</span>Menü</a><a href="#"><span>04</span>İskele</a></nav>
+    <a class="btn" href="#">Sipariş ver <span>→</span></a>
+  </header>
+
+  <main>
+    <section class="copy">
+      <div class="tag mono"><i></i>K-12 · Tek kazan · 2019'dan beri</div>
+      <h1>Vapur kalkmadan <span>kahven hazır.</span></h1>
+      <p class="lede">Kemankeş Caddesi'nde tek kazan, tek kavrum. Her sabah 07.00'de ısınır, ilk paket kazan soğumadan tezgâha iner.</p>
+      <dl class="spec mono">
+        <div><dt>Kapasite</dt><dd>12 kg / kavrum</dd></div>
+        <div><dt>Kavurma</dt><dd>Her sabah 07.00</dd></div>
+        <div><dt>İskeleye</dt><dd>90 sn yürüyüş</dd></div>
+        <div><dt>Sırasız</dt><dd>Kalkışa 6 dk kala</dd></div>
+      </dl>
+      <div class="ctas"><a class="btn" href="#">Çekirdekleri gör →</a><a class="btn ghost" href="#">Kemankeş Cd. 12</a></div>
+    </section>
+
+    <figure>
+      <img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu">
+      <svg viewBox="0 0 660 534" preserveAspectRatio="none" aria-hidden="true">
+        <g fill="none" stroke="#111" stroke-width="1">
+          <polyline points="262,98 262,62 470,62" /><circle cx="262" cy="98" r="3" fill="#ff4d00" stroke="none"/>
+          <polyline points="222,250 40,250 40,150" /><circle cx="222" cy="250" r="3" fill="#ff4d00" stroke="none"/>
+          <polyline points="585,272 585,340 620,340" /><circle cx="585" cy="272" r="3" fill="#ff4d00" stroke="none"/>
+          <polyline points="222,345 140,345" /><circle cx="222" cy="345" r="3" fill="#ff4d00" stroke="none"/>
+          <path d="M16 520 h20 M16 520 v-20 M644 40 h-20 M644 40 v20" />
+        </g>
+      </svg>
+      <div class="call mono" style="left:478px;top:54px"><b>1</b>Kapak / boşaltma</div>
+      <div class="call mono" style="left:16px;top:128px"><b>2</b>Tambur</div>
+      <div class="call mono" style="left:540px;top:350px"><b>3</b>Kol, elle</div>
+      <div class="call mono" style="left:16px;top:336px"><b>4</b>Ocak gözü</div>
+      <div class="fig mono">Şek. 1 — Arşiv: ilk kavurucu</div>
+    </figure>
+  </main>
+
+  <section class="row">
+    <div><span class="mono">02 / Bu hafta</span><h2>Dört çekirdek, tek kazan.</h2></div>
+    <div><div class="sku mono"><span><i class="led"></i>LDS-01</span><span>250 g</span></div><div class="name">Lodos harmanı</div><div class="price mono"><span>Paket</span><b>₺420</b></div></div>
+    <div><div class="sku mono"><span><i class="led"></i>ETH-02</span><span>250 g</span></div><div class="name">Etiyopya Guji</div><div class="price mono"><span>Paket</span><b>₺560</b></div></div>
+    <div><div class="sku mono"><span><i class="led off"></i>FLT-03</span><span>Fincan</span></div><div class="name">Filtre kahve</div><div class="price mono"><span>Bardak</span><b>₺95</b></div></div>
+    <div><div class="sku mono"><span><i class="led off"></i>TRK-04</span><span>Fincan</span></div><div class="name">Türk kahvesi</div><div class="price mono"><span>Fincan</span><b>₺80</b></div></div>
+  </section>
+
+<script>
+  const calls = document.querySelectorAll(".call");
+  const lines = document.querySelectorAll("figure polyline");
+  const rows = document.querySelectorAll(".spec div, .row > div");
+  lines.forEach((l) => { const n = l.getTotalLength(); l.style.strokeDasharray = n; l.dataset.n = n; });
+  window.demo = {
+    duration: 1600,
+    render(p) {
+      // hard, stepped snaps: no soft easing
+      rows.forEach((el, i) => { el.style.opacity = p >= 0.08 + i * 0.05 ? 1 : 0; });
+      lines.forEach((l, i) => {
+        const t = gl.seg(p, 0.3 + i * 0.1, 0.55 + i * 0.1);
+        l.style.strokeDashoffset = l.dataset.n * (1 - Math.round(t * 6) / 6);
+      });
+      calls.forEach((c, i) => { c.style.opacity = p >= 0.55 + i * 0.1 ? 1 : 0; });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

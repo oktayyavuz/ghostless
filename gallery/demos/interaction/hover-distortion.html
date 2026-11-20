@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dokununca dalgalanan görsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Sora:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --navy: #0f1c29; --cream: #f1e8da; --coral: #ef7b5a; --quiet: #8797a6; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--navy); color: var(--cream); font: 400 15px/1.5 Sora, system-ui, sans-serif; overflow: hidden; display: grid; grid-template-columns: 380px 1fr; }
+  .copy { padding: 48px 20px 44px 56px; display: flex; flex-direction: column; }
+  .copy b.logo { font: 600 26px/1 Spectral, Georgia, serif; }
+  .copy h1 { margin-top: auto; font: 400 60px/1 Spectral, Georgia, serif; letter-spacing: -.02em; }
+  .copy h1 em { color: var(--coral); }
+  .copy p { margin-top: 22px; color: #c2c8cc; max-width: 30ch; }
+  .copy small { margin-top: 36px; color: var(--quiet); font-size: 13px; }
+  .stage { position: relative; margin: 36px 36px 36px 0; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 3px; }
+  .cap { position: absolute; left: 18px; bottom: 16px; font-size: 13px; color: #fff; background: rgba(15,28,41,.75); padding: 4px 10px; border-radius: 2px; }
+  #src { display: none; }
+  .cursor { position: absolute; left: 0; top: 0; width: 24px; height: 30px; z-index: 30; pointer-events: none; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; } .copy { padding: 20px; } .copy h1 { font-size: 34px; margin-top: 16px; } .copy small { display: none; } .stage { margin: 0 16px 16px; } }
+</style>
+</head>
+<body>
+  <section class="copy">
+    <b class="logo">Lodos</b>
+    <h1>Boğaz'a karşı, <em>taze kavrum.</em></h1>
+    <p>Kemankeş Cd. 12, Karaköy. Her sabah 07.00'de kavuruyoruz; iskeleye 90 saniye.</p>
+    <small>Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</small>
+  </section>
+  <div class="stage"><canvas id="cv" role="img" aria-label="Boğaz Köprüsü gün batımında"></canvas><span class="cap">Boğaz, akşamüstü</span></div>
+  <img id="src" src="../../assets/kopru.webp" alt="">
+  <svg class="cursor" viewBox="0 0 22 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17 L11 25.5 L14.5 24 L11 15.8 L18.5 15.8 Z" fill="#f1e8da" stroke="#0f1c29" stroke-width="1.8" stroke-linejoin="round"/></svg>
+<script>
+  const cv = document.getElementById("cv"), ctx = cv.getContext("2d"), img = document.getElementById("src");
+  const stage = document.querySelector(".stage"), cursor = document.querySelector(".cursor");
+  // pointer path in stage-relative units (0..1), ending at rest over the bridge tower
+  const KEYS = [[-0.12, 0.85], [0.12, 0.62], [0.34, 0.38], [0.58, 0.5], [0.74, 0.72], [0.56, 0.78], [0.44, 0.52], [0.46, 0.44], [0.46, 0.44]];
+  const cr = (a, b, c, d, t) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+  function pathAt(t) {
+    t = gl.clamp(t);
+    const n = KEYS.length - 1, f = Math.min(n - 1e-6, t * n), i = Math.floor(f), u = f - i;
+    const P = (k) => KEYS[Math.max(0, Math.min(n, k))];
+    return [0, 1].map((ax) => cr(P(i - 1)[ax], P(i)[ax], P(i + 1)[ax], P(i + 2)[ax], u));
+  }
+  const timeToPath = (p) => { const s = gl.seg(p, 0, 0.9); return 0.55 * s + 0.45 * gl.easeInOutCubic(s); };
+  const TILE = 6;
+  window.demo = {
+    duration: 4200,
+    render(p) {
+      const sr = stage.getBoundingClientRect();
+      const W = Math.round(sr.width), H = Math.round(sr.height);
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+      // cover-fit the photo into the frame
+      const iw = img.naturalWidth || 1600, ih = img.naturalHeight || 800;
+      const sc = Math.max(W / iw, H / ih), ox = (iw - W / sc) / 2, oy = (ih - H / sc) / 2;
+      const [ux, uy] = pathAt(timeToPath(p));
+      const cx = ux * W, cy = uy * H;
+      cursor.style.transform = `translate(${sr.left + cx}px, ${sr.top + cy}px)`;
+      // recent positions make the wake; faster movement makes taller ripples
+      const trail = [];
+      for (let j = 0; j < 6; j++) {
+        const q = p - j * 0.025;
+        const [ax, ay] = pathAt(timeToPath(q));
+        const [bx, by] = pathAt(timeToPath(q - 0.01));
+        const speed = Math.min(1, Math.hypot((ax - bx) * W, (ay - by) * H) / 9);
+        trail.push({ x: ax * W, y: ay * H, a: speed * (1 - j / 6), age: j });
+      }
+      const R = Math.min(W, H) * 0.26, phase = p * 60;
+      ctx.clearRect(0, 0, W, H);
+      for (let y = 0; y < H; y += TILE) {
+        for (let x = 0; x < W; x += TILE) {
+          const mx = x + TILE / 2, my = y + TILE / 2;
+          let dx = 0, dy = 0;
+          // a gentle lens under the pointer (stays while hovering)
+          const lx = mx - cx, ly = my - cy, ld = Math.hypot(lx, ly);
+          const lens = Math.exp(-(ld * ld) / (R * R * 0.45)) * 0.32;
+          dx += lx * lens; dy += ly * lens;
+          // water rings in the pointer's wake
+          trail.forEach((t) => {
+            if (t.a <= 0.01) return;
+            const rx = mx - t.x, ry = my - t.y, r = Math.hypot(rx, ry) || 1;
+            const env = Math.exp(-(r * r) / (R * R));
+            const wave = Math.sin(r / 20 - phase + t.age * 1.1) * 24 * t.a * env;
+            dx += (rx / r) * wave; dy += (ry / r) * wave;
+          });
+          const tw = (TILE + 1) / sc;
+          const sx = gl.clamp(ox + (x - dx) / sc, 0, iw - tw), sy = gl.clamp(oy + (y - dy) / sc, 0, ih - tw);
+          ctx.drawImage(img, sx, sy, tw, tw, x, y, TILE + 1, TILE + 1);
+        }
+      }
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

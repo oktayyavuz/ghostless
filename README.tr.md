@@ -37,6 +37,22 @@ ASCII, iris, şerit birleşme, sabitlenmiş hikâye, View Transitions…) npm'de
 (GSAP ve artık ücretsiz eklentileri, Lenis, Motion, Paper Shaders, OGL, three…) listeler. Hazır bileşen
 kitlerinin "yapay zekâ sitesi" imzası olan efektlerini (beam, spotlight, shimmer, aurora) tarayıcı yakalar.
 
+## Galeri: bakarak seç
+
+Çoğu kişi tasarım stillerinin adını bilmez, bileşen kodundan anlamaz ama görünce neyi sevdiğini bilir.
+ghostless yerelde site kurucusu gibi bir seçim sayfası açar:
+
+```bash
+node ~/.claude/skills/ghostless/scripts/gallery.mjs            # 5600'den başlayarak boş bir portta açılır
+```
+
+Aynı hayali müşterinin (iskele kenarında bir kahve kavurma evi) ~60 canlı demosu: 22 görsel stil, yazı
+hareketleri, görselin oluşması (piksel, dither, halftone, şerit, parçacık), kaydırma hareketleri,
+etkileşim ve görsel işleme. **Beğendim** ya da **Asla** ile işaretle, not yaz, gönder: seçim
+`tasarim/secimler.json` dosyasına yazılır ve üç yön buradan kurulur. `--directions tasarim/yonler` ile
+aynı sayfa üç yönün önizlemesini de gösterir; biri seçilir, diğerlerinin neden olmadığı işaretlenir.
+Tüm demoların ekran görüntüleri: [`gallery/GALLERY.md`](gallery/GALLERY.md).
+
 ## Görseller
 
 Şablon sitelerde görsel azdır. ghostless bol görselle plan yapar: önce müşterinin kendi fotoğrafları,

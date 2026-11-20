@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalınlığı akan yazı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,50..150,100..900;1,50..150,100..900&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #1f3dc4; --paper: #f3ecdd; --sun: #ffb341; --quiet: #a9b5ec; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--paper); font: 400 16px/1.5 Anybody, system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 56px; right: 56px; top: 40px; display: flex; justify-content: space-between; align-items: baseline; }
+  header b { font-weight: 800; font-variation-settings: "wdth" 130; font-size: 20px; letter-spacing: .02em; }
+  header span { color: var(--quiet); font-size: 15px; }
+  .stage { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: grid; place-items: center; }
+  h1 { font-size: clamp(48px, 16vw, 212px); line-height: 1; letter-spacing: -.01em; white-space: nowrap; margin-top: -40px; }
+  h1 span { display: inline-block; }
+  .sub { position: absolute; left: 56px; bottom: 48px; max-width: 40ch; font-size: 19px; line-height: 1.4; font-variation-settings: "wdth" 88, "wght" 380; }
+  .sub i { color: var(--sun); font-style: italic; font-variation-settings: "wdth" 88, "wght" 600; }
+  .axes { position: absolute; right: 56px; bottom: 48px; width: 300px; font-family: "DM Mono", ui-monospace, monospace; font-size: 12px; color: var(--quiet); display: grid; gap: 14px; }
+  .ax { display: grid; grid-template-columns: 44px 1fr 38px; align-items: center; gap: 12px; }
+  .bar { height: 2px; background: rgba(243,236,221,.2); position: relative; }
+  .bar i { position: absolute; left: 0; top: -1px; height: 4px; background: var(--sun); }
+  .ax output { color: var(--paper); text-align: right; }
+  @media (max-width: 700px) { .axes { left: 20px; right: 20px; width: auto; bottom: 150px; } .sub { left: 20px; font-size: 16px; } header { left: 20px; right: 20px; } }
+</style>
+</head>
+<body>
+  <header><b>LODOS</b><span>güneybatıdan esen rüzgâr · Karaköy</span></header>
+  <div class="stage"><h1 aria-label="LODOS">LODOS</h1></div>
+  <p class="sub">Lodos esince kavrum kokusu <i>iskeleye iner.</i> Her sabah 07.00'de, 12 kg'lık tek kazan.</p>
+  <div class="axes" aria-hidden="true">
+    <div class="ax"><span>wght</span><div class="bar"><i id="bw"></i></div><output id="ow">100</output></div>
+    <div class="ax"><span>wdth</span><div class="bar"><i id="bd"></i></div><output id="od">50</output></div>
+  </div>
+<script>
+  const h1 = document.querySelector("h1");
+  const letters = [...h1.textContent].map((c) => { const s = document.createElement("span"); s.textContent = c; s.setAttribute("aria-hidden", "true"); return s; });
+  h1.textContent = ""; letters.forEach((s) => h1.appendChild(s));
+  const bw = document.getElementById("bw"), bd = document.getElementById("bd");
+  const ow = document.getElementById("ow"), od = document.getElementById("od");
+  window.demo = {
+    duration: 3200,
+    render(p) {
+      let sw = 0, sd = 0;
+      letters.forEach((el, i) => {
+        // a wave of weight runs left → right; width follows a beat later
+        const tw = gl.easeInOutCubic(gl.seg(p, 0.02 + i * 0.09, 0.5 + i * 0.09));
+        const td = gl.easeInOutCubic(gl.seg(p, 0.1 + i * 0.09, 0.62 + i * 0.09));
+        const w = gl.lerp(100, 900, tw), d = gl.lerp(50, 150, td);
+        el.style.fontVariationSettings = `"wght" ${w.toFixed(0)}, "wdth" ${d.toFixed(1)}`;
+        el.style.color = tw > 0.02 && tw < 0.98 ? "var(--sun)" : "";
+        sw += w; sd += d;
+      });
+      sw /= letters.length; sd /= letters.length;
+      bw.style.width = `${((sw - 100) / 800) * 100}%`; ow.textContent = sw.toFixed(0);
+      bd.style.width = `${((sd - 50) / 100) * 100}%`; od.textContent = sd.toFixed(0);
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piksellerden netleşme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+  :root { --teal: #0d4f50; --cream: #f2ead9; --brick: #e2603b; --ink: #0c1d1d; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--teal); color: var(--cream); font: 400 16px/1.45 "Familjen Grotesk", system-ui, sans-serif;
+         overflow: hidden; display: grid; grid-template-columns: 1.55fr 1fr; }
+  .stage { position: relative; background: var(--ink); }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .px { font-family: Silkscreen, ui-monospace, monospace; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+  .tag { position: absolute; left: 22px; bottom: 20px; background: var(--cream); color: var(--ink); padding: 6px 10px 5px; }
+  aside { padding: 34px 40px 36px; display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; }
+  .top b { font-weight: 700; font-size: 20px; letter-spacing: -.01em; }
+  h1 { font-weight: 700; font-size: clamp(46px, 5.6vw, 84px); line-height: .9; letter-spacing: -.035em; }
+  h1 span { color: var(--brick); }
+  .price { display: flex; align-items: baseline; justify-content: space-between; border-top: 2px solid var(--cream); padding-top: 14px; margin-top: 26px; }
+  .price strong { font-size: 40px; font-weight: 600; }
+  aside p { color: #b8cfc9; max-width: 32ch; margin-top: 14px; }
+  ul { list-style: none; padding: 0; display: grid; gap: 6px; }
+  li { display: flex; justify-content: space-between; color: #b8cfc9; border-bottom: 1px solid #2d6a69; padding-bottom: 6px; }
+  @media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: 46vh 1fr; } aside { padding: 20px; } ul { display: none; } }
+</style>
+</head>
+<body>
+  <div class="stage"><canvas id="c" role="img" aria-label="Makineden iki fincana akan espresso"></canvas><span class="tag px" id="tag">blok 96 px</span></div>
+  <aside>
+    <div class="top"><b>Lodos</b><span class="px">Karaköy</span></div>
+    <div>
+      <h1>Çift shot,<br><span>tek kazan.</span></h1>
+      <p>Lodos harmanı, her sabah 07.00'de kavrulan ilk partiden çekilir.</p>
+      <div class="price"><span class="px">Espresso</span><strong>₺75</strong></div>
+    </div>
+    <ul><li><span>Filtre kahve</span><span>₺95</span></li><li><span>Türk kahvesi</span><span>₺80</span></li><li><span>Lodos harmanı, 250 g</span><span>₺420</span></li></ul>
+  </aside>
+<script>
+  const c = document.getElementById("c"), x = c.getContext("2d"), tag = document.getElementById("tag");
+  const small = document.createElement("canvas"), sx = small.getContext("2d");
+  const img = new Image(); img.src = "../../assets/espresso.webp";
+  let last = 1, ok = false;
+  const steps = [96, 64, 44, 30, 20, 13, 8, 5, 3, 1];
+  function size() { const r = c.getBoundingClientRect(); c.width = Math.round(r.width); c.height = Math.round(r.height); }
+  function cover(w, h) { // source rect that covers w×h
+    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight), sw = w / s, sh = h / s;
+    return [(img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh];
+  }
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      last = p; if (!ok) return;
+      const W = c.width, H = c.height;
+      const i = Math.min(steps.length - 1, Math.floor(gl.seg(p, 0.04, 0.9) * steps.length));
+      const b = steps[i];
+      tag.textContent = b > 1 ? `blok ${b} px` : "net";
+      if (b === 1) { x.imageSmoothingEnabled = true; x.drawImage(img, ...cover(W, H), 0, 0, W, H); return; }
+      const w = Math.ceil(W / b), h = Math.ceil(H / b);
+      small.width = w; small.height = h;
+      sx.imageSmoothingEnabled = true; sx.imageSmoothingQuality = "high";
+      sx.drawImage(img, ...cover(w * b, h * b).map((v) => v), 0, 0, w, h);
+      x.imageSmoothingEnabled = false;
+      x.drawImage(small, 0, 0, w, h, 0, 0, w * b, h * b);
+      // a hairline grid between big blocks makes the pieces read as tiles
+      if (b >= 13) {
+        x.fillStyle = "rgba(12,29,29,.55)";
+        for (let gx = b; gx < W; gx += b) x.fillRect(gx, 0, 1, H);
+        for (let gy = b; gy < H; gy += b) x.fillRect(0, gy, W, 1);
+      }
+    },
+  };
+  size();
+  img.decode().then(() => { ok = true; demo.render(last); });
+  addEventListener("resize", () => { size(); demo.render(last); });
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

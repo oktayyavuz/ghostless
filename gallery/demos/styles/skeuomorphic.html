@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerçek malzeme (skeuomorfik)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Barlow+Condensed:wght@500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --walnut: #4a2d1a; --leather: #3b2418; --paper: #efe4cc; --ink: #2a1d14; --brass: #b8913f;
+    --steel-ink: #3a3c3f; --enamel: #b2321f;
+    /* textures: SVG turbulence, stretched for wood grain / brushed metal / paper fibre */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.003 0.06' numOctaves='5' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 2.2 -0.75'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23f)'/%3E%3C/svg%3E");
+    --brush: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0015 0.8' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 -0.25'/%3E%3C/filter%3E%3Crect width='700' height='300' filter='url(%23f)'/%3E%3C/svg%3E");
+    --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0 0.1 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)'/%3E%3C/svg%3E");
+    --pebble: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 -0.1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; color: var(--ink); font: 400 17px/1.45 "Courier Prime", "Courier New", monospace;
+         background: var(--grain), linear-gradient(100deg, #5a3820, #452914 40%, #533320 70%, #3d2413); }
+  .eng { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .16em;
+         color: #2f3134; text-shadow: 0 1px 0 rgba(255,255,255,.75), 0 -1px 0 rgba(0,0,0,.25); }
+
+  /* ---------- header: brushed steel rail ---------- */
+  header { position: absolute; left: 0; right: 0; top: 0; height: 84px; display: flex; align-items: center; gap: 34px; padding: 0 40px;
+           background: var(--brush), linear-gradient(180deg, #e9eaeb 0%, #c4c6c8 46%, #aeb1b4 54%, #cfd1d3 100%);
+           box-shadow: inset 0 1px 0 #fff, inset 0 -2px 0 #7b7e82, 0 6px 14px rgba(0,0,0,.45); z-index: 3; }
+  .plate { position: relative; padding: 8px 30px 9px; border-radius: 4px; font: 700 30px/1 "Barlow Condensed", sans-serif; letter-spacing: .32em;
+           color: #3d2a0e; text-shadow: 0 1px 0 rgba(255,236,190,.8), 0 -1px 0 rgba(60,35,5,.45);
+           background: var(--brush), linear-gradient(180deg, #e2c27a, #b88f3e 48%, #9a7329 52%, #c9a456);
+           box-shadow: inset 0 1px 0 #f6e1aa, inset 0 -1px 0 #6d4f17, 0 2px 3px rgba(0,0,0,.5); }
+  .plate small { display: block; font-size: 11px; letter-spacing: .3em; margin-top: 3px; font-weight: 600; }
+  .screw { position: absolute; width: 10px; height: 10px; border-radius: 50%; top: 50%; margin-top: -5px;
+           background: radial-gradient(circle at 35% 30%, #fff 0, #c7c9cc 30%, #6f7276 100%); box-shadow: 0 1px 1px rgba(0,0,0,.6); }
+  .screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 2px; background: #55585c; transform: rotate(var(--r, 35deg)); }
+  .plate .screw:first-child { left: 9px; } .plate .screw:nth-child(2) { right: 9px; --r: -20deg; }
+  nav { display: flex; gap: 26px; margin-left: auto; }
+  nav a { display: flex; align-items: center; gap: 10px; font-size: 16px; }
+  .lamp { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #7a6a55, #2b241b 70%);
+          box-shadow: inset 0 1px 2px rgba(0,0,0,.8), 0 1px 0 rgba(255,255,255,.8); }
+  .lamp.on { background: radial-gradient(circle at 40% 35%, #fff3c4 0, #f2b53a 35%, #a8620e 100%); }
+
+  /* ---------- paper card ---------- */
+  .card { position: absolute; left: 62px; top: 132px; width: 474px; height: 446px; padding: 40px 40px 34px; rotate: -1.2deg;
+          background: var(--fibre), linear-gradient(170deg, #f6eedb, #e9dcbf);
+          box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 2px 2px rgba(0,0,0,.35), 0 18px 30px -8px rgba(0,0,0,.6); }
+  .card::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(90,60,30,.35); outline: 3px double rgba(90,60,30,.25); outline-offset: 3px; pointer-events: none; }
+  .pin { position: absolute; width: 18px; height: 18px; border-radius: 50%; top: -6px;
+         background: radial-gradient(circle at 35% 30%, #fff6d8 0, #d9b25a 30%, #8a6420 80%); box-shadow: 0 3px 4px rgba(0,0,0,.55); }
+  .typed { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #6a4b2c; }
+  .card h1 { font: 600 58px/1.0 "Fraunces", Georgia, serif; letter-spacing: -.015em; margin-top: 18px; color: #2a1a10; }
+  .card h1 em { font-style: italic; font-weight: 500; color: #8a2f18; }
+  .card p { margin-top: 18px; font-size: 16px; line-height: 1.5; color: #3d2b1d; max-width: 30ch; }
+  .card .stamp { position: absolute; right: 34px; bottom: 34px; width: 104px; height: 104px; border-radius: 50%; rotate: -14deg;
+                 border: 3px solid rgba(150,40,25,.75); display: grid; place-items: center; text-align: center;
+                 font: 700 12px/1.2 "Barlow Condensed", sans-serif; letter-spacing: .14em; color: rgba(150,40,25,.82); text-transform: uppercase; }
+  .card .stamp b { display: block; font-size: 28px; letter-spacing: .02em; }
+
+  /* physical push button */
+  .push { position: absolute; left: 92px; top: 594px; display: flex; align-items: center; gap: 18px; }
+  .push .bezel { width: 210px; height: 66px; border-radius: 14px; padding: 7px;
+                 background: var(--brush), linear-gradient(180deg, #d6d8da, #8d9094);
+                 box-shadow: inset 0 1px 0 #fff, 0 3px 6px rgba(0,0,0,.6); }
+  .push .key { height: 100%; border-radius: 9px; display: grid; place-items: center; color: #fbeee0;
+               font: 700 18px/1 "Barlow Condensed", sans-serif; letter-spacing: .2em; text-transform: uppercase; text-shadow: 0 -1px 0 rgba(0,0,0,.45);
+               background: linear-gradient(180deg, #d9573c 0%, #b2321f 55%, #8f2414 100%);
+               box-shadow: inset 0 1px 0 rgba(255,210,190,.7), inset 0 -3px 0 rgba(0,0,0,.25), 0 4px 0 #5e170c, 0 6px 8px rgba(0,0,0,.5); }
+  .push span { color: #e9d6b8; font-size: 14px; line-height: 1.35; max-width: 23ch; text-shadow: 0 1px 1px rgba(0,0,0,.6); }
+
+  /* ---------- faceplate ---------- */
+  .face { position: absolute; left: 562px; top: 120px; width: 680px; height: 488px; border-radius: 18px;
+          background: var(--brush), linear-gradient(160deg, #e6e7e8 0%, #c3c5c8 38%, #d5d6d8 62%, #aeb1b5 100%);
+          box-shadow: inset 0 2px 0 #fff, inset 0 -2px 0 #85898d, 0 3px 0 #6c6f73, 0 26px 40px -10px rgba(0,0,0,.7); }
+  .face > .screw { width: 14px; height: 14px; margin: 0; }
+  .face > .screw::after { top: 6px; }
+  .s1 { left: 16px; top: 16px; } .s2 { right: 16px; top: 16px; --r: 80deg; } .s3 { left: 16px; bottom: 16px; top: auto; --r: 10deg; } .s4 { right: 16px; bottom: 16px; top: auto; --r: -50deg; }
+  .face .title { position: absolute; left: 46px; top: 34px; font-size: 14px; }
+
+  .dial { position: absolute; left: 64px; top: 70px; width: 360px; height: 360px; }
+  .scale { position: absolute; inset: 0; border-radius: 50%;
+           background: repeating-conic-gradient(from -135deg, #2f3134 0 .6deg, transparent .6deg 6.75deg);
+           mask: radial-gradient(circle, transparent 146px, #000 147px 160px, transparent 161px), conic-gradient(from 135deg, transparent 0 90deg, #000 90deg);
+           mask-composite: intersect; }
+  .scale.major { background: repeating-conic-gradient(from -135.6deg, #2f3134 0 1.2deg, transparent 1.2deg 67.5deg);
+           mask: radial-gradient(circle, transparent 140px, #000 141px 168px, transparent 169px), conic-gradient(from 135deg, transparent 0 90deg, #000 90deg);
+           mask-composite: intersect; }
+  .lbl { position: absolute; font-size: 14px; white-space: nowrap; translate: -50% -50%; }
+  .lbl.hot { color: #8a2414; }
+  .well { position: absolute; left: 50%; top: 50%; width: 270px; height: 270px; margin: -135px; border-radius: 50%;
+          background: radial-gradient(circle, #6d7175 60%, #9a9da1 100%); box-shadow: inset 0 6px 12px rgba(0,0,0,.6), 0 1px 0 #fff; }
+  .knob { position: absolute; left: 50%; top: 50%; width: 248px; height: 248px; margin: -124px; border-radius: 50%;
+          background: repeating-conic-gradient(#5b5e62 0 3deg, #c9ccd0 3deg 4.5deg, #8a8d91 4.5deg 6deg);
+          box-shadow: 0 14px 18px rgba(0,0,0,.55), 0 4px 4px rgba(0,0,0,.4); }
+  .cap { position: absolute; inset: 15px; border-radius: 50%;
+         background: conic-gradient(from 20deg, #f3f4f5, #9da0a4 45deg, #e8e9ea 95deg, #7f8286 150deg, #dfe1e3 200deg, #8f9296 260deg, #f6f7f8 310deg, #f3f4f5);
+         box-shadow: inset 0 2px 1px rgba(255,255,255,.9), inset 0 -3px 4px rgba(0,0,0,.35), 0 0 0 2px #6a6d71; }
+  .cap::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+                 background: repeating-radial-gradient(circle, rgba(255,255,255,.12) 0 1px, rgba(0,0,0,.05) 1px 2px); }
+  .pointer { position: absolute; left: 50%; top: 18px; width: 8px; height: 62px; margin-left: -4px; border-radius: 4px;
+             background: linear-gradient(90deg, #6e2010, #c0402a 50%, #7a2412); box-shadow: inset 0 2px 2px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.7); }
+  .rot { position: absolute; inset: 0; }
+
+  .port { position: absolute; right: 30px; top: 50px; width: 184px; height: 184px; border-radius: 50%; padding: 16px;
+          background: var(--brush), radial-gradient(circle at 35% 30%, #f0d898, #b48a3a 45%, #6f4f18 100%);
+          box-shadow: 0 10px 14px rgba(0,0,0,.5), inset 0 2px 1px rgba(255,240,200,.8); }
+  .port .glass { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; position: relative; box-shadow: inset 0 6px 14px rgba(0,0,0,.8); }
+  .port img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 60%; display: block; }
+  .port .glass::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 6px 14px rgba(0,0,0,.75);
+                        background: linear-gradient(140deg, rgba(255,255,255,.28) 0 22%, transparent 23%); }
+  .bolt { position: absolute; width: 11px; height: 11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbecc0, #8a6420 80%); box-shadow: 0 1px 1px rgba(0,0,0,.6); }
+  .port-lbl { position: absolute; right: 30px; top: 246px; width: 184px; text-align: center; font-size: 13px; }
+
+  .switches { position: absolute; right: 52px; top: 296px; display: flex; gap: 40px; }
+  .sw { display: grid; justify-items: center; gap: 6px; font-size: 12px; }
+  .nut { position: relative; width: 46px; height: 46px; border-radius: 50%;
+         background: conic-gradient(#e8e9ea, #8d9094, #e0e1e3, #7c7f83, #e8e9ea); box-shadow: 0 3px 4px rgba(0,0,0,.5), inset 0 0 0 4px rgba(0,0,0,.08); }
+  .bat { position: absolute; left: 50%; bottom: 50%; width: 12px; height: 44px; margin-left: -6px; border-radius: 6px 6px 3px 3px; transform-origin: 50% 100%;
+         background: linear-gradient(90deg, #8a8d91, #f4f5f6 40%, #9da0a4); box-shadow: 4px 6px 6px rgba(0,0,0,.35); }
+  .sw .tag { opacity: .45; } .sw > :first-child { margin-bottom: 30px; } .sw .tag.on { opacity: 1; }
+  .kazan { position: absolute; left: 46px; bottom: 30px; display: flex; align-items: center; gap: 14px; font-size: 13px; }
+  .led { width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ffd7c9 0, #e2452a 40%, #84200f 100%);
+         box-shadow: inset 0 -1px 2px rgba(0,0,0,.4), 0 0 0 3px #9da0a4, 0 0 0 4px #6c6f73; }
+
+  /* ---------- second section: stitched leather strip ---------- */
+  .strip { position: absolute; left: 0; right: 0; top: 676px; bottom: -40px; padding: 30px 62px;
+           background: var(--pebble), linear-gradient(180deg, #4b2c1c, #331d12);
+           box-shadow: 0 -8px 18px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,220,180,.15); }
+  .strip::before { content: ""; position: absolute; left: 18px; right: 18px; top: 12px; border-top: 2px dashed rgba(234,205,160,.55); }
+  .strip h2 { font: 600 30px/1 "Fraunces", serif; color: #f0dfc2; text-shadow: 0 -1px 0 rgba(0,0,0,.6), 0 1px 0 rgba(255,230,190,.12); }
+  .strip h2 small { font: 600 14px/1 "Barlow Condensed", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: #c9a87c; margin-left: 16px; }
+  .tags { display: flex; gap: 22px; margin-top: 18px; }
+  .tags span { padding: 10px 18px 22px 30px; font-size: 15px; color: #2b1d10; background: var(--fibre), linear-gradient(180deg, #d9b98a, #c49e6c);
+               clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%); position: relative; }
+  .tags span::before { content: ""; position: absolute; left: 12px; top: 50%; width: 8px; height: 8px; margin-top: -16px; border-radius: 50%; background: #3a2216; }
+
+  @media (max-width: 700px) {
+    .face, .push, .strip, nav, .card .stamp { display: none; }
+    .card { left: 14px; right: 14px; width: auto; top: 110px; height: auto; }
+    .card h1 { font-size: 40px; }
+    header { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="plate"><i class="screw"></i><i class="screw"></i>Lodos<small>Kahve Kavurma Evi · 2019</small></div>
+    <nav class="eng">
+      <a><i class="lamp on"></i>Kavrum</a><a><i class="lamp"></i>Menü</a><a><i class="lamp"></i>Çekirdekler</a><a><i class="lamp"></i>İskele</a>
+    </nav>
+  </header>
+
+  <article class="card" data-in="0,.45">
+    <i class="pin" style="left:40px"></i><i class="pin" style="right:40px"></i>
+    <div class="typed">Kemankeş Cd. 12 · Karaköy</div>
+    <h1>Vapur kalkmadan <em>kahven</em> hazır.</h1>
+    <p>Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Kalkışa 6 dakika kala sipariş verene sıra yok.</p>
+    <div class="stamp"><div>İskeleye<b>90 sn</b></div></div>
+  </article>
+
+  <div class="push" data-in=".2,.6">
+    <div class="bezel"><div class="key">Sipariş ver</div></div>
+    <span>Hafta içi 07.00–19.00<br>Cumartesi 08.00–18.00</span>
+  </div>
+
+  <section class="face" data-in=".08,.5">
+    <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
+    <div class="title eng">Öğütme ayarı</div>
+    <div class="dial">
+      <div class="scale"></div><div class="scale major"></div>
+      <span class="lbl eng" style="left:12%;top:90%;translate:-100% -50%">Kalın</span>
+      <span class="lbl eng" style="left:6%;top:28%;translate:-100% -50%">Orta</span>
+      <span class="lbl eng hot" style="left:50%;top:-2.5%">Filtre</span>
+      <span class="lbl eng" style="left:94%;top:28%;translate:0 -50%">Espresso</span>
+      <span class="lbl eng" style="left:88%;top:90%;translate:0 -50%">Türk kahvesi</span>
+      <div class="well"></div>
+      <div class="rot" id="rot"><div class="knob"><div class="cap"><div class="pointer"></div></div></div></div>
+    </div>
+
+    <div class="port">
+      <div class="glass"><img src="../../assets/deniz.webp" alt="Vapurdan Boğaz ve şehir silueti"></div>
+    </div>
+    <div class="kazan eng"><i class="led"></i>Kazan yandı · 07.00</div>
+    <div class="port-lbl eng">Karaköy iskelesi · 90 sn</div>
+
+    <div class="switches">
+      <div class="sw eng"><span class="tag on">Çekirdek</span><div class="nut"><i class="bat" style="rotate:-28deg"></i></div><span class="tag">Öğütülmüş</span></div>
+      <div class="sw eng"><span class="tag">250 g</span><div class="nut"><i class="bat" id="bat" style="rotate:28deg"></i></div><span class="tag on">1 kg</span></div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <h2>Haftanın dört çekirdeği <small>Kazandan yeni çıktı</small></h2>
+    <div class="tags"><span>Lodos harmanı · ₺420</span><span>Etiyopya Guji · ₺560</span><span>Kolombiya Huila</span><span>Türk kahvesi kavrumu</span></div>
+  </section>
+
+<script>
+  // bolts around the porthole
+  const port = document.querySelector(".port");
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + Math.PI / 8, b = document.createElement("i");
+    b.className = "bolt"; b.style.left = 92 + Math.cos(a) * 83 - 5.5 + "px"; b.style.top = 92 + Math.sin(a) * 83 - 5.5 + "px";
+    port.appendChild(b);
+  }
+  const rot = document.getElementById("rot");
+  const items = [...document.querySelectorAll("[data-in]")];
+  window.demo = {
+    duration: 2200, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.easeOutQuart(gl.seg(p, a, b));
+        el.style.opacity = t; el.style.translate = `0 ${(1 - t) * 26}px`;
+      });
+      // the dial is turned from "Türk kahvesi" back to "Filtre", with a little mechanical overshoot
+      const t = gl.seg(p, 0.35, 1);
+      const spring = 1 - Math.exp(-6 * t) * Math.cos(9 * t);
+      rot.style.rotate = `${gl.lerp(135, 0, t >= 1 ? 1 : spring)}deg`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

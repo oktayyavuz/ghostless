@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fırlatılabilen şerit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+  :root { --sky: #cfe0e8; --ink: #14232c; --sea: #1f5d7d; --quiet: #5a7280; --paper: #f3f0e8; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--sky); color: var(--ink); font: 400 15px/1.45 Archivo, system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 56px; right: 56px; top: 36px; display: flex; justify-content: space-between; align-items: end; }
+  header h1 { font-weight: 800; font-stretch: 125%; font-variation-settings: "wdth" 125; font-size: 52px; line-height: .95; letter-spacing: -.02em; text-transform: uppercase; }
+  header p { color: var(--quiet); text-align: right; font-variation-settings: "wdth" 90; }
+  header p b { color: var(--ink); }
+  .strip { position: absolute; left: 0; top: 168px; display: flex; gap: 24px; padding-left: 56px; will-change: transform; }
+  .card { width: 320px; flex: none; }
+  .card .ph { height: 400px; overflow: hidden; border-radius: 4px; position: relative; background: #e2e2de; }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .card .cap { display: flex; justify-content: space-between; margin-top: 10px; font-variation-settings: "wdth" 80; font-weight: 600; font-size: 17px; }
+  .card .cap span { color: var(--quiet); font-weight: 400; }
+  .ruler { position: absolute; left: 0; right: 0; bottom: 58px; height: 34px; overflow: hidden; border-top: 1.5px solid var(--ink); }
+  .ruler .ticks { position: absolute; left: 0; top: 0; height: 100%; width: 4000px; will-change: transform;
+                  background: repeating-linear-gradient(90deg, var(--ink) 0 1.5px, transparent 1.5px 43px) 56px 0 / auto 10px no-repeat; }
+  .ruler .ticks i { position: absolute; top: 12px; font-style: normal; font-size: 12px; color: var(--quiet); font-variation-settings: "wdth" 75; }
+  .foot { position: absolute; left: 56px; right: 56px; bottom: 22px; display: flex; justify-content: space-between; color: var(--quiet); font-size: 13px; }
+  .grab { position: absolute; left: 0; top: 0; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--ink); color: var(--paper);
+          display: grid; place-items: center; font-weight: 700; font-size: 11px; letter-spacing: .08em; z-index: 30; will-change: transform; font-variation-settings: "wdth" 100; }
+  .grab::before, .grab::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; border-top: 2px solid var(--paper); border-left: 2px solid var(--paper); margin-top: -4px; }
+  .grab::before { left: 9px; transform: rotate(-45deg); } .grab::after { right: 9px; transform: rotate(135deg); }
+  .mark { position: absolute; top: 150px; bottom: 100px; width: 0; border-left: 2px dashed rgba(20,35,44,.45); z-index: 25; }
+  .mark span { position: absolute; top: -20px; left: -30px; width: 60px; text-align: center; font-size: 11px; color: var(--quiet); letter-spacing: .06em; }
+  @media (max-width: 700px) { header h1 { font-size: 30px; } header p { display: none; } .card { width: 220px; } .card .ph { height: 280px; } header, .foot { left: 20px; right: 20px; } }
+</style>
+</head>
+<body>
+  <header><h1>Karaköy'den<br>kareler</h1><p><b>Sürükle ve bırak.</b><br>Kemankeş Cd. 12 · iskeleye 90 saniye</p></header>
+  <div class="strip">
+    <article class="card"><div class="ph"><img src="../../assets/kopru.webp" alt="Boğaz Köprüsü"></div><div class="cap">Boğaz, akşamüstü<span>01</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/deniz.webp" alt="Vapurdan Boğaz"></div><div class="cap">İskeleye 90 saniye<span>02</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/kavurucu.webp" alt="Teneke kavurucu"></div><div class="cap">Kazan, 07.00<span>03</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/cekirdek.webp" alt="Kavrulmuş çekirdekler"></div><div class="cap">Lodos harmanı<span>04</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/barista.webp" alt="Barista elleri"></div><div class="cap">Tezgâh<span>05</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/espresso.webp" alt="Espresso"></div><div class="cap">Espresso, ₺75<span>06</span></div></article>
+    <article class="card"><div class="ph"><img src="../../assets/fincan.webp" alt="Küçük fincan"></div><div class="cap">Türk kahvesi, ₺80<span>07</span></div></article>
+  </div>
+  <div class="ruler"><div class="ticks"></div></div>
+  <div class="foot"><span>Lodos Kahve Kavurma Evi</span><span>2019'dan beri</span></div>
+  <div class="mark"><span>BIRAKTI</span></div>
+  <div class="grab" aria-hidden="true"><span class="gl">SÜRÜKLE</span></div>
+<script>
+  const strip = document.querySelector(".strip"), ticks = document.querySelector(".ticks");
+  const grab = document.querySelector(".grab"), glab = grab.querySelector(".gl"), mark = document.querySelector(".mark");
+  for (let i = 0; i < 90; i++) { const t = document.createElement("i"); t.style.left = 56 + i * 43 * 2 - 6 + "px"; t.textContent = String(i * 2).padStart(2, "0"); ticks.appendChild(t); }
+  const DRAG = 380, GLIDE = 760, K = 4.5, T_PRESS = 0.12, T_REL = 0.34;
+  const norm = 1 - Math.exp(-K * (1 - T_REL));
+  window.demo = {
+    duration: 4600,
+    render(p) {
+      const W = innerWidth, H = innerHeight;
+      const gx0 = W * 0.72, gy = 168 + 200;
+      let gx, off;
+      // pointer arrives, presses, drags left faster and faster, lets go
+      const arrive = gl.easeInOutCubic(gl.seg(p, 0, 0.09));
+      if (p < T_PRESS) { gx = gl.lerp(W * 0.9, gx0, arrive); off = 0; }
+      else if (p < T_REL) { const s = gl.seg(p, T_PRESS, T_REL); off = -DRAG * s * s; gx = gx0 + off; }
+      else {
+        // after release: the strip keeps the throw's speed and slows down exponentially
+        gx = gx0 - DRAG;
+        off = -DRAG - (GLIDE * (1 - Math.exp(-K * (p - T_REL)))) / norm;
+      }
+      const ty = gl.lerp(H * 0.86, gy, arrive);
+      strip.style.transform = `translateX(${off.toFixed(1)}px)`;
+      ticks.style.transform = `translateX(${off.toFixed(1)}px)`;
+      const pressed = p >= T_PRESS - 0.02 && p < T_REL;
+      grab.style.transform = `translate(${gx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${pressed ? 0.72 : 1})`;
+      glab.textContent = pressed ? "" : "SÜRÜKLE";
+      grab.style.background = pressed ? "#1f5d7d" : "";
+      // a marker where the hand let go, so the extra travel reads in a still frame
+      const showMark = p >= T_REL;
+      mark.style.left = `${gx0 - DRAG}px`;
+      mark.style.opacity = showMark ? (1 - gl.seg(p, 0.9, 1) * 0.5).toFixed(2) : 0;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

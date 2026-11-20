@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terminal / ASCII</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0e0f0c; --fg: #d6d3c4; --dim: #6e6c62; --amber: #f2a93b; --green: #9ccf7a; --sel: #2a2a24; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); overflow: hidden; font: 400 15px/1.55 "JetBrains Mono", ui-monospace, monospace; }
+  a { color: inherit; text-decoration: none; }
+  .d { color: var(--dim); } .a { color: var(--amber); } .g { color: var(--green); }
+
+  .tabs { height: 30px; display: flex; align-items: center; background: var(--fg); color: var(--bg); font-size: 13px; padding: 0 14px; gap: 0; }
+  .tabs b { font-weight: 800; margin-right: 18px; }
+  .tabs a { padding: 0 12px; height: 100%; display: flex; align-items: center; }
+  .tabs a.on { background: var(--amber); }
+  .tabs .r { margin-left: auto; }
+
+  main { display: grid; grid-template-columns: 1fr 520px; height: 560px; }
+  .sh { padding: 22px 30px 0; }
+  .ln { display: block; min-height: 1.55em; white-space: pre-wrap; }
+  .pr::before { content: "lodos@karakoy:~$ "; color: var(--green); }
+  h1 { font: 800 68px/1.0 "JetBrains Mono", monospace; letter-spacing: -.04em; margin: 12px 0 14px; color: var(--fg); white-space: normal; }
+  h1 .a { color: var(--amber); }
+  .cur { display: inline-block; width: .6em; height: 1.15em; background: var(--fg); vertical-align: -.2em; }
+
+  .art { position: relative; border-left: 1px dashed #34332d; padding: 16px 0 0 18px; }
+  .art pre { font: 700 9px/9px "JetBrains Mono", monospace; letter-spacing: 0; color: var(--amber); }
+  .art .cap { position: absolute; left: 18px; bottom: 12px; font-size: 12px; }
+
+  .ls { border-top: 1px dashed #34332d; padding: 14px 30px 0; height: 210px; }
+  .row { display: grid; grid-template-columns: 120px 280px 90px 110px 1fr; }
+  .row.h { color: var(--dim); }
+
+  @media (max-width: 700px) {
+    .tabs a:not(.on), .tabs .r { display: none; } main { grid-template-columns: 1fr; height: auto; } .art { display: none; }
+    .sh { padding: 16px; } h1 { font-size: 34px; } .ls { padding: 12px 16px; font-size: 12px; } .row { grid-template-columns: 1fr 70px 70px; } .row span:nth-child(1), .row span:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+  <nav class="tabs"><b>[lodos]</b><a class="on" href="#">0:kavurma*</a><a href="#">1:cekirdek</a><a href="#">2:menu</a><a href="#">3:iskele</a><span class="r">Kemankeş Cd. 12 · Karaköy · 07.00–19.00</span></nav>
+
+  <main>
+    <section class="sh">
+<span class="ln pr" data-t="./lodos --hakkinda"></span><span class="ln d" data-o>Lodos Kahve Kavurma Evi · 2019'dan beri · Karaköy</span><h1 data-o aria-label="Vapur kalkmadan kahven hazır.">Vapur kalkmadan <span class="a">kahven</span> hazır.</h1><span class="ln pr" data-t="siparis --vapur 08:10"></span><span class="ln" data-o><span class="g">✓</span> kalkışa 6 dk var → <span class="a">sıra beklemeden</span> hazırlanıyor</span><span class="ln d" data-o>  iskeleye yürüyüş: 90 sn</span><span class="ln pr" data-t="tail -2 kavurma.log"></span><span class="ln" data-o><span class="d">07.00</span>  kazan ısındı · 12 kg tek kavrum</span><span class="ln" data-o><span class="d">07.00</span>  kazan soğumadan ilk paket tezgâhta</span><span class="ln pr" data-t="cat adres.txt"></span><span class="ln" data-o>Kemankeş Cd. 12, Karaköy, İstanbul · 0212 000 00 00</span><span class="ln d" data-o>Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</span><span class="ln pr" data-t="" data-last><span class="cur"></span></span>
+    </section>
+    <figure class="art"><pre id="ascii" aria-label="Eski teneke kahve kavurucunun karakterlerden çizimi"></pre><figcaption class="cap d"># kavurucu.jpg → 90 sütun ascii</figcaption></figure>
+  </main>
+
+  <section class="ls">
+    <div class="ln pr" data-t="ls -l cekirdekler/"></div>
+    <div class="row h" data-o><span>izin</span><span>ad</span><span>gramaj</span><span>fiyat</span><span>not</span></div>
+    <div class="row" data-o><span class="d">-rw-r--r--</span><span>lodos-harmani</span><span>250 g</span><span class="a">₺420</span><span class="d"># ev harmanı</span></div>
+    <div class="row" data-o><span class="d">-rw-r--r--</span><span>etiyopya-guji</span><span>250 g</span><span class="a">₺560</span><span class="d"># bu hafta</span></div>
+    <div class="row" data-o><span class="d">-rw-r--r--</span><span>kolombiya-huila</span><span>250 g</span><span class="a">—</span><span class="d"># bu hafta</span></div>
+    <div class="row" data-o><span class="d">-rw-r--r--</span><span>turk-kahvesi-kavrumu</span><span>fincan</span><span class="a">₺80</span><span class="d"># her gün</span></div>
+  </section>
+
+<script>
+  const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+  const RAMP = " .'`^,:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+  const pre = document.getElementById("ascii");
+  let rows = [];
+  const img = new Image();
+  img.onload = () => {
+    const cols = 90, cw = 0.6;                       // monospace cell is ~0.6 as wide as tall
+    const rowsN = Math.round(cols * (img.height / img.width) * cw * 1.02);
+    const c = document.createElement("canvas"); c.width = cols; c.height = rowsN;
+    const x = c.getContext("2d"); x.drawImage(img, 0, 0, cols, rowsN);
+    const d = x.getImageData(0, 0, cols, rowsN).data;
+    for (let y = 0; y < rowsN; y++) {
+      let s = "";
+      for (let i = 0; i < cols; i++) {
+        const k = (y * cols + i) * 4;
+        let l = (0.299 * d[k] + 0.587 * d[k + 1] + 0.114 * d[k + 2]) / 255;
+        l = Math.min(1, Math.max(0, (l - 0.12) / 0.4));   // push the grey studio ground to blank
+        s += RAMP[Math.round((1 - l) * (RAMP.length - 1))];        // dark object → dense characters
+      }
+      rows.push(s.replace(/\s+$/, ""));
+    }
+    start();
+  };
+  img.src = "data:image/jpeg;base64,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";
+
+  // typed prompt lines and their output, as one sequence
+  const items = [...document.querySelectorAll("[data-t], [data-o]")];
+  items.forEach((el) => { if (el.dataset.t !== undefined && !el.hasAttribute("data-last")) el.textContent = ""; });
+  function start() {
+    const n = items.length;
+    window.demo = {
+      duration: 3000, hold: 1800,
+      render(p) {
+        items.forEach((el, i) => {
+          const a = 0.04 + (i / n) * 0.62, b = a + 0.62 / n;
+          if (el.dataset.t !== undefined && !el.hasAttribute("data-last")) {
+            const t = el.dataset.t;
+            el.textContent = t.slice(0, Math.floor(seg(p, a, b) * t.length));
+            el.style.visibility = p >= a ? "visible" : "hidden";
+          } else {
+            el.style.visibility = p >= b ? "visible" : "hidden";
+          }
+        });
+        const r = Math.floor(seg(p, 0.1, 0.9) * rows.length);
+        pre.textContent = rows.slice(0, r).join("\n");
+      },
+    };
+    const rt = document.createElement("script"); rt.src = "../_runtime.js"; document.body.appendChild(rt);
+  }
+</script>
+</body>
+</html>

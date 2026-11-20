@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eski işletim sistemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --desk: #1f7a74; --face: #c9c4b8; --hi: #fbf9f3; --lo: #7d786d; --dk: #1b1a17;
+    --bar: #20307a; --bar2: #6a1f2a; --ink: #15140f; --paper: #fffdf6; --coffee: #7a3b1d;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--desk); color: var(--ink); overflow: hidden; position: relative;
+         font: 400 21px/1.15 "VT323", "Courier New", monospace; -webkit-font-smoothing: none; }
+  .px { font-family: "Pixelify Sans", "VT323", monospace; }
+
+  /* bevel helpers */
+  .out { background: var(--face); box-shadow: inset -2px -2px 0 var(--dk), inset 2px 2px 0 var(--hi), inset -4px -4px 0 var(--lo); }
+  .in  { box-shadow: inset 2px 2px 0 var(--lo), inset -2px -2px 0 var(--hi), inset 4px 4px 0 var(--dk); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 6px 18px 7px; font-size: 22px; color: var(--ink);
+         background: var(--face); box-shadow: inset -2px -2px 0 var(--dk), inset 2px 2px 0 var(--hi), inset -4px -4px 0 var(--lo); }
+  .btn.def { outline: 2px solid var(--dk); outline-offset: -1px; }
+  .btn u { text-decoration: none; border-bottom: 2px solid currentColor; }
+
+  .win { position: absolute; padding: 4px; }
+  .tb { height: 28px; display: flex; align-items: center; gap: 8px; padding: 0 4px 0 8px; color: #fff;
+        background: linear-gradient(90deg, var(--bar), #4a68b8); font: 600 16px/1 "Pixelify Sans", monospace; letter-spacing: .02em; }
+  .tb.off { background: linear-gradient(90deg, #7f7b72, #b3aea3); color: #e9e6de; }
+  .tb .t { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tb i { width: 22px; height: 20px; display: grid; place-items: center; font: 700 15px/1 "Pixelify Sans", monospace; color: var(--ink); font-style: normal;
+          background: var(--face); box-shadow: inset -2px -2px 0 var(--dk), inset 2px 2px 0 var(--hi); }
+  .menu { display: flex; gap: 18px; padding: 4px 8px 3px; font-size: 20px; }
+  .menu span::first-letter { text-decoration: underline; }
+
+  /* desktop icons */
+  .icons { position: absolute; left: 18px; top: 22px; display: grid; gap: 22px; width: 92px; }
+  .ico { display: grid; justify-items: center; gap: 4px; text-align: center; color: #fff; font-size: 19px; line-height: 1; }
+  .ico svg { width: 44px; height: 44px; shape-rendering: crispEdges; }
+  .ico span { padding: 1px 3px; }
+  .ico.sel span { background: var(--bar); outline: 1px dotted #fff; }
+
+  /* main browser window */
+  #main { left: 124px; top: 18px; width: 742px; height: 548px; display: flex; flex-direction: column; }
+  .addr { display: flex; align-items: center; gap: 8px; padding: 2px 6px 6px; font-size: 20px; }
+  .addr .field { flex: 1; background: #fff; padding: 2px 8px; }
+  .page { flex: 1; background: var(--paper); margin: 0 2px; position: relative; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+  .site-nav { display: flex; align-items: center; gap: 22px; padding: 12px 22px; border-bottom: 2px solid var(--ink); font-size: 22px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 700 28px/1 "Pixelify Sans", monospace; letter-spacing: .01em; margin-right: auto; }
+  .logo svg { width: 30px; height: 30px; shape-rendering: crispEdges; }
+  .site-nav a { color: var(--bar); text-decoration: underline; text-underline-offset: 3px; }
+  .site-nav a.on { color: var(--bar2); }
+  .hero { display: grid; grid-template-columns: 1.08fr .92fr; gap: 20px; padding: 22px 22px 18px; }
+  .hero h1 { font: 700 54px/.98 "Pixelify Sans", monospace; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: #fff; background: var(--coffee); padding: 0 6px; }
+  .hero p { margin-top: 16px; font-size: 23px; line-height: 1.12; max-width: 30ch; }
+  .hero .cta { margin-top: 18px; display: flex; gap: 12px; }
+  .frame { padding: 4px; align-self: start; }
+  .frame img { display: block; width: 100%; height: 252px; object-fit: cover; image-rendering: pixelated; }
+  .cap { font-size: 18px; margin-top: 6px; color: #4a463d; }
+  .status { display: flex; gap: 4px; padding: 4px 2px 0; font-size: 19px; }
+  .status div { padding: 1px 8px; }
+  .status div:first-child { flex: 1; }
+
+  /* notepad */
+  #note { left: 892px; top: 46px; width: 368px; height: 316px; display: flex; flex-direction: column; }
+  .txt { flex: 1; background: #fff; margin: 2px; padding: 10px 14px; font-size: 22px; line-height: 1.2; overflow: hidden; }
+  .txt .row { display: flex; }
+  .txt .row b { font-weight: 400; margin-left: auto; }
+  .txt .row i { font-style: normal; flex: 1; border-bottom: 2px dotted #9b968b; margin: 0 6px 6px; }
+  .caret { display: inline-block; width: 10px; height: 20px; background: var(--ink); vertical-align: -3px; }
+
+  /* photo viewer */
+  #photo { left: 912px; top: 386px; width: 340px; height: 252px; display: flex; flex-direction: column; }
+  #photo .view { flex: 1; margin: 4px 2px 2px; background: #000; padding: 2px; }
+  #photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* dialog */
+  #dlg { left: 620px; top: 404px; width: 360px; }
+  .dlg-body { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 16px 16px 10px; font-size: 22px; line-height: 1.12; }
+  .dlg-body svg { width: 48px; height: 48px; shape-rendering: crispEdges; }
+  .dlg-btns { display: flex; justify-content: center; gap: 12px; padding: 4px 0 12px; }
+
+  /* second section window */
+  #beans { left: 124px; top: 588px; width: 742px; height: 260px; }
+  .beans-body { background: var(--paper); margin: 4px 2px; padding: 14px 20px; }
+  .beans-body h2 { font: 700 30px/1 "Pixelify Sans", monospace; }
+  .tabs { display: flex; gap: 0; margin-top: 12px; }
+  .tabs span { padding: 5px 14px; font-size: 21px; background: var(--face); box-shadow: inset -2px 0 0 var(--dk), inset 2px 2px 0 var(--hi); }
+  .tabs span.on { background: var(--paper); }
+
+  /* taskbar */
+  .task { position: absolute; left: 0; right: 0; bottom: 0; height: 40px; display: flex; align-items: center; gap: 6px; padding: 4px 4px;
+          background: var(--face); box-shadow: inset 0 2px 0 var(--hi); z-index: 10; }
+  .start { font: 700 19px/1 "Pixelify Sans", monospace; padding: 5px 12px; gap: 8px; }
+  .start svg { width: 20px; height: 20px; shape-rendering: crispEdges; }
+  .task .slot { min-width: 170px; justify-content: flex-start; padding: 5px 10px; font-size: 20px; }
+  .task .slot.on { box-shadow: inset 2px 2px 0 var(--dk), inset -2px -2px 0 var(--hi); background: #dcd8ce; }
+  .clock { margin-left: auto; padding: 5px 14px; font-size: 21px; }
+
+  @media (max-width: 700px) {
+    .icons, #note, #photo, #dlg, #beans, .task .slot { display: none; }
+    #main { left: 8px; right: 8px; width: auto; top: 8px; bottom: 48px; height: auto; }
+    .hero { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 40px; }
+    .site-nav a { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="icons">
+    <div class="ico sel" data-in="0,.2">
+      <svg viewBox="0 0 16 16"><path fill="#1b1a17" d="M4 2h8v1h1v12H3V3h1z"/><path fill="#b8742f" d="M4 3h8v11H4z"/><path fill="#f3e6c8" d="M5 6h6v5H5z"/><path fill="#7a3b1d" d="M7 7h2v1H7zM6 8h1v2h1V9h1v1h1V8H9V7"/><path fill="#1b1a17" d="M3 4h10v1H3z"/></svg>
+      <span>Kavrum günlüğü</span>
+    </div>
+    <div class="ico" data-in=".04,.24">
+      <svg viewBox="0 0 16 16"><path fill="#1b1a17" d="M3 1h8l3 3v11H3z"/><path fill="#fff" d="M4 2h6v3h3v9H4z"/><path fill="#7d786d" d="M5 7h7v1H5zm0 2h7v1H5zm0 2h5v1H5z"/></svg>
+      <span>Menü.txt</span>
+    </div>
+    <div class="ico" data-in=".08,.28">
+      <svg viewBox="0 0 16 16"><path fill="#1b1a17" d="M6 3h3v3h4v1h2v2l-2 3H2L1 9h1V6h4z"/><path fill="#c23b2f" d="M7 4h1v2H7z"/><path fill="#fff" d="M3 7h9v2H3z"/><path fill="#20307a" d="M4 7h1v1H4zm2 0h1v1H6zm2 0h1v1H8zm2 0h1v1h-1z"/><path fill="#fff" d="M2 10h12l-1 1H3z"/><path fill="#9fd3cf" d="M0 13h16v1H0z"/></svg>
+      <span>İskele.lnk</span>
+    </div>
+    <div class="ico" data-in=".12,.32">
+      <svg viewBox="0 0 16 16"><path fill="#1b1a17" d="M4 3h8v1h1v1H3V4h1zM4 6h8v9H4z"/><path fill="#e8e6e0" d="M5 7h6v7H5z"/><path fill="#7d786d" d="M6 8h1v5H6zm3 0h1v5H9z"/><path fill="#1b1a17" d="M7 2h2v1H7z"/></svg>
+      <span>Çöp kutusu</span>
+    </div>
+  </div>
+
+  <!-- second section, peeking under the taskbar -->
+  <section class="win out" id="beans" data-win=".42,.62">
+    <div class="tb off"><span class="t">Haftanın çekirdekleri</span><i>_</i><i>□</i><i>×</i></div>
+    <div class="beans-body in">
+      <h2>Bu hafta kazanda 4 çekirdek</h2>
+      <div class="tabs"><span class="on">Lodos harmanı</span><span>Etiyopya Guji</span><span>Kolombiya Huila</span><span>Türk kahvesi kavrumu</span></div>
+    </div>
+  </section>
+
+  <section class="win out" id="main" data-win="0,.3">
+    <div class="tb"><span class="t">Lodos Kahve Kavurma Evi — Gezgin</span><i>_</i><i>□</i><i>×</i></div>
+    <div class="menu"><span>Dosya</span><span>Düzen</span><span>Görünüm</span><span>Kavrum</span><span>Yardım</span></div>
+    <div class="addr"><span>Adres</span><div class="field in">lodos.kahve/karakoy/index.htm</div><span class="btn" style="padding:2px 12px">Git</span></div>
+    <div class="page in">
+      <nav class="site-nav">
+        <span class="logo">
+          <svg viewBox="0 0 12 12"><path fill="#7a3b1d" d="M2 4h7v1h2v3H9v2H3V9H2z"/><path fill="#fffdf6" d="M9 6h1v1H9z"/><path fill="#15140f" d="M4 1h1v2H4zm2 0h1v2H6z"/><path fill="#15140f" d="M1 11h10v1H1z"/></svg>
+          Lodos
+        </span>
+        <a class="on">Ana sayfa</a><a>Menü</a><a>Çekirdekler</a><a>İskele</a>
+      </nav>
+      <div class="hero">
+        <div>
+          <h1>Vapur kalkmadan <em>kahven</em> hazır.</h1>
+          <p>Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Karaköy iskelesine 90 saniye.</p>
+          <div class="cta"><span class="btn def"><u>S</u>iparişi ver</span><span class="btn"><u>M</u>enüyü aç</span></div>
+        </div>
+        <div>
+          <div class="frame in"><img src="../../assets/barista.webp" alt="Barista portafiltreden fincana espresso alıyor"></div>
+          <div class="cap">sabah_ilk_kavrum.jpg · 1024×683</div>
+        </div>
+      </div>
+    </div>
+    <div class="status"><div class="in">Kemankeş Cd. 12, Karaköy</div><div class="in">07.00–19.00</div><div class="in">Açık</div></div>
+  </section>
+
+  <section class="win out" id="note" data-win=".12,.38">
+    <div class="tb off"><span class="t">Menü.txt — Not Defteri</span><i>_</i><i>□</i><i>×</i></div>
+    <div class="menu"><span>Dosya</span><span>Düzen</span><span>Biçim</span></div>
+    <div class="txt in">
+      LODOS / FİYATLAR<br><br>
+      <div class="row">Lodos harmanı 250 g<i></i><b>₺420</b></div>
+      <div class="row">Etiyopya Guji 250 g<i></i><b>₺560</b></div>
+      <div class="row">Filtre kahve<i></i><b>₺95</b></div>
+      <div class="row">Türk kahvesi<i></i><b>₺80</b></div>
+      <div class="row">Espresso<i></i><b>₺75</b></div>
+      <br>Cumartesi 08.00–18.00<span class="caret"></span>
+    </div>
+  </section>
+
+  <section class="win out" id="photo" data-win=".22,.46">
+    <div class="tb off"><span class="t">karakoy_iskele.bmp</span><i>×</i></div>
+    <div class="view in"><img src="../../assets/deniz.webp" alt="Vapurdan Boğaz ve şehir silueti"></div>
+  </section>
+
+  <section class="win out" id="dlg" data-win=".55,.78">
+    <div class="tb" style="background:linear-gradient(90deg,var(--bar2),#b0503c)"><span class="t">Vapur saati</span><i>×</i></div>
+    <div class="dlg-body">
+      <svg viewBox="0 0 16 16"><path fill="#1b1a17" d="M7 1h2v1h1v2h1v2h1v2h1v2h1v2h1v3H1v-3h1v-2h1V8h1V6h1V4h1V2h1z"/><path fill="#f2c230" d="M7 3h2v2h1v2h1v2h1v2h1v2H3v-2h1V9h1V7h1V5h1z"/><path fill="#1b1a17" d="M7 6h2v4H7zm0 5h2v2H7z"/></svg>
+      <div>Kalkışa 6 dakika var. Şimdi sipariş verirsen sıra beklemezsin.</div>
+    </div>
+    <div class="dlg-btns"><span class="btn def">Tamam</span><span class="btn">Vazgeç</span></div>
+  </section>
+
+  <div class="task">
+    <span class="btn start"><svg viewBox="0 0 10 10"><path fill="#7a3b1d" d="M1 3h6v1h2v3H7v2H2V8H1z"/><path fill="#c9c4b8" d="M7 5h1v1H7z"/></svg>Başlat</span>
+    <span class="btn slot on">Lodos — Gezgin</span>
+    <span class="btn slot">Menü.txt</span>
+    <span class="btn slot">Vapur saati</span>
+    <span class="clock in">07.00</span>
+  </div>
+
+<script>
+  const wins = [...document.querySelectorAll("[data-win]")];
+  const icons = [...document.querySelectorAll("[data-in]")];
+  const step = (t, n) => Math.floor(t * n) / n; // choppy, like an old machine
+  window.demo = {
+    duration: 2000, hold: 5000,
+    render(p) {
+      wins.forEach((el) => {
+        const [a, b] = el.dataset.win.split(",").map(Number);
+        const t = step(gl.seg(p, a, b), 4);
+        el.style.visibility = t > 0 ? "visible" : "hidden";
+        el.style.scale = 0.7 + 0.3 * t;
+        el.style.transformOrigin = "20% 10%";
+      });
+      icons.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        el.style.opacity = step(gl.seg(p, a, b), 2);
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

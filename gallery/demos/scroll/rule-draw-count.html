@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Çizgi çizilip sayı sayma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #131211; --ink: #f1ebe0; --orange: #ff6b2c; --quiet: #8a8378; --line: #3a3733; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); font: 400 14px/1.5 "IBM Plex Mono", ui-monospace, monospace; overflow: hidden; }
+  .doc { position: absolute; left: 0; right: 0; top: 0; padding: 0 64px; will-change: transform; }
+  .head { display: flex; justify-content: space-between; align-items: end; padding-top: 44px; padding-bottom: 22px; }
+  .head h2 { font: 800 54px/.9 "Big Shoulders Display", sans-serif; text-transform: uppercase; letter-spacing: .01em; }
+  .head h2 span { color: var(--orange); }
+  .head p { color: var(--quiet); max-width: 38ch; text-align: right; }
+  .row { position: relative; display: grid; grid-template-columns: 70px 1fr 340px; align-items: end; height: 124px; padding-bottom: 14px; }
+  .row .i { color: var(--quiet); font-size: 13px; align-self: end; padding-bottom: 12px; }
+  .num { font: 800 112px/.8 "Big Shoulders Display", sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -.01em; white-space: nowrap; }
+  .num small { font-weight: 500; font-size: 40px; color: var(--quiet); margin-left: 10px; letter-spacing: .02em; }
+  .row:nth-child(odd) .num b { color: var(--orange); font-weight: 800; }
+  .lab { text-align: right; color: #c9c1b4; padding-bottom: 10px; }
+  .lab em { font-style: normal; color: var(--quiet); display: block; font-size: 12px; }
+  .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
+  .rule i { position: absolute; inset: -1px 0 auto 0; height: 3px; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); }
+  .rail { position: fixed; right: 12px; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: rgba(255,255,255,.08); z-index: 20; }
+  .thumb { position: absolute; left: 0; width: 3px; height: 70px; border-radius: 2px; background: rgba(255,255,255,.6); }
+  @media (max-width: 760px) { .doc { padding: 0 20px; } .head p { display: none; } .row { grid-template-columns: 30px 1fr; height: 110px; } .lab { display: none; } .num { font-size: 72px; } .num small { font-size: 24px; } }
+</style>
+</head>
+<body>
+  <div class="doc">
+    <div class="head"><h2>Lodos'un <span>sayıları</span></h2><p>Kemankeş Cd. 12, Karaköy iskelesinin hemen yukarısı.</p></div>
+    <div class="rows">
+      <div class="row" data-v="07.00"><span class="i">01</span><div class="num"><b>00.00</b></div><p class="lab">Her sabah kavruma başladığımız saat<em>hafta içi 07.00–19.00 açığız</em></p><div class="rule"><i></i></div></div>
+      <div class="row" data-v="90" data-u="saniye"><span class="i">02</span><div class="num"><b>0</b><small>saniye</small></div><p class="lab">Kapıdan Karaköy iskelesine<em>Kemankeş Caddesi'nden</em></p><div class="rule"><i></i></div></div>
+      <div class="row" data-v="6" data-u="dakika"><span class="i">03</span><div class="num"><b>0</b><small>dakika</small></div><p class="lab">Kalkışa bu kadar kala gelene sıra yok<em>vapuru kaçırma</em></p><div class="rule"><i></i></div></div>
+      <div class="row" data-v="12" data-u="kg"><span class="i">04</span><div class="num"><b>0</b><small>kg</small></div><p class="lab">Tek kazanımızın bir kavrumu<em>tek kazan, tek sabah</em></p><div class="rule"><i></i></div></div>
+      <div class="row" data-v="2019" data-from="2000"><span class="i">05</span><div class="num"><b>2000</b></div><p class="lab">Karaköy'de açıldığımız yıl<em>Lodos Kahve Kavurma Evi</em></p><div class="rule"><i></i></div></div>
+    </div>
+  </div>
+  <div class="rail"><div class="thumb"></div></div>
+<script>
+  const doc = document.querySelector(".doc");
+  const rows = [...document.querySelectorAll(".row")].map((r) => ({ r, b: r.querySelector(".num b"), rule: r.querySelector(".rule i"), v: r.dataset.v, from: +(r.dataset.from || 0) }));
+  const thumb = document.querySelector(".thumb"), rail = document.querySelector(".rail");
+  const fmt = (row, t) => {
+    if (row.v === "07.00") { const m = Math.round(420 * t); return String(Math.floor(m / 60)).padStart(2, "0") + "." + String(m % 60).padStart(2, "0"); }
+    return String(Math.round(gl.lerp(row.from, +row.v, t)));
+  };
+  window.demo = {
+    duration: 4200,
+    render(p) {
+      // the list scrolls up into view as the visitor scrolls
+      doc.style.transform = `translateY(${gl.lerp(150, 0, gl.easeOutQuart(gl.seg(p, 0, 0.7))).toFixed(1)}px)`;
+      rows.forEach((row, i) => {
+        const s = 0.03 + i * 0.15;
+        const draw = gl.easeInOutCubic(gl.seg(p, s, s + 0.24));     // rule draws left → right
+        const count = gl.easeOutQuart(gl.seg(p, s + 0.02, s + 0.3)); // number counts up to its real value
+        row.rule.style.transform = `scaleX(${draw.toFixed(4)})`;
+        row.b.textContent = fmt(row, count);
+        const vis = gl.seg(p, s - 0.03, s + 0.06);
+        row.r.style.opacity = (0.15 + 0.85 * vis).toFixed(3);
+      });
+      thumb.style.top = `${p * (rail.clientHeight - 70)}px`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

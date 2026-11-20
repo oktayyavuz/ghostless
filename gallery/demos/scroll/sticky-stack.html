@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Üst üste yığılan paneller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --page: #f4efe6; --ink: #191512; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--page); color: var(--ink); font: 400 16px/1.5 "Public Sans", system-ui, sans-serif; overflow: hidden; }
+  header { position: absolute; left: 56px; right: 56px; top: 30px; display: flex; justify-content: space-between; align-items: baseline; }
+  header h2 { font: 800 30px/1 Syne, sans-serif; letter-spacing: -.02em; }
+  header span { color: #6f665c; font-size: 14px; }
+  .panel { position: absolute; left: 40px; right: 40px; top: 0; height: calc(100vh - 116px); border-radius: 18px; overflow: hidden;
+           display: grid; grid-template-columns: 1.05fr 1fr; transform-origin: 50% 0; will-change: transform; box-shadow: 0 -1px 0 rgba(0,0,0,.06); }
+  .panel .txt { padding: 40px 44px; display: flex; flex-direction: column; }
+  .panel .no { font: 700 15px/1 Syne, sans-serif; letter-spacing: .08em; display: flex; justify-content: space-between; opacity: .8; }
+  .panel h3 { font: 800 clamp(40px, 6.2vw, 84px)/.95 Syne, sans-serif; letter-spacing: -.03em; margin-top: auto; }
+  .panel p { margin-top: 18px; max-width: 34ch; font-size: 17px; opacity: .85; }
+  .panel .price { margin-top: 26px; display: flex; gap: 16px; align-items: baseline; font: 700 30px/1 Syne, sans-serif; }
+  .panel .price small { font: 400 15px/1 "Public Sans", sans-serif; opacity: .7; }
+  .panel figure { position: relative; margin: 14px 14px 14px 0; border-radius: 10px; overflow: hidden; }
+  .panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .panel .shade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+  .p0 { background: #c4532d; color: #fbf1e4; }
+  .p1 { background: #e7d8bc; color: #2a1d12; }
+  .p2 { background: #1f4f73; color: #eef2f4; }
+  .p3 { background: #181512; color: #f1e7d6; }
+  .p1 img { object-fit: contain; background: #e4e3df; }
+  .rail { position: fixed; right: 12px; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: rgba(0,0,0,.07); z-index: 20; }
+  .thumb { position: absolute; left: 0; width: 3px; height: 70px; border-radius: 2px; background: rgba(20,20,20,.5); }
+  @media (max-width: 700px) { .panel { left: 12px; right: 12px; grid-template-columns: 1fr; grid-template-rows: 1fr 34%; } .panel figure { margin: 0 12px 12px; } header { left: 16px; right: 16px; } header span { display: none; } }
+</style>
+</head>
+<body>
+  <header><h2>Tezgâhta bu hafta</h2><span>Haftada 4 çekirdek · Kemankeş Cd. 12, Karaköy</span></header>
+  <article class="panel p0"><div class="txt"><div class="no"><span>01</span><span>ev harmanı</span></div><h3>Lodos harmanı</h3><p>Her sabah 07.00'de, 12 kg'lık tek kazanda kavrulan ev harmanı. Sütlüye de, sade de olur.</p><div class="price">₺420 <small>250 g</small></div></div><figure><img src="../../assets/cekirdek.webp" alt="Kavrulmuş çekirdekler ve fincan"></figure><div class="shade"></div></article>
+  <article class="panel p1"><div class="txt"><div class="no"><span>02</span><span>tek köken</span></div><h3>Etiyopya Guji</h3><p>Aynı tek kazanda kavrulur. Filtrede en iyi hâli.</p><div class="price">₺560 <small>250 g</small></div></div><figure><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu"></figure><div class="shade"></div></article>
+  <article class="panel p2"><div class="txt"><div class="no"><span>03</span><span>tezgâhtan</span></div><h3>Filtre kahve</h3><p>Vapurun kalkışına 6 dakika kala sipariş verene sıra yok.</p><div class="price">₺95 <small>fincan</small></div></div><figure><img src="../../assets/barista.webp" alt="Barista elleri ve portafiltre"></figure><div class="shade"></div></article>
+  <article class="panel p3"><div class="txt"><div class="no"><span>04</span><span>Türk kahvesi kavrumu</span></div><h3>Türk kahvesi</h3><p>Kendi kavrumumuz. Karaköy iskelesine 90 saniye, soğumadan yetişir.</p><div class="price">₺80 <small>fincan</small></div></div><figure><img src="../../assets/espresso.webp" alt="Fincanlara akan kahve"></figure><div class="shade"></div></article>
+  <div class="rail"><div class="thumb"></div></div>
+<script>
+  const panels = [...document.querySelectorAll(".panel")];
+  const shades = panels.map((el) => el.querySelector(".shade"));
+  const thumb = document.querySelector(".thumb"), rail = document.querySelector(".rail");
+  const TOP = 86, STEP = 14;
+  window.demo = {
+    duration: 4800,
+    render(p) {
+      const vh = innerHeight;
+      // how far each panel has slid up (panel 0 is already in place)
+      const e = panels.map((_, i) => (i === 0 ? 1 : gl.easeInOutCubic(gl.seg(p, 0.04 + (i - 1) * 0.31, 0.3 + (i - 1) * 0.31))));
+      panels.forEach((el, i) => {
+        const y = gl.lerp(vh + 20, TOP + i * STEP, e[i]);
+        // every panel that lands on top pushes this one back: smaller and darker
+        let cover = 0;
+        for (let j = i + 1; j < panels.length; j++) cover += e[j];
+        const s = 1 - 0.04 * cover;
+        el.style.transform = `translateY(${y.toFixed(1)}px) scale(${s.toFixed(4)})`;
+        el.style.zIndex = i + 1;
+        shades[i].style.opacity = Math.min(0.55, 0.2 * cover).toFixed(3);
+      });
+      thumb.style.top = `${p * (rail.clientHeight - 70)}px`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

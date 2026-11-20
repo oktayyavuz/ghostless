@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sabitlenmiş hikâye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --green: #163a2d; --cream: #efe6d3; --amber: #e3a552; --quiet: #9db3a6; --ink: #1b241f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--cream); color: var(--ink); font: 400 16px/1.5 "Albert Sans", system-ui, sans-serif; overflow: hidden; }
+  .doc { position: absolute; left: 0; right: 0; top: 0; will-change: transform; }
+  .intro { height: 300px; padding: 64px 72px 0; display: flex; justify-content: space-between; align-items: start; }
+  .intro h2 { font: 400 64px/1 "DM Serif Display", Georgia, serif; letter-spacing: -.01em; max-width: 14ch; }
+  .intro h2 em { color: #2d6a4f; }
+  .intro p { max-width: 30ch; color: #5d6b62; margin-top: 12px; }
+  .pin { position: relative; height: 100vh; background: var(--green); color: var(--cream); display: grid; grid-template-columns: 1fr 1.05fr; overflow: hidden; }
+  .left { position: relative; overflow: hidden; }
+  .head { position: absolute; left: 72px; right: 40px; top: 44px; display: flex; justify-content: space-between; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--quiet); z-index: 2; }
+  .count { color: var(--cream); font-variant-numeric: tabular-nums; }
+  .count b { color: var(--amber); font-weight: 600; }
+  .win { position: absolute; left: 0; right: 0; top: 84px; bottom: 84px; overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); }
+  .steps { position: absolute; left: 72px; right: 48px; top: 0; will-change: transform; }
+  .step { height: 340px; display: flex; flex-direction: column; justify-content: center; }
+  .step .k { font: 400 22px/1 "DM Serif Display", serif; color: var(--amber); font-style: italic; margin-bottom: 14px; }
+  .step h3 { font: 400 58px/1.02 "DM Serif Display", Georgia, serif; letter-spacing: -.01em; }
+  .step p { margin-top: 16px; font-size: 18px; color: #cfd8cf; max-width: 32ch; }
+  .bars { position: absolute; left: 72px; bottom: 44px; display: flex; gap: 6px; }
+  .bars i { width: 54px; height: 3px; background: rgba(239,230,211,.18); position: relative; overflow: hidden; }
+  .bars i b { position: absolute; inset: 0; background: var(--amber); transform-origin: 0 50%; }
+  .right { position: relative; margin: 28px 28px 28px 0; overflow: hidden; border-radius: 3px; }
+  .right img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .right .cap { position: absolute; left: 18px; bottom: 16px; color: #fff; font-size: 13px; background: rgba(22,58,45,.85); padding: 4px 10px; border-radius: 2px; }
+  .rail { position: fixed; right: 9px; top: 12px; bottom: 12px; width: 3px; border-radius: 2px; background: rgba(0,0,0,.08); z-index: 9; }
+  .thumb { position: absolute; left: 0; width: 3px; height: 70px; border-radius: 2px; background: rgba(20,20,20,.55); }
+  @media (max-width: 760px) { .pin { grid-template-columns: 1fr; grid-template-rows: 1fr 40vh; } .intro { padding: 24px 20px; } .intro h2 { font-size: 36px; } .intro p { display: none; }
+    .steps, .head, .bars { left: 20px; } .step h3 { font-size: 34px; } .right { margin: 0; } }
+</style>
+</head>
+<body>
+  <div class="doc">
+    <section class="intro">
+      <h2>Çekirdekten iskeleye, <em>dört durak.</em></h2>
+      <p>Lodos'ta bir fincanın sabahı. Kemankeş Cd. 12, Karaköy.</p>
+    </section>
+    <section class="pin">
+      <div class="left">
+        <div class="head"><span>Bir sabah, Lodos'ta</span><span class="count"><b id="cn">01</b> / 04</span></div>
+        <div class="win"><div class="steps">
+          <div class="step"><span class="k">07.00</span><h3>Kazan ısınıyor.</h3><p>Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz.</p></div>
+          <div class="step"><span class="k">haftada 4 çekirdek</span><h3>Bugünün kavrumu.</h3><p>Lodos harmanı, Etiyopya Guji, Kolombiya Huila ve Türk kahvesi kavrumu.</p></div>
+          <div class="step"><span class="k">6 dakika kala</span><h3>Sıra beklemeden.</h3><p>Vapurun kalkışına 6 dakika kala sipariş verene sıra yok.</p></div>
+          <div class="step"><span class="k">90 saniye</span><h3>Kahven elinde, iskeleye.</h3><p>Karaköy iskelesine 90 saniye. Halatlar çözülmeden yetişirsin.</p></div>
+        </div></div>
+        <div class="bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+      </div>
+      <div class="right">
+        <img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu">
+        <img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde kavrulmuş çekirdekler">
+        <img src="../../assets/espresso.webp" alt="Fincanlara akan espresso">
+        <img src="../../assets/deniz.webp" alt="Vapurdan Boğaz">
+        <span class="cap" id="cap">Kavurma odası</span>
+      </div>
+    </section>
+  </div>
+  <div class="rail"><div class="thumb"></div></div>
+<script>
+  const doc = document.querySelector(".doc");
+  const steps = document.querySelector(".steps");
+  const stepEls = [...document.querySelectorAll(".step")];
+  const imgs = [...document.querySelectorAll(".right img")];
+  const bars = [...document.querySelectorAll(".bars b")];
+  const cn = document.getElementById("cn"), cap = document.getElementById("cap");
+  const caps = ["Kavurma odası", "Çuvaldan fincana", "Tezgâh", "Karaköy iskelesi"];
+  const thumb = document.querySelector(".thumb"), rail = document.querySelector(".rail");
+  window.demo = {
+    duration: 5200,
+    render(p) {
+      const vh = innerHeight;
+      // 1) the section scrolls up into place, then pins
+      const enter = gl.easeInOutCubic(gl.seg(p, 0, 0.2));
+      doc.style.transform = `translateY(${-300 * enter}px)`;
+      // 2) while pinned, scrolling advances the story: 0 → 3
+      const raw = gl.seg(p, 0.22, 0.96) * 3;
+      // hold a beat on each step: snap-ish curve between integers
+      const q = Math.floor(raw) + gl.easeInOutCubic(raw - Math.floor(raw));
+      const stepH = stepEls[0].offsetHeight;
+      const wh = steps.parentElement.clientHeight;
+      steps.style.transform = `translateY(${(wh / 2 - stepH / 2 - q * stepH).toFixed(1)}px)`;
+      stepEls.forEach((el, i) => { el.style.opacity = (1 - Math.min(1, Math.abs(q - i)) * 0.82).toFixed(3); });
+      imgs.forEach((img, i) => {
+        if (i === 0) return;
+        const t = gl.clamp(q - (i - 1));
+        img.style.clipPath = `inset(${((1 - t) * 100).toFixed(2)}% 0 0 0)`;
+        img.style.transform = `scale(${1.12 - 0.12 * t})`;
+      });
+      const idx = Math.min(3, Math.round(q));
+      cn.textContent = "0" + (idx + 1); cap.textContent = caps[idx];
+      bars.forEach((b, i) => { b.style.transform = `scaleX(${gl.clamp(raw - i + 1)})`; });
+      bars[0].style.transform = `scaleX(${gl.clamp(raw + 1)})`;
+      thumb.style.top = `${p * (rail.clientHeight - 70)}px`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Y2K / krom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rammetto+One&family=Unbounded:wght@400;600;800&family=Chakra+Petch:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ice: #dfe3f3; --ink: #15123c; --pink: #ff3d9a; --lime: #c6f24e;
+    --chrome: linear-gradient(180deg, #ffffff 0%, #d3d8e3 16%, #757d90 38%, #f6f8fb 50%, #a4abbc 64%, #3b4153 84%, #d9dde6 100%);
+    --irid: linear-gradient(115deg, #ffc9e8 0%, #c4f1ff 34%, #dccdff 62%, #cdfde4 88%);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--ice); color: var(--ink); font: 500 17px/1.5 "Chakra Petch", system-ui, sans-serif; }
+  .abs { position: absolute; }
+  .unb { font-family: "Unbounded", sans-serif; }
+
+  /* header: one iridescent capsule */
+  header { left: 40px; right: 40px; top: 24px; height: 64px; border-radius: 40px; background: var(--irid); display: flex; align-items: center; gap: 10px; padding: 0 10px 0 26px;
+           box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--ink); z-index: 5; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 400 28px/1 "Rammetto One", cursive; margin-right: auto; }
+  .ball { display: inline-block; width: 26px; height: 26px; border-radius: 50%;
+          background: radial-gradient(circle at 34% 28%, #fff 0 9%, #e3e7ef 18%, #7d8496 46%, #262b3c 70%, #b4bac8 92%); box-shadow: 0 0 0 2px var(--ink); }
+  nav { display: flex; gap: 6px; }
+  nav a { padding: 10px 18px; border-radius: 30px; font: 600 13px/1 "Unbounded", sans-serif; letter-spacing: .02em; }
+  nav a.on { background: var(--ink); color: #fff; }
+  .order { padding: 13px 22px; border-radius: 30px; font: 800 13px/1 "Unbounded", sans-serif; color: var(--ink); background: var(--lime); box-shadow: 0 0 0 2px var(--ink); margin-left: 8px; }
+
+  h1 { left: 50px; top: 128px; width: 640px; font: 400 80px/1.0 "Rammetto One", cursive; letter-spacing: -.01em; z-index: 3; }
+  h1 .pk { color: var(--pink); }
+  .lede { left: 54px; top: 470px; width: 420px; font-size: 19px; line-height: 1.45; z-index: 3; }
+  .chips { left: 54px; top: 572px; display: flex; gap: 10px; z-index: 3; }
+  .chip { padding: 11px 18px; border-radius: 30px; font: 600 13px/1 "Unbounded", sans-serif; background: var(--irid); box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--ink); }
+  .chip.dark { background: var(--ink); color: #fff; box-shadow: none; }
+
+  /* chrome liquid + framed photo */
+  .liquid { left: 640px; top: 96px; width: 640px; height: 600px; }
+  .frame { left: 812px; top: 150px; width: 300px; height: 420px; border-radius: 150px; padding: 13px; background: var(--chrome); box-shadow: 0 0 0 2px var(--ink), inset 0 0 0 2px var(--ink); z-index: 2; }
+  .frame .in { width: 100%; height: 100%; border-radius: 140px; overflow: hidden; box-shadow: 0 0 0 2px var(--ink); }
+  .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; display: block; }
+  .sph { border-radius: 50%; z-index: 3; box-shadow: 0 0 0 2px var(--ink);
+         background: radial-gradient(circle at 34% 28%, #fff 0 7%, #e3e7ef 16%, #8a91a2 40%, #2a2f40 64%, #6d7486 80%, #d6dae3 96%); }
+  .s1 { left: 1110px; top: 140px; width: 86px; height: 86px; }
+  .s2 { left: 760px; top: 520px; width: 52px; height: 52px; }
+  .torus { left: 1060px; top: 470px; width: 150px; height: 150px; border-radius: 50%; z-index: 3;
+           background: conic-gradient(from 200deg, #fff, #8a91a2 18%, #2a2f40 30%, #e8ebf1 46%, #737a8c 60%, #fdfdff 74%, #3b4153 88%, #fff);
+           -webkit-mask: radial-gradient(circle, transparent 38px, #000 39px 73px, transparent 74px); mask: radial-gradient(circle, transparent 38px, #000 39px 73px, transparent 74px); }
+  .torus-line { left: 1060px; top: 470px; width: 150px; height: 150px; border-radius: 50%; z-index: 3; border: 2px solid var(--ink); }
+  .torus-line::after { content: ""; position: absolute; inset: 35px; border-radius: 50%; border: 2px solid var(--ink); }
+  .timer { left: 700px; top: 600px; width: 250px; padding: 12px 16px; border-radius: 20px; background: #fff; box-shadow: 0 0 0 2px var(--ink), 6px 6px 0 var(--ink); z-index: 4; }
+  .timer b { font: 800 12px/1 "Unbounded", sans-serif; letter-spacing: .04em; display: block; margin-bottom: 8px; }
+  .track { height: 16px; border-radius: 10px; box-shadow: inset 0 0 0 2px var(--ink); padding: 3px; }
+  .fill { height: 100%; width: 72%; border-radius: 8px; background: var(--irid); box-shadow: 0 0 0 1.5px var(--ink); }
+  .timer span { display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px; }
+
+  /* second section */
+  .sec { left: 0; right: 0; top: 700px; bottom: 0; background: var(--ink); color: #fff; padding: 30px 50px; display: flex; align-items: center; gap: 26px; z-index: 6; }
+  .sec::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; background: var(--chrome); box-shadow: 0 -2px 0 var(--ink); }
+  .sec h2 { font: 400 30px/1 "Rammetto One", cursive; margin-right: 14px; white-space: nowrap; }
+  .sec .chip { white-space: nowrap; }
+  .sec .chip { color: var(--ink); }
+
+  @media (max-width: 700px) {
+    nav, .liquid, .frame, .sph, .torus, .torus-line, .timer, .sec { display: none; }
+    header { left: 12px; right: 12px; } h1 { left: 16px; width: 350px; font-size: 42px; top: 120px; }
+    .lede { left: 16px; width: 340px; top: 380px; } .chips { left: 16px; top: 560px; flex-wrap: wrap; width: 340px; }
+  }
+</style>
+</head>
+<body>
+  <header class="abs">
+    <div class="logo"><i class="ball"></i>lodos</div>
+    <nav class="unb"><a class="on">Ana sayfa</a><a>Menü</a><a>Çekirdekler</a><a>İskele</a></nav>
+    <span class="order">Sipariş ver</span>
+  </header>
+
+  <svg class="abs liquid" viewBox="0 0 640 600" aria-hidden="true" data-melt>
+    <defs>
+      <linearGradient id="chr" x1="0" y1="0" x2=".25" y2="1">
+        <stop offset="0" stop-color="#ffffff"/><stop offset=".14" stop-color="#cfd4df"/><stop offset=".34" stop-color="#6e7689"/>
+        <stop offset=".47" stop-color="#f7f8fb"/><stop offset=".6" stop-color="#a1a8b9"/><stop offset=".8" stop-color="#363c4f"/><stop offset="1" stop-color="#c9ced9"/>
+      </linearGradient>
+      <linearGradient id="chr2" x1="0" y1="0" x2="1" y2=".4">
+        <stop offset="0" stop-color="#2e3446"/><stop offset=".5" stop-color="#e9ecf2"/><stop offset="1" stop-color="#5d6476"/>
+      </linearGradient>
+    </defs>
+    <path d="M120 150 C 150 70, 290 40, 372 92 C 440 134, 520 86, 574 150 C 626 214, 590 300, 540 330 C 506 352, 516 404, 488 436 C 466 462, 458 506, 444 530 C 432 550, 410 546, 412 522 C 414 492, 404 466, 378 462 C 346 458, 336 494, 326 520 C 318 540, 296 536, 298 516 C 300 488, 292 458, 252 452 C 186 442, 112 428, 82 364 C 52 300, 86 228, 120 150 Z"
+          fill="url(#chr)" stroke="#15123c" stroke-width="2.5"/>
+    <path d="M150 170 C 180 116, 260 96, 320 120 C 270 118, 200 140, 170 196 Z" fill="#fff" opacity=".9"/>
+    <path d="M520 190 C 556 220, 552 270, 516 296 C 536 260, 538 228, 520 190 Z" fill="#fff" opacity=".8"/>
+    <path d="M110 330 C 140 390, 210 410, 270 418 C 210 424, 130 404, 104 350 Z" fill="url(#chr2)"/>
+    <ellipse cx="560" cy="560" rx="26" ry="20" fill="url(#chr)" stroke="#15123c" stroke-width="2.5"/>
+    <path d="M550 552 c 6 -6 16 -6 20 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+
+  <div class="abs frame" data-pop=".15"><div class="in"><img src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso"></div></div>
+  <i class="abs sph s1" data-pop=".3"></i>
+  <i class="abs sph s2" data-pop=".38"></i>
+  <div class="abs torus" data-pop=".44"></div><div class="abs torus-line" data-pop=".44"></div>
+  <div class="abs timer" data-pop=".55">
+    <b>VAPUR SAYACI</b>
+    <div class="track"><div class="fill" data-fill></div></div>
+    <span><em style="font-style:normal">kalkışa 6 dk</em><em style="font-style:normal">sıra yok</em></span>
+  </div>
+
+  <h1 class="abs" aria-label="Vapur kalkmadan kahven hazır.">
+    <span data-in="0,.35" style="display:inline-block">Vapur</span>
+    <span data-in=".06,.41" style="display:inline-block">kalkmadan</span>
+    <span class="pk" data-in=".12,.47" style="display:inline-block">kahven</span>
+    <span data-in=".18,.53" style="display:inline-block">hazır.</span>
+  </h1>
+  <p class="abs lede" data-in=".3,.62">Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Karaköy iskelesine tam 90 saniye.</p>
+  <div class="abs chips" data-in=".36,.68"><span class="chip dark">Menü →</span><span class="chip">07.00 kavrum</span><span class="chip">Kemankeş Cd. 12</span></div>
+
+  <section class="abs sec">
+    <h2>Bu hafta kazanda</h2>
+    <span class="chip">Lodos harmanı</span><span class="chip">Etiyopya Guji</span><span class="chip">Kolombiya Huila</span><span class="chip">Türk kahvesi kavrumu</span>
+  </section>
+
+<script>
+  const items = [...document.querySelectorAll("[data-in]")];
+  const pops = [...document.querySelectorAll("[data-pop]")];
+  const melt = document.querySelector("[data-melt]"), fill = document.querySelector("[data-fill]");
+  const back = (x) => 1 + 2.6 * Math.pow(x - 1, 3) + 1.6 * Math.pow(x - 1, 2);
+  window.demo = {
+    duration: 2400, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.seg(p, a, b);
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.scale = t <= 0 ? 0.6 : 0.6 + 0.4 * back(t);
+      });
+      pops.forEach((el) => { const a = +el.dataset.pop, t = gl.seg(p, a, a + 0.32); el.style.scale = t <= 0 ? 0 : back(t); });
+      // liquid chrome pours in: grows from the top with a jelly wobble
+      const m = gl.seg(p, 0, 0.7);
+      const wob = m >= 1 ? 0 : Math.exp(-5 * m) * Math.sin(m * 14) * 0.08;
+      melt.style.transformOrigin = "50% 10%";
+      melt.style.scale = `${gl.easeOutQuart(m) * (1 - wob)} ${gl.easeOutQuart(m) * (1 + wob)}`;
+      fill.style.width = `${72 * gl.easeInOutCubic(gl.seg(p, 0.55, 1))}%`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

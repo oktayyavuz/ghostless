@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Çift ton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f3ede4; --navy: #13213a; --apricot: #f2b48a; --mute: #6f6a63; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--navy); font: 500 14px/1.45 Epilogue, system-ui, sans-serif; overflow: hidden;
+         display: grid; grid-template-rows: auto auto 1fr; gap: 26px; padding: 28px 40px 36px; }
+  header { display: flex; justify-content: space-between; font-size: 13px; color: var(--mute); }
+  header b { color: var(--navy); font-weight: 800; font-size: 18px; letter-spacing: -.02em; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; }
+  h1 { font-weight: 800; font-size: clamp(38px, 4.8vw, 70px); line-height: .95; letter-spacing: -.045em; }
+  h1 i { font: italic 400 1.08em/1 "Instrument Serif", Georgia, serif; letter-spacing: -.01em; }
+  .head p { max-width: 34ch; color: var(--mute); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; min-height: 0; }
+  figure { display: grid; grid-template-rows: 1fr auto; gap: 10px; min-height: 0; }
+  .ph { position: relative; overflow: hidden; background: var(--navy); }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ph .duo { filter: url(#duo); will-change: clip-path; }
+  .ph .seam { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--paper); }
+  figcaption { display: flex; justify-content: space-between; font-size: 13px; }
+  figcaption span:last-child { color: var(--mute); }
+  @media (max-width: 760px) { body { padding: 16px; gap: 14px; } .head p { display: none; } .cards { grid-template-columns: 1fr; } figure:nth-child(n+2) { display: none; } }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- every photo becomes luminance, then maps dark → Boğaz laciverti, light → kayısı -->
+    <filter id="duo" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.075 0.949"/>
+        <feFuncG type="table" tableValues="0.129 0.706"/>
+        <feFuncB type="table" tableValues="0.227 0.541"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+  <header><b>Lodos</b><span>Kahve Kavurma Evi · Kemankeş Cd. 12, Karaköy</span></header>
+  <div class="head">
+    <h1>Üç ayrı fotoğraf,<br><i>tek bir</i> Lodos.</h1>
+    <p>Gün batımı, çuval, makine: üç ışık, üç kaynak. Hepsi laciverde ve kayısıya çevrilince aynı kitaptan çıkmış gibi durur.</p>
+  </div>
+  <div class="cards">
+    <figure><div class="ph"><img src="../../assets/kopru.webp" alt="Gün batımında Boğaz Köprüsü"><img class="duo" src="../../assets/kopru.webp" alt=""><i class="seam"></i></div><figcaption><span>Akşam vapuru</span><span class="st">ham</span></figcaption></figure>
+    <figure><div class="ph"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve çekirdekler"><img class="duo" src="../../assets/cekirdek.webp" alt=""><i class="seam"></i></div><figcaption><span>Etiyopya Guji, 250 g</span><span class="st">ham</span></figcaption></figure>
+    <figure><div class="ph"><img src="../../assets/espresso.webp" alt="İki fincana akan espresso"><img class="duo" src="../../assets/espresso.webp" alt=""><i class="seam"></i></div><figcaption><span>Espresso, ₺75</span><span class="st">ham</span></figcaption></figure>
+  </div>
+<script>
+  const cards = [...document.querySelectorAll(".ph")].map((ph, i) => ({ duo: ph.querySelector(".duo"), seam: ph.querySelector(".seam"), st: document.querySelectorAll(".st")[i] }));
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      cards.forEach(({ duo, seam, st }, i) => {
+        const t = gl.easeInOutCubic(gl.seg(p, 0.06 + i * 0.15, 0.56 + i * 0.15));
+        duo.style.clipPath = `inset(0 ${((1 - t) * 100).toFixed(2)}% 0 0)`;   // treated version sweeps over the original
+        seam.style.left = `calc(${(t * 100).toFixed(2)}% - 1px)`;
+        seam.style.opacity = t > 0 && t < 1 ? 1 : 0;
+        st.textContent = t < 0.5 ? "ham" : "çift ton";
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

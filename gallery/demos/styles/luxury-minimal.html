@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lüks sade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bone: #f3f0ea; --ink: #1e1c19; --quiet: #8a8176; --line: #d9d3c8; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--bone); color: var(--ink); font: 400 12px/1.7 "Hanken Grotesk", "Helvetica Neue", sans-serif; letter-spacing: .04em; }
+  .abs { position: absolute; }
+  .caps { text-transform: uppercase; letter-spacing: .32em; font-size: 10.5px; }
+  .serif { font-family: "Cormorant Garamond", Garamond, serif; font-weight: 300; letter-spacing: 0; }
+
+  header { left: 72px; right: 72px; top: 40px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  header nav { display: flex; gap: 40px; }
+  header nav:last-child { justify-content: flex-end; }
+  .mark { font: 400 22px/1 "Cormorant Garamond", serif; letter-spacing: .62em; padding-left: .62em; text-transform: uppercase; }
+
+  .eyebrow { left: 72px; top: 270px; color: var(--quiet); }
+  h1 { left: 72px; top: 302px; width: 560px; font: 300 76px/1.02 "Cormorant Garamond", serif; letter-spacing: -.012em; }
+  h1 em { font-style: italic; }
+  .lede { left: 74px; top: 498px; width: 300px; font-size: 13px; line-height: 1.85; color: #4d4740; letter-spacing: .02em; }
+  .link { left: 74px; top: 600px; display: flex; align-items: center; gap: 18px; }
+  .link i { display: block; width: 56px; height: 1px; background: var(--ink); }
+
+  figure { left: 752px; top: 112px; width: 400px; height: 560px; overflow: hidden; }
+  figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; display: block; }
+  .fig-cap { left: 752px; top: 684px; width: 400px; display: flex; justify-content: space-between; color: var(--quiet); }
+  .vert { left: 1194px; top: 112px; writing-mode: vertical-rl; color: var(--quiet); }
+
+  /* the next section starts below the fold */
+  .next { left: 72px; right: 72px; top: 744px; border-top: 1px solid var(--line); padding-top: 22px; display: grid; grid-template-columns: 300px 1fr; }
+  .next .serif { font-size: 34px; line-height: 1.2; color: var(--ink); }
+  .next .caps { color: var(--quiet); padding-top: 10px; }
+
+  @media (max-width: 700px) {
+    header nav, .vert, .fig-cap, .next { display: none; }
+    header { left: 20px; right: 20px; grid-template-columns: 1fr; justify-items: center; }
+    figure { left: 20px; right: 20px; width: auto; top: 90px; height: 300px; }
+    .eyebrow { left: 20px; top: 420px; } h1 { left: 20px; top: 446px; width: 340px; font-size: 46px; }
+    .lede { left: 20px; top: 610px; width: 330px; } .link { left: 20px; top: 740px; }
+  }
+</style>
+</head>
+<body>
+  <header class="abs caps" data-in="0,.5">
+    <nav><a>Kahve</a><a>Kavrum</a><a>Ziyaret</a></nav>
+    <div class="mark">Lodos</div>
+    <nav><a>Sipariş</a></nav>
+  </header>
+
+  <figure class="abs" data-img><img src="../../assets/fincan.webp" alt="Beyaz masada tek küçük fincan"></figure>
+  <div class="abs fig-cap caps" data-in=".55,1"><span>Karaköy</span><span>Sabah, 07.00</span></div>
+  <div class="abs vert caps" data-in=".6,1">Kemankeş Caddesi 12</div>
+
+  <div class="abs eyebrow caps" data-in=".2,.7">Kahve kavurma evi · 2019</div>
+  <h1 class="abs" data-in=".25,.8">Vapur kalkmadan, <em>kahveniz</em> hazır.</h1>
+  <p class="abs lede" data-in=".4,.9">Her sabah yedide, on iki kilogramlık tek bir kazanda kavrulur. İskeleye doksan saniye.</p>
+  <a class="abs link caps" data-in=".5,1"><i></i>Çekirdekleri görün</a>
+
+  <section class="abs next" data-in=".6,1">
+    <div class="caps">I — Kavrum</div>
+    <p class="serif">Haftada yalnızca dört çekirdek. Lodos harmanı, Etiyopya Guji, Kolombiya Huila ve Türk kahvesi kavrumu.</p>
+  </section>
+
+<script>
+  const items = [...document.querySelectorAll("[data-in]")];
+  const img = document.querySelector("[data-img] img");
+  window.demo = {
+    duration: 3200, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.easeInOutCubic(gl.seg(p, a, b));
+        el.style.opacity = t;
+        el.style.translate = `0 ${(1 - t) * 10}px`;
+      });
+      const k = gl.easeOutQuart(gl.seg(p, 0, 1));
+      img.style.opacity = gl.seg(p, 0, 0.45);
+      img.style.scale = k >= 1 ? 1 : 1 + 0.06 * (1 - k);
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

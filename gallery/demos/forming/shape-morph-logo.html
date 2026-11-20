@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Görselin logoya dönüşmesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #ebe5da; --navy: #12233a; --mute: #6d6a63; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--navy); font: 400 15px/1.45 "Bricolage Grotesque", system-ui, sans-serif; overflow: hidden; }
+  .band { position: absolute; inset: 0; will-change: clip-path; }
+  .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 34% 47%; will-change: transform; }
+  .word { position: absolute; will-change: transform, opacity; }
+  .word h1 { font-weight: 800; font-size: clamp(64px, 11vw, 158px); line-height: .82; letter-spacing: -.045em; }
+  .word p { margin-top: 18px; display: flex; gap: 22px; font-size: 15px; color: var(--mute); }
+  .word p b { color: var(--navy); font-weight: 400; }
+  .corner { position: absolute; left: 32px; right: 32px; bottom: 26px; display: flex; justify-content: space-between; font-size: 13px; color: var(--mute); }
+</style>
+</head>
+<body>
+  <div id="bands" role="img" aria-label="Vapurdan Boğaz ve şehir silueti; görsel Lodos'un üç dalgalı işaretine dönüşür"></div>
+  <div class="word" id="word"><h1>Lodos</h1><p><b>Kahve Kavurma Evi</b><span>Karaköy · 2019</span></p></div>
+  <div class="corner" id="corner"><span>Kemankeş Cd. 12</span><span>Rüzgâr lodostan eserse, iskelede kahve kokar.</span></div>
+<script>
+  const host = document.getElementById("bands"), word = document.getElementById("word"), corner = document.getElementById("corner");
+  const bands = [0, 1, 2].map(() => {
+    const d = document.createElement("div"); d.className = "band";
+    const img = document.createElement("img"); img.src = "../../assets/deniz.webp"; img.alt = "";
+    d.appendChild(img); host.appendChild(d); return { d, img };
+  });
+  const N = 36;                                   // points per edge
+  let geo;
+  function layout() {
+    const W = innerWidth, H = innerHeight, narrow = W < 760;
+    const mw = narrow ? W * 0.62 : Math.min(W * 0.3, 400);
+    const bh = mw * 0.15, gap = mw * 0.085, amp = bh * 0.6;
+    const total = 3 * bh + 2 * gap + 2 * amp;
+    const cx = narrow ? W / 2 : W * 0.34, cy = narrow ? H * 0.36 : H * 0.47;
+    // the Lodos mark: three wind/sea waves, each a little shorter and shifted, like gusts
+    const spans = [[0.0, 0.86], [0.08, 1.0], [0.3, 0.92]];
+    geo = [0, 1, 2].map((i) => {
+      const y0 = cy - total / 2 + amp + i * (bh + gap), [a, b] = spans[i];
+      const top = [], fromTop = [], fromBot = [];
+      for (let k = 0; k < N; k++) {
+        const u = k / (N - 1), x = cx - mw / 2 + (a + (b - a) * u) * mw;
+        const y = y0 + amp * Math.sin(((a + (b - a) * u) * 1.15 + 0.15) * Math.PI * 2);
+        top.push([x, y]);
+        fromTop.push([(u * W), (i * H) / 3]);
+        fromBot.push([(u * W), ((i + 1) * H) / 3]);
+      }
+      const bot = top.map(([x, y]) => [x, y + bh]).reverse();
+      return { start: fromTop.concat(fromBot.reverse()), end: top.concat(bot) };
+    });
+    word.style.left = narrow ? "50%" : cx + mw / 2 + W * 0.045 + "px";
+    word.style.top = narrow ? cy + total / 2 + 30 + "px" : cy + "px";
+    word.dataset.narrow = narrow ? "1" : "";
+  }
+  layout();
+  addEventListener("resize", () => { layout(); demo.render(last); });
+  const smooth = (x) => x * x * (3 - 2 * x);
+  let last = 1;
+  window.demo = {
+    duration: 2800,
+    render(p) {
+      last = p;
+      bands.forEach(({ d, img }, i) => {
+        const t = smooth(gl.seg(p, i * 0.05, 0.62 + i * 0.05));
+        const { start, end } = geo[i];
+        d.style.clipPath = "polygon(" + start.map((s, k) => `${gl.lerp(s[0], end[k][0], t).toFixed(1)}px ${gl.lerp(s[1], end[k][1], t).toFixed(1)}px`).join(",") + ")";
+        img.style.transform = `translateY(${-19 * t}%) scale(${1 + 0.4 * t})`;
+        img.style.filter = `contrast(${1 + 0.25 * t}) brightness(${1 - 0.12 * t})`;
+      });
+      const w = gl.easeOutQuart(gl.seg(p, 0.62, 1));
+      const narrow = word.dataset.narrow;
+      word.style.opacity = w;
+      word.style.transform = narrow ? `translate(-50%, ${(1 - w) * 24}px)` : `translate(${(1 - w) * -30}px, -50%)`;
+      corner.style.opacity = gl.seg(p, 0.75, 1);
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

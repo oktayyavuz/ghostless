@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotoğrafla dolu yazı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #efe9df; --ink: #1a1817; --mute: #77706a; --red: #cf3a2a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); font: 400 15px/1.45 Figtree, system-ui, sans-serif; overflow: hidden; }
+  .photo, .word { position: absolute; inset: 0; background: url(../../assets/kopru.webp) center 66% / cover no-repeat; }
+  .word { display: grid; place-items: center; white-space: nowrap; overflow: hidden;
+          font-family: Anton, Impact, "Arial Narrow", sans-serif; line-height: .9; letter-spacing: -.005em; text-transform: none;
+          -webkit-background-clip: text; background-clip: text; color: transparent; padding-top: 2vh; }
+  header, footer { position: absolute; left: 40px; right: 40px; display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+  header { top: 26px; font-size: 14px; }
+  header b { font: 400 24px/1 Anton, Impact, sans-serif; letter-spacing: .02em; }
+  footer { bottom: 28px; align-items: end; }
+  footer p { max-width: 36ch; color: var(--mute); }
+  footer p b { color: var(--ink); font-weight: 600; }
+  footer .meta { text-align: right; font-size: 13px; color: var(--mute); }
+  .chrome { transition: none; }
+  @media (max-width: 700px) { header, footer { left: 16px; right: 16px; } footer .meta { display: none; } }
+</style>
+</head>
+<body>
+  <div class="photo" id="photo" role="img" aria-label="Gün batımında Boğaz Köprüsü ve şehir ışıkları"></div>
+  <h1 class="word" id="word">Karaköy</h1>
+  <header class="chrome" id="hd"><b>LODOS</b><span>Kahve Kavurma Evi · 2019</span></header>
+  <footer class="chrome" id="ft">
+    <p><b>Köprü bir yanda, iskele öbür yanda.</b> Arada Kemankeş Caddesi ve sabah 07.00'de yanan tek kazan.</p>
+    <span class="meta">Kemankeş Cd. 12<br>Hafta içi 07.00–19.00</span>
+  </footer>
+<script>
+  const word = document.getElementById("word"), photo = document.getElementById("photo"), chrome = document.querySelectorAll(".chrome");
+  let fit = 300, last = 1;
+  function measure() {
+    // the word's resting size: as wide as the page allows
+    word.style.fontSize = "100px";
+    const r = document.createRange(); r.selectNodeContents(word);
+    const w = r.getBoundingClientRect().width;
+    fit = Math.min((innerWidth * 0.94 * 100) / w, innerHeight * 0.62);
+  }
+  window.demo = {
+    duration: 2800,
+    render(p) {
+      last = p;
+      const q = gl.seg(p, 0.04, 0.92), e = q * q * (3 - 2 * q);
+      // starts so large that one letter covers the screen, then shrinks until the photo lives only inside the word
+      word.style.fontSize = (fit * Math.pow(14, 1 - e)).toFixed(1) + "px";
+      photo.style.opacity = 1 - gl.easeInOutCubic(gl.seg(p, 0.08, 0.55));
+      const c = gl.easeOutQuart(gl.seg(p, 0.6, 1));
+      chrome.forEach((el) => { el.style.opacity = c; el.style.transform = `translateY(${(1 - c) * (el.tagName === "HEADER" ? -14 : 14)}px)`; });
+    },
+  };
+  measure();
+  document.fonts.load('100px "Anton"').then(() => { measure(); demo.render(last); }, () => {});
+  addEventListener("resize", () => { measure(); demo.render(last); });
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

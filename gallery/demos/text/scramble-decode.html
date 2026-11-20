@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karışık harflerden çözülme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0e3436; --ink: #eef1e6; --hot: #c8f169; --quiet: #7fa3a0; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); font: 400 15px/1.5 "Space Grotesk", system-ui, sans-serif;
+         display: grid; grid-template-columns: 1.35fr 1fr; overflow: hidden; }
+  .copy { padding: 56px 56px 52px 64px; display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; color: var(--quiet); font-family: "Space Mono", monospace; font-size: 13px; letter-spacing: .04em; }
+  .top b { color: var(--ink); font-weight: 400; }
+  .label { white-space: pre; font-family: "Space Mono", monospace; color: var(--hot); font-size: 14px; letter-spacing: .08em; margin-bottom: 18px; }
+  .big { font-family: "Space Mono", monospace; font-weight: 700; font-size: clamp(40px, 9.6vw, 132px); line-height: 1; letter-spacing: -.03em; white-space: pre; }
+  .rows { margin-top: 34px; font-family: "Space Mono", monospace; font-size: clamp(14px, 1.5vw, 19px); line-height: 1.9; }
+  .rows div { white-space: pre; border-top: 1px solid rgba(238,241,230,.14); height: 46px; display: flex; align-items: center; overflow: hidden; }
+  .rows .c { line-height: 1; }
+  .c { display: inline-block; }
+  .c.s { color: var(--hot); }
+  .c.g { opacity: .0; }
+  .foot { color: var(--quiet); max-width: 44ch; }
+  .foot b { color: var(--ink); font-weight: 500; }
+  figure { position: relative; overflow: hidden; }
+  figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
+  figcaption { position: absolute; left: 18px; bottom: 16px; font-family: "Space Mono", monospace; font-size: 12px; color: #eef1e6; background: rgba(14,52,54,.82); padding: 4px 8px; }
+  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: 1fr 30vh; } .copy { padding: 24px 20px; } }
+</style>
+</head>
+<body>
+  <section class="copy">
+    <div class="top"><span><b>LODOS</b> / Karaköy</span><span>kavrum günlüğü</span></div>
+    <div>
+      <div class="label" data-s>BUGÜNÜN KAVRUMU</div>
+      <h1 class="big" data-s aria-label="Etiyopya Guji">ETİYOPYA
+GUJİ</h1>
+      <div class="rows">
+        <div data-s>KAVRUM   07.00 · 12 KG KAZAN</div>
+        <div data-s>PAKET    250 G · ₺560</div>
+        <div data-s>FİNCAN   FİLTRE · ₺95</div>
+      </div>
+    </div>
+    <p class="foot"><b>Haftada 4 çekirdek.</b> Lodos harmanı, Etiyopya Guji, Kolombiya Huila ve Türk kahvesi kavrumu.</p>
+  </section>
+  <figure>
+    <img src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso">
+    <figcaption>07.12 · ilk shot</figcaption>
+  </figure>
+<script>
+  const POOL = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ0123456789#%&*+/<>=?";
+  const hash = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967295; };
+  const cells = [];
+  let k = 0;
+  document.querySelectorAll("[data-s]").forEach((el, block) => {
+    const txt = el.textContent;
+    el.textContent = "";
+    if (!el.hasAttribute("aria-label")) el.setAttribute("aria-label", txt);
+    [...txt].forEach((ch) => {
+      if (ch === "\n") { el.appendChild(document.createTextNode("\n")); return; }
+      const s = document.createElement("span");
+      s.className = "c"; s.setAttribute("aria-hidden", "true");
+      el.appendChild(s);
+      cells.push({ s, ch, i: k++, block });
+    });
+  });
+  const n = cells.length;
+  cells.forEach((c) => {
+    const r = hash(c.i, 7);
+    c.start = 0.02 + 0.32 * (c.i / n);              // glyphs appear left → right
+    c.settle = 0.18 + 0.7 * (c.i / n) + r * 0.1;     // and lock into the real letter a bit later
+  });
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      const tick = Math.floor(p * 70);
+      cells.forEach((c) => {
+        let out, cls = "c";
+        if (c.ch === " ") out = " ";
+        else if (p >= c.settle) out = c.ch;
+        else if (p < c.start) { out = c.ch; cls += " g"; }
+        else { out = POOL[Math.floor(hash(c.i, tick) * POOL.length)]; cls += " s"; }
+        if (c.s.textContent !== out) c.s.textContent = out;
+        if (c.s.className !== cls) c.s.className = cls;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

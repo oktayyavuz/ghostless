@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaydırarak anlatım</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f5f2eb; --ink: #16202c; --mute: #8a8f96; --water: #c9d9df; --land: #ebe5d8; --road: #d7cfbf; --route: #e0482a; --sea: #2f6f86; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); overflow: hidden; font: 400 16px/1.5 "Source Serif 4", Georgia, serif; }
+  .ui { font-family: "Schibsted Grotesk", Arial, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+
+  header { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 36px; border-bottom: 1px solid #d9d3c6; font-size: 14px; }
+  header .logo { font-weight: 700; font-size: 19px; letter-spacing: -.01em; }
+  header .crumb { color: var(--mute); }
+  header nav { margin-left: auto; display: flex; gap: 24px; }
+  .bar { position: absolute; left: 0; top: 55px; height: 3px; background: var(--route); width: 0; }
+
+  .wrap { display: grid; grid-template-columns: 70px 470px 1fr; height: 744px; }
+  .rail { position: relative; border-right: 1px solid #d9d3c6; }
+  .rail .tick { position: absolute; left: 30px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); }
+  .rail .tick.done { background: var(--ink); }
+  .rail .line { position: absolute; left: 34px; top: 120px; width: 2px; height: 480px; background: #d9d3c6; }
+  .rail .fill { position: absolute; left: 34px; top: 120px; width: 2px; background: var(--ink); }
+  .rail .hint { position: absolute; left: 22px; bottom: 34px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+  .text { position: relative; display: flex; flex-direction: column; }
+  .win { position: relative; flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
+  .track { position: absolute; left: 40px; right: 40px; top: 0; }
+  .intro { padding: 40px 40px 26px; }
+  .kick { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--route); font-weight: 500; }
+  h1 { font-weight: 600; font-size: 50px; line-height: 1.02; letter-spacing: -.02em; margin-top: 14px; }
+  .intro p { margin-top: 16px; color: #46505c; font-size: 18px; max-width: 34ch; }
+  .step { height: 230px; padding-top: 18px; border-top: 1px solid #d9d3c6; transition: none; }
+  .step .n { font-size: 13px; font-weight: 500; letter-spacing: .1em; color: var(--mute); }
+  .step h2 { font-size: 30px; line-height: 1.1; font-weight: 600; margin-top: 8px; letter-spacing: -.01em; }
+  .step p { margin-top: 10px; font-size: 17px; color: #46505c; max-width: 36ch; }
+  .step .t { font-family: "Schibsted Grotesk", sans-serif; font-weight: 700; color: var(--route); }
+
+  .viz { position: relative; background: var(--water); overflow: hidden; }
+  .viz svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .lbl { font: 500 12px "Schibsted Grotesk", sans-serif; letter-spacing: .12em; text-transform: uppercase; fill: #5d6a72; }
+  .lbl.w { fill: #3f6574; font-style: italic; font-family: "Source Serif 4", serif; text-transform: none; letter-spacing: .02em; font-size: 17px; }
+  .pin text { font: 700 14px "Schibsted Grotesk", sans-serif; }
+  .clock { position: absolute; right: 26px; top: 24px; background: var(--ink); color: var(--paper); padding: 14px 18px; min-width: 160px; }
+  .clock small { display: block; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+  .clock b { font: 700 40px/1.05 "Schibsted Grotesk", sans-serif; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .inset { position: absolute; left: 26px; bottom: 26px; width: 250px; background: var(--paper); padding: 8px 8px 10px; }
+  .inset img { width: 100%; height: 140px; object-fit: cover; display: block; }
+  .inset span { display: block; font-size: 13px; margin-top: 7px; font-style: italic; color: #46505c; }
+
+  @media (max-width: 700px) {
+    header nav, header .crumb { display: none; } header { padding: 0 16px; }
+    .wrap { grid-template-columns: 1fr; grid-template-rows: 320px 1fr; } .rail { display: none; } .viz { grid-row: 1; }
+    .track { left: 16px; right: 16px; } h1 { font-size: 34px; } .inset { display: none; }
+  }
+</style>
+</head>
+<body>
+  <header class="ui">
+    <span class="logo">Lodos</span><span class="crumb">Hikâye · Bir sabah, dört durak</span>
+    <nav><a href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+  </header>
+  <div class="bar"></div>
+
+  <div class="wrap">
+    <div class="rail ui">
+      <div class="line"></div><div class="fill"></div>
+      <span class="tick" style="top:115px"></span><span class="tick" style="top:275px"></span>
+      <span class="tick" style="top:435px"></span><span class="tick" style="top:595px"></span>
+      <span class="hint">Kaydır</span>
+    </div>
+
+    <div class="text">
+      <div class="intro">
+          <div class="kick ui">Kemankeş Cd. 12 → Karaköy iskelesi</div>
+          <h1>Vapur kalkmadan kahven hazır.</h1>
+          <p>Kazanın ısındığı andan vapurun iskeleden ayrıldığı ana kadar, Lodos'ta bir sabah.</p>
+      </div>
+      <div class="win"><div class="track">
+        <div class="step"><div class="n ui">01 · <span class="t">07.00</span></div><h2>Kazan ısınıyor</h2><p>Her sabah tek kazanla, 12 kg kavuruyoruz. İlk paket kazan soğumadan tezgâhta.</p></div>
+        <div class="step"><div class="n ui">02 · <span class="t">6 dk kala</span></div><h2>Sipariş, sırasız</h2><p>Vapurun kalkışına 6 dakika kala sipariş veren sıra beklemez. Fincan iki dakikada elinde.</p></div>
+        <div class="step"><div class="n ui">03 · <span class="t">90 sn</span></div><h2>İskeleye yürüyüş</h2><p>Kemankeş Caddesi'nden Karaköy iskelesine doksan saniye. Kahve daha soğumadan turnikedesin.</p></div>
+        <div class="step"><div class="n ui">04 · <span class="t">Kalkış</span></div><h2>Vapurda ilk yudum</h2><p>Boğaz'ı geçerken fincanın elinde, kazan arkada bir sonraki kavruma hazırlanıyor.</p></div>
+      </div></div>
+    </div>
+
+    <div class="viz">
+      <svg viewBox="0 0 740 744" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <!-- land masses -->
+        <path d="M0 470 C 90 455 170 470 250 452 C 330 434 380 400 430 405 C 500 412 560 470 640 478 C 690 483 720 470 740 466 L740 744 L0 744 Z" fill="var(--land)"/>
+        <path d="M0 0 L520 0 C 500 60 440 92 360 110 C 270 130 190 118 120 150 C 70 172 30 200 0 210 Z" fill="var(--land)"/>
+        <path d="M640 0 L740 0 L740 250 C 715 230 690 190 680 150 C 668 100 650 50 640 0 Z" fill="var(--land)"/>
+        <!-- streets (Karaköy side) -->
+        <g stroke="var(--road)" stroke-width="7" fill="none" stroke-linecap="round">
+          <path d="M40 560 C 160 545 260 520 360 498 C 420 486 480 500 560 540"/>
+          <path d="M120 744 L 170 548"/><path d="M300 744 L 290 515"/><path d="M470 744 L 430 500"/>
+          <path d="M20 650 C 200 640 400 640 700 660"/>
+        </g>
+        <text class="lbl" x="58" y="590">Kemankeş Cd.</text>
+        <text class="lbl" x="520" y="640">Karaköy</text>
+        <text class="lbl w" x="200" y="300">Haliç ağzı</text>
+        <text class="lbl w" x="520" y="250">Boğaz</text>
+        <text class="lbl" x="150" y="70">Eminönü</text>
+        <!-- ferry route (pending) -->
+        <path id="ferry" d="M360 418 C 420 330 520 250 690 140" stroke="var(--sea)" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+        <text class="lbl" x="560" y="140" style="fill: var(--sea)">Kadıköy vapuru</text>
+        <!-- pier -->
+        <rect x="330" y="405" width="68" height="16" fill="var(--ink)" transform="rotate(-18 364 413)"/>
+        <!-- walking route -->
+        <path id="walk" d="M200 560 C 230 528 250 520 290 508 C 330 496 350 470 360 430" stroke="var(--route)" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <g class="pin"><circle cx="200" cy="560" r="12" fill="var(--route)" stroke="var(--paper)" stroke-width="4"/><text x="120" y="610" fill="var(--ink)">Lodos</text></g>
+        <g class="pin" id="pierpin"><circle cx="362" cy="424" r="9" fill="var(--paper)" stroke="var(--ink)" stroke-width="4"/><text x="384" y="452" fill="var(--ink)">Karaköy iskelesi</text></g>
+        <g id="walker"><circle r="8" fill="var(--ink)"/></g>
+      </svg>
+      <div class="clock ui"><small>Durak 03 · yürüyüş</small><b id="sec">90 sn</b></div>
+      <figure class="inset"><img src="../../assets/deniz.webp" alt="Vapurdan şehir siluetine bakış"><span>İskeleden ilk görünen: karşı yaka.</span></figure>
+    </div>
+  </div>
+
+<script>
+  const track = document.querySelector(".track");
+  const steps = [...document.querySelectorAll(".step")];
+  const ticks = [...document.querySelectorAll(".rail .tick")];
+  const fill = document.querySelector(".rail .fill");
+  const bar = document.querySelector(".bar");
+  const walk = document.getElementById("walk");
+  const walker = document.getElementById("walker");
+  const sec = document.getElementById("sec");
+  const L = walk.getTotalLength();
+  walk.style.strokeDasharray = L;
+  window.demo = {
+    duration: 2800, hold: 1600,
+    render(p) {
+      // p = how far the visitor has scrolled: step 03 sits in the reading line at the end
+      const s = gl.easeInOutCubic(p);
+      track.style.transform = `translateY(${36 - s * 400}px)`;
+      const active = s < 0.35 ? 0 : s < 0.75 ? 1 : 2;
+      steps.forEach((el, i) => (el.style.opacity = i === active ? 1 : 0.28));
+      ticks.forEach((el, i) => el.classList.toggle("done", i <= active));
+      fill.style.height = `${s * 320}px`;
+      bar.style.width = `${s * 58}%`;
+      const w = gl.easeInOutCubic(gl.seg(p, 0.62, 1));
+      walk.style.strokeDashoffset = L * (1 - w);
+      const pt = walk.getPointAtLength(L * w);
+      walker.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
+      sec.textContent = `${Math.round(90 * w)} sn`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>
