@@ -70,6 +70,9 @@ const rules = [
   { id: "ambient-fx", cat: "motion", weight: 4, sat: 2,
     re: /\bmarquee\b|\bshimmer\b|animate-(?:gradient|spin-slow|float|glow|shimmer|marquee)\b|\btypewriter\b|\bcount-up\b|\bCountUp\b/,
     msg: "Ambient effect (marquee, shimmer, float, typing, count-up)" },
+  { id: "kit-slop", cat: "motion", weight: 6, sat: 2,
+    re: /<(?:Spotlight\w*|BorderBeam|ShineBorder|ShimmerButton|Meteors|SparklesCore|AuroraBackground|Aurora|BackgroundBeams\w*|BackgroundGradient\w*|(?:Animated)?GridPattern|DotPattern|AnimatedGradientText|LampContainer|TextShimmer|ShinyText|GlareHover|Particles)\b/,
+    msg: "Component-kit effect that reads as the AI-site signature (beam, spotlight, shimmer, aurora, grid pattern…)" },
   // imagery & icons
   { id: "sparkle", cat: "imagery", weight: 6, sat: 2,
     re: /✨|✦|<Sparkles\b|\bSparklesIcon\b/, msg: "Sparkle ✨/✦ motif" },
@@ -160,7 +163,19 @@ function textParts(line) {
 const isComment = (t) => /^\s*(?:\/\/|\/\*|\*|<!--|#)/.test(t);
 
 const hits = Object.fromEntries(rules.map((r) => [r.id, []]));
-let radiusBig = 0, radiusAll = 0, filesScanned = 0, visualHits = 0;
+let radiusBig = 0, radiusAll = 0, filesScanned = 0, visualHits = 0, fadeUps = 0;
+// Motion palette: which families of movement exist at all (see references/motion.md).
+const MOTION_FAMILIES = {
+  split: /\bSplitText\b|\bsplitText\b|\bSplitting\b|split-type|ScrambleText/,
+  clip: /clip-?path|clipPath/i,
+  scroll: /\bscrub\s*:|\bpin\s*:\s*true|containerAnimation|useScroll\b|animation-timeline/,
+  sticky: /position:\s*sticky|\bsticky\b\s+top-/,
+  layout: /\bFlip\.|\blayoutId\b|\blayout\b(?=[\s=}])|useAutoAnimate|startViewTransition|view-transition-name/,
+  draw: /DrawSVG|MorphSVG|stroke-dashoffset|strokeDashoffset/,
+  gl: /from\s+["'](?:ogl|three|pixi\.js|@react-three\/fiber|@paper-design\/shaders(?:-react)?|@vfx-js\/core|react-vfx|curtainsjs|gpu-curtains)["']|getContext\(["']2d["']\)/,
+  rich: /@rive-app|lottie|Draggable|Physics2D|quickTo\(/,
+};
+const familiesSeen = new Set();
 const ctaLabels = new Map();
 
 for (const file of walk(root)) {
@@ -181,6 +196,8 @@ for (const file of walk(root)) {
       if (/<(?:img|Image|video|canvas|picture|Canvas)\b|three|@react-three|background-image:\s*url|lottie|spline/i.test(line)) visualHits++;
       radiusAll += (line.match(/\brounded(?:-[a-z0-9[\].]+)?\b/g) || []).length;
       radiusBig += (line.match(/\brounded-(?:xl|2xl|3xl)\b/g) || []).length;
+      for (const [fam, re] of Object.entries(MOTION_FAMILIES)) if (re.test(line)) familiesSeen.add(fam);
+      if (/\bwhileInView\b|data-aos=|animate-fade-(?:in-)?up|\bfadeInUp\b|(?:opacity|autoAlpha)\s*:\s*0\s*,\s*y\s*:\s*\d|\by\s*:\s*\d{2}\s*,\s*(?:opacity|autoAlpha)\s*:\s*0\b/.test(line)) fadeUps++;
     }
     const comment = isComment(line);
     const isImport = /^\s*import\s/.test(line);
@@ -210,6 +227,11 @@ if (radiusBig >= 12 && radiusBig / Math.max(radiusAll, 1) > 0.6) {
 if (filesScanned >= 3 && visualHits === 0) {
   aggregate.push({ id: "sterile-no-visuals", cat: "sterile", weight: 8,
     msg: "No images, video, canvas or 3D anywhere. Avoiding the ghost by removing everything is the sterile escape" });
+}
+
+if (fadeUps >= 4 && familiesSeen.size < 2) {
+  aggregate.push({ id: "one-entrance", cat: "motion", weight: 6,
+    msg: `Motion palette of one: ${fadeUps} fade/slide-up reveals and ${familiesSeen.size ? "only " + [...familiesSeen].join(", ") : "no other kind of movement"}. Plan a motion language (references/motion.md)` });
 }
 
 // ---------------------------------------------------------------------------

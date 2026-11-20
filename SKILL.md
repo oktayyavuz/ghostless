@@ -81,6 +81,12 @@ Each direction has:
 - **Moves:** 2–3 additive moves from `references/moves.md` (scale, color, image, motion, type).
   At most **one** restrictive constraint per direction, and only if it sharpens the idea.
 - **Tokens sketch:** 4–6 colors with roles, typefaces with roles, and the reference sites it learns from.
+- **Style vocabulary:** a named style it starts from (`references/styles.md`: editorial, Swiss,
+  industrial, risograph, dithered, terminal, collage…) and how the subject bends it. The three
+  directions start from three different styles.
+- **Motion language** (`references/motion.md`): a motif taken from the subject or the mark, one
+  signature move, 2–4 supporting moves, and the section-by-section entrance sequence. No two
+  neighbouring sections arrive the same way; "everything fades up" is not a motion language.
 
 **Build each direction's first screen as a high-fidelity preview**, with real type, real color,
 real or generated visuals and its motion running. Low-fi wireframes can't show "impressive",
@@ -102,7 +108,8 @@ one make someone stop scrolling? If not, redo the weakest one.
 Turn the chosen direction into a system (`references/system.md`): tokens with roles, scales that
 vary by hierarchy level, type scale with a locale glyph test, **imagery system** (sources, crops,
 treatment, how missing images are handled), **motion system** (the signature motion, transitions,
-micro-interactions, easing, reduced-motion fallback). Write it to `DESIGN.md`.
+micro-interactions, easing, reduced-motion fallback; use the template in `references/motion.md`).
+Write it to `DESIGN.md`.
 
 ## Phase 5 — Words
 
@@ -116,7 +123,8 @@ The first screen needs at least 3 facts that only fit this client.
 - **Visual richness without cliché:** large confident imagery, real color, depth that comes from
   layering and scale (not glow and blur), section rhythm that changes pace (full-bleed image →
   dense info → breathing space).
-- **Motion that feels alive:** scroll-linked storytelling tied to content, smooth page and state
+- **Motion that feels alive:** build the motion language from `references/motion.md` with the
+  libraries listed there (GSAP + free plugins, Lenis, Motion, shaders); scroll-linked storytelling tied to content, smooth page and state
   transitions, considered micro-interactions, one or two memorable moments. Avoid generic
   fade-up on everything, shimmer and ambient blobs. Always honor `prefers-reduced-motion`.
 - **Imagery:** real photography with art direction; otherwise *make* visuals: 3D (three.js / R3F
@@ -146,6 +154,8 @@ and any later "I don't like this". Phase 0 reads it every time.
 |---|---|
 | `references/ambition.md` | phases 2, 3, 6, 7: quality bar, reference sourcing, liveliness techniques, craft checklist, impact rubric |
 | `references/moves.md` | phase 3: additive moves + a few constraints |
+| `references/styles.md` | phase 3: named visual styles as starting vocabularies, with motion that suits each |
+| `references/motion.md` | phases 3, 4, 6: motion language, ~50 named moves, verified libraries, component-kit warnings |
 | `references/tells.md` | phases 2, 7: template tells **and** sterile-escape tells |
 | `references/subject.md` | phases 1–2: subject material, ghost table, examples |
 | `references/system.md` | phase 4: tokens, scales, imagery/motion systems, file templates |

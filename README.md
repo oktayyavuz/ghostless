@@ -19,7 +19,9 @@ ghostless works upstream of the pixels:
 3. **Ambition, not just avoidance.** A reference board of real top-tier sites, a target feeling, and an
    impact rubric. A clean scan with a dull result counts as a fail, because the "sterile escape"
    (monochrome tables, page dressed up as a document) is a failure mode too.
-4. **Three directions across a range of energy** (bold / refined / wildcard), each with a hero visual plan, built
+4. **Three directions across a range of energy** (bold / refined / wildcard), each starting from a different
+   named style and with its own motion language (a motif, one signature move, no two neighbouring
+   sections entering the same way) and a hero visual plan, built
    as high-fidelity previews that you look at before the person chooses.
 5. **System with roles.** Tokens say what they're for; radius, shadow and spacing change by hierarchy level.
 6. **Words before layout.** Real copy, specificity count, and a filler lexicon in **English and Turkish**.
@@ -48,7 +50,8 @@ node ~/.claude/skills/ghostless/scripts/slop-scan.mjs src --fail-under 80   # CI
 
 It checks color (AI gradient palettes, gradient text, glow, trend accents), surfaces (glass, blur
 blobs, one radius everywhere, icon tiles), type (default faces, caps eyebrows, mono meta), motion
-(scroll fades, hover lifts, marquee/shimmer/count-up), imagery (sparkles, emoji icons, stock),
+(scroll fades, hover lifts, marquee/shimmer/count-up, component-kit effects like beams and spotlights,
+a motion palette of one), imagery (sparkles, emoji icons, stock),
 structure (→ CTAs, middle-dot meta, 01/02/03) and copy (filler lexicon EN/TR, invented proof,
 generic CTAs). Scoring scales with project size.
 
@@ -63,6 +66,8 @@ references/tells.md       catalog of AI tells by family
 references/subject.md     dossier method, ghost table, worked examples
 references/ambition.md   quality bar, references, liveliness, craft, impact rubric
 references/moves.md       additive moves + a few constraints
+references/styles.md      named visual styles (editorial, Swiss, risograph, dithered, terminal…)
+references/motion.md      motion language, ~50 named moves, verified libraries, kit warnings
 references/system.md      tokens with roles, hierarchy scales, DESIGN.md / DESIGN-LOG.md templates
 references/copy.md        copy rules + EN/TR filler lexicon
 references/critique.md    visual tests, report format

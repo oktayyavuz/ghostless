@@ -29,6 +29,7 @@ moves into `DESIGN.md` so they hold for the whole project.
 - **Big numbers:** the client's real numbers set huge, labels small.
 
 ### Motion
+(Full catalog of named moves and libraries: `motion.md`.)
 - **Scroll story:** a pinned section where the scroll explains a process step by step (board → firmware → server → screen).
 - **Signature transition:** one distinctive transition between pages or states, derived from the brand mark or subject.
 - **Responsive matter:** elements with physics or springs that react to cursor/touch (subtle, purposeful).

@@ -1,0 +1,49 @@
+# Visual styles
+
+The ghost has one look: rounded cards, slate text, one accent, a centred hero. Named styles are
+a way out, because each one comes with its own rules for type, colour, shape, imagery and
+motion. Use them as **starting vocabularies for directions** in phase 3, never as costumes:
+the style has to be bent by the subject (dossier), or it's just a different template.
+
+## How to use
+
+1. For each of the three directions, consider one style from this list that fits the subject
+   and the target feeling. Spread them across the energy range (bold / refined / wildcard).
+2. Write what you take from it and what you change: "Swiss grid and flush-left grotesk, but
+   photos are our own night shots and the one colour is the tow-truck amber."
+3. Pair it with a motion language (`motion.md`): each style below suggests moves that suit it.
+4. Mixing two styles is fine when one leads (e.g. editorial layout + risograph imagery).
+5. Don't pick the style you used last project for the same kind of client.
+
+## Catalog
+
+| Style | Signature traits | Motion that suits it | Fits when |
+|---|---|---|---|
+| **Editorial / magazine** | serif display, columns, pull quotes, drop caps, rich photography | line mask rise, curtain + counter-parallax, scale-down hero | hospitality, media, long-form, holdings |
+| **Swiss / International** | strict grid, flush-left grotesk, asymmetry, big numbers, few colours, photo + type | rule draw, strip assemble, FLIP | architecture, consultancies, institutions |
+| **Industrial / product manual** | square corners, mono details, objects on clean ground, one signal colour (e.g. Teenage Engineering) | split-flap, precise snaps, exploded 3D views | hardware, tools, audio, engineering |
+| **Neo-brutalism** | thick black borders, hard offset shadows, flat loud colours, big sans (e.g. Gumroad's redesign) | hard snaps, no easing, physics toys | creator tools, indie SaaS |
+| **Kinetic typographic** | type is the image; motion carries meaning | kinetic sequence, variable-font morph, text on a path | campaigns, music, conferences |
+| **Scrollytelling** | pinned visuals that change with the text beside them | pinned story, data-driven canvas | reports, NGOs, research, process |
+| **Photo-led documentary** | full-bleed real photography, minimal UI, captions | iris expand, curtain, shared-element transitions | local businesses, hospitality, NGOs |
+| **Risograph / print** | overprinted spot inks, misregistration, grain, 2–3 colours | halftone build, slight-offset layers | zines, festivals, cafés, bookshops |
+| **Dithered / 1-bit** | Bayer or Floyd–Steinberg images, two colours | dithering reveal, pixel resolve | tech with character, archives |
+| **Pixel art / 8-bit** | sprites, chunky type, stepped motion (`steps()`) | pixel resolve, stepped easing | games, kids, retro |
+| **Terminal / ASCII** | mono type, prompt UI, ASCII imagery | scramble/decode, typed with corrections, ASCII render | dev tools, infra, security |
+| **Retro OS / skeuomorphic UI** | window chrome, desktop metaphor, pixel fonts (e.g. Poolsuite) | window open/close, drag with inertia | music, nostalgia, playful products |
+| **Skeuomorphic revival** | tactile materials, real textures, physical controls | springs, knobs, physics | audio, hardware, luxury |
+| **Collage / scrapbook** | torn paper, tape, cut-out photos, handwriting | SVG mask wipe, handwriting draw, drag | food, travel, personal brands |
+| **Memphis** | squiggles, confetti shapes, clashing pastels and brights | bouncy springs, physics toys | kids, events, playful retail |
+| **Maximalist** | dense layering, pattern clashes, many faces | cursor image trail, kinetic type | fashion, culture, nightlife |
+| **Organic / anti-design** | irregular layout, hand-drawn, natural forms (not blurred blobs) | SVG mask wipe, noise dissolve | wellness, craft |
+| **Illustrated / mascot-led** | one illustrator's system, characters | Rive state machines | onboarding-heavy apps, kids |
+| **Bauhaus** ⚠ | primaries, circle/square/triangle, geometric sans | shape morph | design schools; ruler-drawn geometry is a common rejection |
+| **Y2K / chrome** ⚠ | liquid chrome, bubbly type, iridescence | liquid transitions | fashion, music; slides into glow and gradient |
+| **Claymorphism** ⚠ | soft inflated 3D shapes, inner shadows | springs | kids, consumer apps; dates quickly |
+| **Bento grid** ⚠ | mixed-size tiles | FLIP | the default AI SaaS layout; only when content is truly modular |
+
+Left out on purpose: glassmorphism (common rejection, contrast problems) and neumorphism
+(contrast and accessibility problems).
+
+⚠ = close to a common rejection or overused. Use only with a dossier reason, and check
+`DESIGN-LOG.md` first.
