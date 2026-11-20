@@ -22,7 +22,8 @@ ghostless works upstream of the pixels:
 4. **Three directions across a range of energy** (bold / refined / wildcard), each starting from a different
    named style and with its own motion language (a motif, one signature move, no two neighbouring
    sections entering the same way) and a hero visual plan, built
-   as high-fidelity previews that you look at before the person chooses.
+   as high-fidelity previews that you look at first and then actually show the person (browser tab or
+   screenshots in the chat) before asking them to choose.
 5. **System with roles.** Tokens say what they're for; radius, shadow and spacing change by hierarchy level.
 6. **Words before layout.** Real copy, specificity count, and a filler lexicon in **English and Turkish**.
 7. **Measure.** `slop-scan.mjs` scores the code for 20+ tells, then visual tests: swap, squint,

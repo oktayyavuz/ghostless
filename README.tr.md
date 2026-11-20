@@ -22,7 +22,8 @@ ghostless işe pikselden önce başlıyor:
 4. **Enerji yelpazesinde üç yön:** cesur, rafine ve sürpriz. Her biri farklı bir adlı stilden (editoryal, İsviçre,
    risograf, dither, terminal…) yola çıkar ve kendi hareket dilini taşır: konudan gelen bir motif, tek bir imza
    hareket, yan yana iki bölümün aynı şekilde gelmemesi. Her birinin bir hero görsel planı olur. Yönler yüksek
-   kaliteli önizleme olarak hazırlanır ve kişiye göstermeden önce bizzat açılıp bakılır.
+   kaliteli önizleme olarak hazırlanır ve kişiye göstermeden önce bizzat açılıp bakılır, sonra seçim sorulmadan önce kişiye gerçekten gösterilir
+   (tarayıcı sekmesi ya da sohbete ekran görüntüsü).
 5. **Rollü sistem:** Token'lar ne işe yaradığını söyler. Köşe yarıçapı, gölge ve boşluk hiyerarşi seviyesine göre değişir.
 6. **Önce kelimeler:** Gerçek metin yazılır ve ilk ekranda "özgüllük sayısı" aranır. Klişe sözlüğü **İngilizce ve Türkçe** olarak gelir.
 7. **Ölçüm:** `slop-scan.mjs` kodu 20'den fazla işarete göre puanlar. Ardından görsel testler yapılır:

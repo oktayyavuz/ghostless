@@ -94,16 +94,36 @@ Each direction has:
 real or generated visuals and its motion running. Low-fi wireframes can't show "impressive",
 and people judge what they can see. **Open the previews and look at them yourself before showing
 them** (local server or browser; screenshots at scale 0.4–0.5). If you can't view them, say so
-plainly. Then let the person choose or mix (`AskUserQuestion` if available).
+plainly. Check: do the three look clearly different in a thumbnail? Would at least one make
+someone stop scrolling? If not, redo the weakest one.
+
+**Then show them. This step is mandatory, and it's the one most often forgotten.** Asking "which
+one?" about designs the person hasn't seen is a failure. Before any choice question:
+
+1. **Put each preview in front of the person**, using whatever this environment offers, in this
+   order of preference:
+   - open it in a browser they can see (in Claude's desktop app: the browser pane, one tab per
+     direction, via `preview_start` / `navigate`);
+   - publish it as a viewable page if a page/artifact tool exists;
+   - send **screenshots as images into the chat** (a file-sending tool with inline rendering):
+     the first screen at desktop and mobile width, plus one inner section, for each direction.
+2. **Give each one a label and a link:** "A · Night shift: http://localhost:5610/a (file:
+   `tasarim/a/index.html`)". A file path alone, buried in a paragraph, doesn't count as showing.
+3. **Describe each in two lines** next to its picture: the idea, the hero visual, the signature move.
+4. **Only then ask.** The choice question must stand on its own (the dialog can hide everything
+   above it): name each option with its label and where to look ("A: tab 1, the night-photo
+   one"). If the question tool supports per-option previews, put the link and the two-line
+   description there.
+5. If you truly can't show anything visual here, say so and give the exact command to open the
+   previews (`npx serve tasarim -l 5610`, then the three URLs).
+
+Then let the person choose or mix (`AskUserQuestion` if available).
 
 **Ask why the others lost.** Once a direction is chosen, ask one short question about each
 direction that wasn't chosen ("What put you off B: the color, the type, the mood?"), with a few
 likely answers as options. A rejection without a reason only blocks that one design; a reason
 ("too playful", "the photo feels cheap") blocks a whole family of designs and goes into the log.
 If the person skips the question, write "no reason given" in the log rather than inventing one.
-
-Before you present, check: do the three look clearly different in a thumbnail? Would at least
-one make someone stop scrolling? If not, redo the weakest one.
 
 ## Phase 4 — System
 
