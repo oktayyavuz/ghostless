@@ -36,6 +36,20 @@ ASCII, iris, şerit birleşme, sabitlenmiş hikâye, View Transitions…) npm'de
 (GSAP ve artık ücretsiz eklentileri, Lenis, Motion, Paper Shaders, OGL, three…) listeler. Hazır bileşen
 kitlerinin "yapay zekâ sitesi" imzası olan efektlerini (beam, spotlight, shimmer, aurora) tarayıcı yakalar.
 
+## Görseller
+
+Şablon sitelerde görsel azdır. ghostless bol görselle plan yapar: önce müşterinin kendi fotoğrafları,
+sonra üretilen görseller (3D, veriden üretilen grafik, illüstrasyon), sonra internetten kendisinin
+bulup indirdiği açık lisanslı görseller. Yalnız ticari kullanıma ve düzenlemeye izin veren lisanslar
+alınır, görseller indirilip siteden sunulur, kaynakça tutulur:
+
+```bash
+node ~/.claude/skills/ghostless/scripts/fetch-images.mjs "solder joint macro" --n 12 --orientation landscape
+```
+
+Aramalar sektör adından değil konudan gelir ("iş dünyası" değil "gece yağmurda çekici vinci"), ve her
+aday kullanılmadan önce gözle kontrol edilir.
+
 ## Kurulum
 
 ```bash

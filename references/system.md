@@ -64,7 +64,8 @@ Spacing: a 4- or 8-based scale, but section spacing should come from content (se
 Sources (photo shoot brief, 3D models, generated graphics, illustration), crop and aspect rules,
 color treatment (e.g. duotone), what every image slot falls back to when content has no image,
 alt-text style. If the client has no photos, plan how visuals get **made** (3D, code-generated,
-illustration, or a shoot brief to send the client), never "no images".
+illustration, fetched openly licensed images with one shared treatment, or a shoot brief to send
+the client), never "no images". Method and fetch script: `imagery.md`.
 
 ## Motion system
 

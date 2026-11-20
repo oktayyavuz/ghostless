@@ -77,6 +77,8 @@ Each direction has:
 - **Hero visual plan:** exactly what makes the first screen striking (a 3D scene of the real
   product, an art-directed photo series, a scroll-driven sequence, oversized kinetic type over
   imagery, a bold color field system…). "A headline and a button" is not a hero visual plan.
+  Previews use real pictures: fetch candidates for the hero and 2–3 sections before building them
+  (`references/imagery.md`), so the person judges the direction with its imagery, not grey boxes.
 - **Signature move:** one memorable idea grown from the subject material.
 - **Moves:** 2–3 additive moves from `references/moves.md` (scale, color, image, motion, type).
   At most **one** restrictive constraint per direction, and only if it sharpens the idea.
@@ -127,9 +129,12 @@ The first screen needs at least 3 facts that only fit this client.
   libraries listed there (GSAP + free plugins, Lenis, Motion, shaders); scroll-linked storytelling tied to content, smooth page and state
   transitions, considered micro-interactions, one or two memorable moments. Avoid generic
   fade-up on everything, shimmer and ambient blobs. Always honor `prefers-reduced-motion`.
-- **Imagery:** real photography with art direction; otherwise *make* visuals: 3D (three.js / R3F
-  scene of the actual product), code-generated graphics driven by real data, custom illustration,
-  kinetic typography. Never use stock, fake dashboards, or AI renders presented as the real product.
+- **Imagery, and a lot of it** (`references/imagery.md`): the client's own photos first; then
+  made visuals (3D of the real product, code-generated graphics from real data, illustration,
+  kinetic type); then openly licensed images you **fetch yourself** with
+  `node <skill-dir>/scripts/fetch-images.mjs "<specific query>"`: search with dossier nouns,
+  look at every candidate, keep few, give them one treatment, keep the credits. Never generic
+  stock clichés, hotlinks, fake dashboards, or AI renders presented as the real product.
 - **Craft details** (`references/ambition.md` § Craft): optical alignment, type details, image
   treatment, hover/focus/active states, loading and empty states, 375 → 1920 px.
 
@@ -155,6 +160,7 @@ and any later "I don't like this". Phase 0 reads it every time.
 | `references/ambition.md` | phases 2, 3, 6, 7: quality bar, reference sourcing, liveliness techniques, craft checklist, impact rubric |
 | `references/moves.md` | phase 3: additive moves + a few constraints |
 | `references/styles.md` | phase 3: named visual styles as starting vocabularies, with motion that suits each |
+| `references/imagery.md` | phases 3, 4, 6: image density, source ladder, fetching openly licensed images, curation, treatment, credits |
 | `references/motion.md` | phases 3, 4, 6: motion language, ~50 named moves, verified libraries, component-kit warnings |
 | `references/tells.md` | phases 2, 7: template tells **and** sterile-escape tells |
 | `references/subject.md` | phases 1–2: subject material, ghost table, examples |

@@ -30,6 +30,19 @@ ghostless works upstream of the pixels:
 8. **Design log.** It asks why the other directions lost and records the answer in the person's words, so the next session
    doesn't bring them back.
 
+## Images
+
+Template sites are image-poor. ghostless plans for a lot of imagery: the client's photos first, then
+made visuals, then openly licensed images it fetches itself (commercial use + modification allowed,
+downloaded and self-hosted, credits kept):
+
+```bash
+node ~/.claude/skills/ghostless/scripts/fetch-images.mjs "solder joint macro" --n 12 --orientation landscape
+```
+
+Searches come from the subject, not the industry ("tow truck winch night rain", not "business"), and
+every candidate is looked at before it's used.
+
 ## Install
 
 ```bash
@@ -68,10 +81,12 @@ references/ambition.md   quality bar, references, liveliness, craft, impact rubr
 references/moves.md       additive moves + a few constraints
 references/styles.md      named visual styles (editorial, Swiss, risograph, dithered, terminal…)
 references/motion.md      motion language, ~50 named moves, verified libraries, kit warnings
+references/imagery.md     image density, source ladder, fetching + curating + treating openly licensed images
 references/system.md      tokens with roles, hierarchy scales, DESIGN.md / DESIGN-LOG.md templates
 references/copy.md        copy rules + EN/TR filler lexicon
 references/critique.md    visual tests, report format
 scripts/slop-scan.mjs     scanner
+scripts/fetch-images.mjs  finds openly licensed images (Openverse, Wikimedia Commons, NASA, Pexels), downloads them, writes credits
 ```
 
 ## License

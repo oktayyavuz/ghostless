@@ -80,7 +80,7 @@ const rules = [
     re: /[\u{1F300}-\u{1FAFF}\u{26A1}\u{2B50}]/u, msg: "Emoji used as an icon" },
   { id: "stock-image", cat: "imagery", weight: 5, sat: 3,
     re: /images\.unsplash\.com|source\.unsplash|images\.pexels\.com|picsum\.photos|placehold\.co|via\.placeholder|randomuser\.me|i\.pravatar\.cc/i,
-    msg: "Stock / placeholder imagery" },
+    msg: "Hotlinked stock / placeholder imagery (download, treat and self-host instead: references/imagery.md)" },
   // structure chrome
   { id: "arrow-cta", cat: "structure", weight: 3, sat: 5,
     re: /[A-Za-zÇĞİÖŞÜçğıöşü][^<>{}"'`\n]{1,40}\s(?:→|&rarr;)\s*(?:<|["'`]|$)/, msg: "→ appended to link/button text" },

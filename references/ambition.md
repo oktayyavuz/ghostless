@@ -28,7 +28,7 @@ Ask: *which sites would this client be proud to stand next to?*
 | Motion | scroll-linked sequence that explains something (the board assembling, data flowing to the server); pinned sections; smooth page transitions; spring-based micro-interactions | fade-up on every block, shimmer, marquee, floating particles |
 | Color | a confident palette with 1–2 strong fields that change by section or topic; color tied to meaning | accent sprinkled everywhere; monochrome "to be safe" |
 | Type | a display face with character at large sizes, plus a calm text face; dramatic scale jumps | Inter everywhere; tiny caps eyebrows on every block |
-| Imagery without photos | three.js / R3F model of the product; code-generated visuals from real data; custom illustration in one consistent style; kinetic type over textures you make | stock, AI renders, abstract waves |
+| Imagery without photos | three.js / R3F model of the product; code-generated visuals from real data; custom illustration in one consistent style; kinetic type over textures you make | generic stock clichés, AI renders, abstract waves (openly licensed photos of the real subject, curated and treated as one set, are fine: `imagery.md`) |
 | Pace | alternate density: immersive image section → information-dense section → quiet breather → interactive moment | identical `py-24` sections |
 
 Pick what serves the target feeling. "Impressive and alive" usually needs at least: a real hero
