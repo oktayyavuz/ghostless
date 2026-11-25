@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dijital bozulma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800;125,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #e7e5de; --ink: #0d0d0c; --mute: #6c6a64; --red: #ff2a1f; --line: #c3c0b7; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--bg); color: var(--ink); font: 400 13px/1.55 "Space Mono", "Courier New", monospace; }
+  .abs { position: absolute; }
+  .wide { font-family: "Archivo", sans-serif; font-stretch: 125%; font-weight: 900; text-transform: uppercase; }
+
+  header { left: 48px; right: 48px; top: 26px; display: flex; align-items: center; gap: 40px; font-size: 12px; }
+  .mark { font-size: 22px; letter-spacing: -.01em; }
+  header nav { display: flex; gap: 26px; }
+  header nav a span { color: var(--mute); }
+  header nav a.on { background: var(--ink); color: var(--bg); padding: 0 6px; }
+  .live { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .live i { width: 8px; height: 8px; background: var(--red); }
+
+  /* headline: solid black, one clean slice knocked sideways */
+  h1 { left: 44px; top: 118px; font: 900 60px/.96 "Archivo", sans-serif; font-stretch: 125%; text-transform: uppercase; letter-spacing: -.025em; }
+  h1 > span { display: block; position: relative; white-space: nowrap; }
+  .cut { color: transparent; }
+  .cut b { position: absolute; left: 0; top: 0; color: var(--ink); font-weight: inherit; }
+  .lede { left: 48px; top: 420px; width: 420px; font-size: 14px; }
+  .lede b { background: var(--ink); color: var(--bg); font-weight: 400; padding: 0 4px; }
+  .cta { left: 48px; top: 528px; display: flex; gap: 12px; }
+  .cta a { height: 44px; display: flex; align-items: center; padding: 0 18px; border: 2px solid var(--ink); font-weight: 700; }
+  .cta a:first-child { background: var(--ink); color: var(--bg); }
+
+  /* the broken picture */
+  .tv { left: 560px; top: 84px; width: 672px; height: 528px; background: #000; overflow: hidden; }
+  .band { position: absolute; left: 0; width: 100%; overflow: hidden; }
+  .stack { position: absolute; left: 0; width: 672px; height: 528px; isolation: isolate; background: #000; }
+  .tv-img { filter: contrast(1.18) saturate(1.35); }
+  .tile { position: absolute; overflow: hidden; }
+  .tile img { position: absolute; width: 672px; height: 528px; object-fit: cover; }
+  .stack img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; mix-blend-mode: screen; display: block; }
+  .smear { position: absolute; left: 0; width: 100%; overflow: hidden; }
+  .smear img { position: absolute; left: 0; width: 672px; height: 528px; object-fit: cover; }
+  .scan { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px); pointer-events: none; }
+  .noise { position: absolute; inset: 0; display: none; }
+  .noise svg { width: 100%; height: 100%; display: block; }
+  .nosig { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--ink); color: #fff; padding: 10px 18px; font-weight: 700; letter-spacing: .2em; display: none; }
+  .chip { position: absolute; background: var(--ink); color: #fff; font-size: 11px; padding: 3px 8px; letter-spacing: .08em; }
+  .tear { position: absolute; height: 3px; background: #fff; mix-blend-mode: difference; }
+
+  /* second section: a broadcast schedule */
+  .sched { left: 0; right: 0; top: 650px; bottom: 0; background: var(--ink); color: var(--bg); padding: 22px 48px 0; }
+  .sched h2 { font: 900 26px/1 "Archivo", sans-serif; font-stretch: 125%; text-transform: uppercase; display: flex; gap: 18px; align-items: baseline; }
+  .sched h2 span { font: 400 12px/1 "Space Mono", monospace; color: #9a978f; letter-spacing: .06em; text-transform: none; }
+  .rows { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 18px; border-top: 1px solid #3a3936; }
+  .rows div { padding: 12px 16px 0 0; display: grid; grid-template-columns: 54px 1fr auto; gap: 8px; border-right: 1px solid #3a3936; margin-right: 16px; }
+  .rows div:last-child { border-right: 0; }
+  .rows i { font-style: normal; color: var(--red); }
+
+  @media (max-width: 700px) {
+    header nav, .live { display: none; } header { left: 16px; right: 16px; }
+    h1 { left: 16px; font-size: 40px; top: 300px; } .tv { left: 16px; top: 76px; width: 343px; height: 210px; }
+    .lede { left: 16px; width: 340px; top: 500px; } .cta { left: 16px; top: 620px; } .sched { display: none; }
+  }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="ch-r" color-interpolation-filters="sRGB"><feColorMatrix values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="ch-g" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="ch-b" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
+  </svg>
+
+  <header class="abs">
+    <div class="mark wide">Lodos</div>
+    <nav><a class="on"><span>01</span> Kavurma</a><a><span>02</span> Çekirdekler</a><a><span>03</span> Menü</a><a><span>04</span> İskele</a></nav>
+    <div class="live"><i></i>KNL 07 · Karaköy · 07.00'den beri yayında</div>
+  </header>
+
+  <h1 class="abs" aria-label="Vapur kalkmadan kahven hazır.">
+    <span>Vapur</span>
+    <span class="cut" data-cut="Kalkmadan" data-y=".64,1" data-dx="-12">Kalkmadan</span>
+    <span>kahven</span>
+    <span class="cut" data-cut="hazır." data-y="0,.56" data-dx="14" data-red>hazır.</span>
+  </h1>
+  <p class="abs lede">Her sabah <b>07.00</b>'de, 12 kg'lık tek kazanla kavuruyoruz. Karaköy iskelesine 90 saniye; kalkışa 6 dakika kala gelene sıra yok.</p>
+  <div class="abs cta"><a>Menüye bak →</a><a>Kemankeş Cd. 12</a></div>
+
+  <section class="abs tv" id="tv" aria-label="Vapurdan şehir siluetine bakış, bozuk yayın görüntüsü">
+    <div class="noise" id="noise"><svg viewBox="0 0 672 528" preserveAspectRatio="none"><filter id="snow" x="0" y="0" width="100%" height="100%"><feTurbulence id="snowT" type="fractalNoise" baseFrequency=".9 .35" numOctaves="1" seed="1"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope="2.2" intercept="-.6"/><feFuncG type="linear" slope="2.2" intercept="-.6"/><feFuncB type="linear" slope="2.2" intercept="-.6"/></feComponentTransfer></filter><rect width="672" height="528" filter="url(#snow)"/></svg></div>
+    <div class="scan"></div>
+    <div class="nosig" id="nosig">SİNYAL YOK</div>
+    <span class="chip" style="left:14px;top:14px" data-chip>KNL 07 · KARAKÖY İSKELESİ</span>
+    <span class="chip" style="right:14px;bottom:14px;background:var(--red)" data-chip>08.10 · KADIKÖY VAPURU</span>
+  </section>
+
+  <section class="abs sched">
+    <h2>Bu hafta kazanda <span>yayın akışı · her sabah 07.00, 12 kg</span></h2>
+    <div class="rows">
+      <div><i>07.00</i><span>Lodos harmanı</span><b>₺420</b></div>
+      <div><i>09.30</i><span>Etiyopya Guji</span><b>₺560</b></div>
+      <div><i>12.00</i><span>Kolombiya Huila</span><b>₺95</b></div>
+      <div><i>15.30</i><span>Türk kahvesi</span><b>₺80</b></div>
+    </div>
+  </section>
+
+<script>
+  const W = 672, H = 528, SRC = "../../assets/deniz.webp";
+  const tv = document.getElementById("tv"), noise = document.getElementById("noise"), nosig = document.getElementById("nosig");
+  const snowT = document.getElementById("snowT");
+  const rnd = ((s) => () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646)(19);
+
+  // horizontal bands, each a stack of R, G, B copies that can drift apart
+  const bands = [], tiles = [];
+  let y = 0;
+  while (y < H) {
+    const h = Math.min(H - y, 8 + Math.floor(rnd() * 46));
+    const band = document.createElement("div"); band.className = "band"; band.style.top = y + "px"; band.style.height = h + "px";
+    const stack = document.createElement("div"); stack.className = "stack tv-img"; stack.style.top = -y + "px";
+    const imgs = ["r", "g", "b"].map((c) => { const im = new Image(); im.src = SRC; im.alt = ""; im.style.filter = `url(#ch-${c})`; stack.appendChild(im); return im; });
+    band.appendChild(stack); tv.insertBefore(band, noise);
+    bands.push({ band, stack, imgs, y, h, k: rnd(), j: rnd() });
+    y += h;
+  }
+  // the resting state: most of the picture clean, a handful of bands knocked out of line
+  const rest = new Map([[2, [-22, 9]], [3, [-48, 14]], [4, [-12, 6]], [7, [64, 16]], [8, [30, 8]], [9, [8, 22]], [12, [-84, 10]], [13, [-30, 18]], [15, [24, 12]]]);
+
+  // one smeared row: a single pixel line stretched tall
+  const smear = document.createElement("div"); smear.className = "smear"; smear.style.top = "300px"; smear.style.height = "26px";
+  const sm = new Image(); sm.src = SRC; sm.alt = ""; sm.style.top = "-300px"; sm.style.transformOrigin = "0 303px"; sm.style.transform = "scaleY(40)";
+  smear.appendChild(sm); tv.insertBefore(smear, noise);
+  // datamosh tiles: blocks of the picture copied from the wrong place
+  [[96, 228, 120, 40, -60, 18], [438, 96, 72, 72, 90, -40], [212, 404, 160, 32, -120, 0], [520, 270, 96, 48, -44, -64], [30, 120, 48, 96, 30, 60]].forEach(([x, ty, w, h, sx, sy]) => {
+    const t = document.createElement("div"); t.className = "tile tv-img"; Object.assign(t.style, { left: x + "px", top: ty + "px", width: w + "px", height: h + "px" });
+    const im = new Image(); im.src = SRC; im.alt = ""; im.style.left = (-x + sx) + "px"; im.style.top = (-ty + sy) + "px"; t.appendChild(im); tv.insertBefore(t, noise); tiles.push(t);
+  });
+  const tears = [[176, 0, 1], [306, -60, 0.6], [418, 40, 1]].map(([ty, x, w]) => {
+    const t = document.createElement("i"); t.className = "tear"; t.style.top = ty + "px"; t.style.left = x + "px"; t.style.width = (W * w) + "px"; tv.insertBefore(t, noise); return t;
+  });
+
+  // crisp headline slices: three copies, the middle band shifted
+  document.querySelectorAll("[data-cut]").forEach((el) => {
+    const [a, b] = el.dataset.y.split(",").map(Number);
+    const parts = [`inset(0 0 ${100 - a * 100}% 0)`, `inset(${a * 100}% -40px ${100 - b * 100}% 0)`, `inset(${b * 100}% 0 0 0)`];
+    el._parts = parts.map((clip, i) => { const s = document.createElement("b"); s.textContent = el.dataset.cut; s.style.clipPath = clip; if (i === 1 && "red" in el.dataset) s.style.color = "var(--red)"; el.appendChild(s); return s; });
+  });
+  const cuts = [...document.querySelectorAll("[data-cut]")];
+  const chips = [...document.querySelectorAll("[data-chip]")];
+
+  window.demo = {
+    duration: 2800, hold: 4200,
+    render(p) {
+      const lost = p > 0.22 && p < 0.4;               // signal-loss moment
+      const heavy = 1 - gl.easeOutQuart(gl.seg(p, 0.4, 0.86)); // how much extra breakage is left
+      const f = Math.floor(p * 60);                     // frame index for jitter
+      noise.style.display = lost ? "block" : "none";
+      nosig.style.display = lost ? "block" : "none";
+      snowT.setAttribute("seed", String(1 + f));
+      bands.forEach((b, i) => {
+        const [rx, rs] = rest.get(i) || [0, 0];
+        const jit = gl.rand(i * 97 + f * 13 + 1);
+        const pre = p < 0.22 ? 1 : heavy;               // before the loss it is also broken
+        const dx = rx + pre * (jit() - 0.5) * 160 * (b.k > 0.45 ? 1 : 0.15);
+        const sp = rs + pre * jit() * 16;
+        b.band.style.transform = `translateX(${dx.toFixed(1)}px)`;
+        b.imgs[0].style.transform = `translateX(${(-sp).toFixed(1)}px)`;
+        b.imgs[2].style.transform = `translateX(${sp.toFixed(1)}px)`;
+        b.band.style.opacity = p < 0.04 ? 0 : 1;
+      });
+      smear.style.opacity = p > 0.4 ? 1 : 0;
+      tiles.forEach((t, i) => { t.style.opacity = p > 0.4 + i * 0.05 || (p < 0.22 && (f + i) % 2) ? 1 : 0; });
+      tears.forEach((t, i) => { t.style.opacity = p > 0.4 || (f + i) % 3 === 0 ? 1 : 0; });
+      chips.forEach((c) => { c.style.opacity = lost ? 0 : 1; });
+      cuts.forEach((el) => {
+        const dx = +el.dataset.dx * (p < 0.4 ? 3 : gl.lerp(1, 3, heavy));
+        el._parts[1].style.transform = `translateX(${dx.toFixed(1)}px)`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

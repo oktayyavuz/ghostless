@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pop art / çizgi roman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Archivo:ital,wght@0,600;0,800;0,900;1,800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #fff4df; --ink: #111; --yellow: #ffd400; --red: #e8202a; --blue: #1d5fd8; --sky: #2aa7ea; --white: #fff; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); overflow: hidden; font: 800 16px/1.3 Archivo, Arial, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .logo, header nav, .btn, .caption, h1, .tag, .card .nm { text-transform: uppercase; }
+  .bang { font-family: Bangers, Impact, sans-serif; font-weight: 400; letter-spacing: .03em; }
+  .out { -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; }
+
+  /* Ben-Day dots on shapes only */
+  .dots-blue { background-color: #fff; background-image: radial-gradient(circle, var(--sky) 4.6px, transparent 5.2px); background-size: 15px 15px; }
+  .dots-red  { background-image: radial-gradient(circle, #ff8a8f 3.4px, transparent 4px); background-size: 12px 12px; background-color: var(--red); }
+  .dots-yel  { background-color: #fff6b8; background-image: radial-gradient(circle, var(--yellow) 4.2px, transparent 4.8px); background-size: 12px 12px; }
+
+  .page { position: relative; width: 1280px; height: 800px; }
+  header { position: absolute; left: 24px; right: 24px; top: 14px; height: 60px; display: flex; align-items: center; gap: 30px; }
+  .logo { font: 400 50px/1 Bangers, Impact, sans-serif; color: var(--red); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill;
+          text-shadow: 4px 4px 0 var(--ink); transform: rotate(-4deg); letter-spacing: .02em; }
+  header nav { display: flex; gap: 26px; font: 400 23px/1 Bangers, sans-serif; letter-spacing: .06em; }
+  header nav a.on { color: var(--red); }
+  .open { margin-left: auto; font-weight: 800; font-size: 14px; }
+  .btn { display: inline-block; font: 400 24px/1 Bangers, sans-serif; letter-spacing: .06em; padding: 12px 20px 10px; border: 4px solid var(--ink);
+         box-shadow: 5px 5px 0 var(--ink); background: var(--yellow); }
+
+  .panels { position: absolute; left: 24px; right: 24px; top: 88px; height: 478px; }
+  .pn { position: absolute; top: 0; bottom: 0; border: 5px solid var(--ink); overflow: hidden; }
+  .left { left: 0; width: 600px; clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%); }
+  .left-edge { position: absolute; left: 0; top: 0; width: 600px; height: 478px; pointer-events: none; }
+  .right { left: 576px; right: 0; background: var(--red); clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%); }
+  .rays { position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 62% 58%, #c9101a 0deg 7deg, transparent 7deg 15deg); }
+
+  .caption { position: absolute; left: 22px; top: 18px; background: var(--yellow); border: 4px solid var(--ink); padding: 8px 14px 6px;
+             font: 400 21px/1.05 Bangers, sans-serif; letter-spacing: .07em; transform: rotate(-1.5deg); }
+  h1 { position: absolute; left: 26px; top: 80px; font: 400 100px/.86 Bangers, Impact, sans-serif; letter-spacing: .015em; color: #fff;
+       -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 7px 7px 0 var(--ink); transform: rotate(-3deg); }
+  h1 span { display: block; } h1 .y { color: var(--yellow); }
+  .balloon { position: absolute; left: 30px; top: 330px; width: 340px; background: #fff; border: 4px solid var(--ink); border-radius: 50%;
+             padding: 24px 36px; text-align: center; font: 400 22px/1.12 "Patrick Hand", "Comic Sans MS", sans-serif; text-transform: uppercase; }
+  .balloon .tail { position: absolute; left: 118px; top: calc(100% - 8px); width: 50px; height: 46px; overflow: visible; }
+  .ctas { position: absolute; left: 388px; top: 350px; display: flex; flex-direction: column; gap: 14px; }
+  .ctas .btn:first-child { background: var(--red); color: #fff; -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; }
+  .ctas .btn:last-child { background: #fff; font-size: 19px; }
+
+  .art { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+  .burst { position: absolute; left: 520px; top: 168px; width: 380px; height: 260px; }
+  .tag { position: absolute; right: 22px; bottom: 22px; background: #fff; border: 4px solid var(--ink); padding: 8px 14px 4px; transform: rotate(3deg);
+         font: 400 20px/1 Bangers, sans-serif; letter-spacing: .06em; box-shadow: 5px 5px 0 var(--ink); }
+  .tag b { display: block; font-size: 44px; color: var(--red); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; letter-spacing: .02em; }
+
+  .second { position: absolute; left: 24px; right: 24px; top: 588px; }
+  .bar { display: flex; align-items: center; gap: 18px; }
+  .bar .caption { position: static; transform: rotate(-1deg); font-size: 26px; }
+  .bar p { font-weight: 800; font-size: 15px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+  .card { position: relative; height: 170px; border: 5px solid var(--ink); overflow: hidden; }
+  .card .ph { position: absolute; inset: 0; }
+  .card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.9) brightness(1.15); mix-blend-mode: multiply; }
+  .card .nm { position: absolute; left: 10px; top: 10px; background: #fff; border: 3px solid var(--ink); padding: 5px 10px 3px;
+              font: 400 22px/1 Bangers, sans-serif; letter-spacing: .05em; }
+  .card .pr { position: absolute; right: 10px; top: 48px; width: 76px; height: 76px; border-radius: 50%; border: 3px solid var(--ink); background: var(--yellow);
+              display: grid; place-items: center; font: 400 26px/1 Bangers, sans-serif; transform: rotate(8deg); }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="#">LODOS!</a>
+    <nav><a class="on" href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+    <div class="open">Kemankeş Cd. 12 · Karaköy · 07.00–19.00</div>
+    <a class="btn" href="#">Sipariş ver!</a>
+  </header>
+
+  <div class="panels">
+    <div class="pn left dots-blue">
+      <div class="caption">O sırada Karaköy'de… sabah 07.00!</div>
+      <h1 aria-label="Vapur kalkmadan kahven hazır!"><span>Vapur</span><span>kalkmadan</span><span class="y">kahven hazır!</span></h1>
+      <div class="balloon">Her sabah 07.00'de 12 kg'lık tek kazanla kavuruyoruz. İskeleye 90 saniye!<svg class="tail" viewBox="0 0 50 46"><path d="M8 0 L-6 46 L36 0" fill="#fff" stroke="#111" stroke-width="4" stroke-linejoin="miter"/></svg></div>
+      <div class="ctas"><a class="btn" href="#">Menüye bak!</a><a class="btn" href="#">Yol tarifi →</a></div>
+    </div>
+    <svg class="left-edge" viewBox="0 0 600 478"><line x1="600" y1="0" x2="564" y2="478" stroke="#111" stroke-width="10"/></svg>
+
+    <div class="pn right">
+      <div class="rays"></div>
+      <svg class="art" viewBox="0 0 650 468" preserveAspectRatio="xMidYMid slice" aria-label="Espresso makinesinden fincana akan kahve">
+        <defs>
+          <pattern id="bd-sky" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#fff"/><circle cx="6" cy="6" r="3.6" fill="#2aa7ea"/></pattern>
+          <pattern id="bd-red" width="11" height="11" patternUnits="userSpaceOnUse"><rect width="11" height="11" fill="#fff"/><circle cx="5.5" cy="5.5" r="3.3" fill="#e8202a"/></pattern>
+          <pattern id="bd-brown" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#8a4a22"/><circle cx="4.5" cy="4.5" r="2.4" fill="#4a230d"/></pattern>
+        </defs>
+        <g stroke="#111" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+          <!-- machine body -->
+          <rect x="250" y="-20" width="330" height="96" fill="#fff"/>
+          <rect x="480" y="-20" width="100" height="96" fill="url(#bd-sky)" stroke="none"/>
+          <rect x="250" y="-20" width="330" height="96" fill="none"/>
+          <rect x="268" y="16" width="120" height="30" rx="6" fill="#111"/>
+          <text x="328" y="39" text-anchor="middle" font-family="Bangers, sans-serif" font-size="22" fill="#ffd400" stroke="none" letter-spacing="2">LODOS</text>
+          <!-- group head -->
+          <path d="M330 76 h140 v28 a10 10 0 0 1 -10 10 h-120 a10 10 0 0 1 -10 -10z" fill="#fff"/>
+          <path d="M420 76 h50 v28 a10 10 0 0 1 -10 10 h-40z" fill="url(#bd-sky)" stroke="none"/>
+          <path d="M330 76 h140 v28 a10 10 0 0 1 -10 10 h-120 a10 10 0 0 1 -10 -10z" fill="none"/>
+          <!-- portafilter + handle -->
+          <path d="M318 114 h164 l-14 44 h-136z" fill="#2b2b2b"/>
+          <path d="M478 128 L640 150 L636 176 L472 152z" fill="#111"/>
+          <rect x="372" y="158" width="18" height="22" fill="#2b2b2b"/><rect x="412" y="158" width="18" height="22" fill="#2b2b2b"/>
+          <!-- streams -->
+          <path d="M381 180 C377 220 386 250 380 300" fill="none" stroke="#6b3517" stroke-width="10"/>
+          <path d="M421 180 C426 222 416 252 422 300" fill="none" stroke="#6b3517" stroke-width="10"/>
+          <!-- saucer -->
+          <ellipse cx="400" cy="440" rx="200" ry="38" fill="url(#bd-red)"/>
+          <ellipse cx="400" cy="428" rx="150" ry="24" fill="#fff"/>
+          <!-- cup -->
+          <path d="M268 300 h264 c0 70 -40 124 -132 124 s-132 -54 -132 -124z" fill="#fff"/>
+          <path d="M268 300 h70 c0 66 22 112 62 124 c-92 0 -132 -54 -132 -124z" fill="url(#bd-sky)" stroke="none"/>
+          <path d="M268 300 h264 c0 70 -40 124 -132 124 s-132 -54 -132 -124z" fill="none"/>
+          <path d="M528 322 c58 -8 70 66 -14 70" fill="none" stroke-width="14"/>
+          <path d="M528 322 c58 -8 70 66 -14 70" fill="none" stroke="#fff" stroke-width="5"/>
+          <ellipse cx="400" cy="300" rx="132" ry="22" fill="url(#bd-brown)"/>
+          <rect x="300" y="342" width="200" height="32" fill="#e8202a" stroke-width="5"/>
+          <text x="400" y="367" text-anchor="middle" font-family="Bangers, sans-serif" font-size="24" fill="#fff" stroke="none" letter-spacing="3">₺75 · ESPRESSO</text>
+          <!-- splash drops -->
+          <path d="M330 286 q-14 -18 -4 -30 q10 14 4 30z" fill="#6b3517" stroke-width="4"/>
+          <path d="M474 284 q16 -16 6 -30 q-12 12 -6 30z" fill="#6b3517" stroke-width="4"/>
+          <!-- action lines -->
+          <path d="M300 220 l-56 -20 M296 248 l-70 -4 M304 274 l-58 18 M500 220 l56 -20 M504 248 l70 -4 M498 274 l58 18" fill="none" stroke-width="5"/>
+        </g>
+      </svg>
+      <div class="tag">Bugün kavruldu<b>07.00!</b></div>
+    </div>
+
+    <svg class="burst" viewBox="0 0 380 260" aria-label="FŞŞŞ!" style="left:470px;top:-36px">
+      <polygon id="star" fill="#ffd400" stroke="#111" stroke-width="6" stroke-linejoin="miter"/>
+      <text x="190" y="166" text-anchor="middle" font-family="Bangers, Impact, sans-serif" font-size="112" fill="#e8202a" stroke="#111" stroke-width="7" paint-order="stroke fill" letter-spacing="3" transform="rotate(-8 190 130)">FŞŞŞ!</text>
+    </svg>
+  </div>
+
+  <section class="second">
+    <div class="bar"><div class="caption">Bu hafta kazanda…</div><p>Haftada 4 çekirdek. Hepsi her sabah 07.00'de, tek kazanda.</p></div>
+    <div class="cards">
+      <div class="card" style="background:var(--yellow)"><div class="ph"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve çekirdekler"></div><div class="nm">Lodos harmanı</div><div class="pr">₺420</div></div>
+      <div class="card" style="background:var(--sky)"><div class="ph"><img src="../../assets/kavurucu.webp" alt="Teneke kahve kavurucu" style="object-position:50% 30%"></div><div class="nm">Etiyopya Guji</div><div class="pr">₺560</div></div>
+      <div class="card" style="background:#ff8a8f"><div class="ph"><img src="../../assets/barista.webp" alt="Barista elleri ve portafiltre"></div><div class="nm">Kolombiya Huila</div><div class="pr">₺95</div></div>
+      <div class="card" style="background:var(--yellow)"><div class="ph"><img src="../../assets/espresso.webp" alt="Fincana akan espresso"></div><div class="nm">Espresso</div><div class="pr">₺75</div></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // jagged burst
+  (function () {
+    const pts = [], n = 15, cx = 190, cy = 130;
+    let s = 5;
+    const r = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+    for (let i = 0; i < n * 2; i++) {
+      const a = (i / (n * 2)) * Math.PI * 2 - 0.2, k = i % 2 ? 0.62 + r() * 0.1 : 0.95 + r() * 0.08;
+      pts.push(`${(cx + Math.cos(a) * 188 * k).toFixed(1)},${(cy + Math.sin(a) * 128 * k).toFixed(1)}`);
+    }
+    document.getElementById("star").setAttribute("points", pts.join(" "));
+  })();
+
+  const burst = document.querySelector(".burst");
+  const h1 = document.querySelector("h1");
+  const bits = [...document.querySelectorAll(".caption, .balloon, .ctas, .tag, .card")];
+  const rays = document.querySelector(".rays");
+  window.demo = {
+    duration: 1800,
+    render(p) {
+      // the burst slams in with an overshoot, everything else pops in order
+      const b = gl.seg(p, 0.15, 0.45);
+      const over = b < 1 ? 0.3 + b * 0.95 + Math.sin(b * Math.PI) * 0.25 : 1;
+      burst.style.transform = `scale(${over}) rotate(${(1 - b) * -14}deg)`;
+      burst.style.opacity = b > 0 ? 1 : 0;
+      const h = gl.easeOutQuart(gl.seg(p, 0, 0.35));
+      h1.style.transform = `rotate(-3deg) translateX(${(1 - h) * -60}px)`;
+      h1.style.opacity = h;
+      bits.forEach((el, i) => { el.style.opacity = gl.seg(p, 0.3 + i * 0.06, 0.4 + i * 0.06) > 0.5 ? 1 : 0; });
+      rays.style.transform = `rotate(${(1 - gl.easeOutQuart(p)) * 12}deg)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

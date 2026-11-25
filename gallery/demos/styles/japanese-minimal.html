@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japon sadeliği</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f2ede3; --ink: #24211d; --quiet: #8c857a; --hair: #cfc6b6; --seal: #b5302b; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--paper); color: var(--ink); font: 400 13px/1.9 "Zen Kaku Gothic New", "Hiragino Sans", sans-serif; letter-spacing: .06em; }
+  .abs { position: absolute; }
+  .v { writing-mode: vertical-rl; }
+  .mincho { font-family: "Shippori Mincho", "Hiragino Mincho ProN", Georgia, serif; }
+  .paper { left: 0; top: 0; width: 1280px; height: 800px; pointer-events: none; mix-blend-mode: multiply; }
+
+  nav { left: 80px; top: 56px; display: flex; gap: 36px; color: var(--quiet); font-size: 12px; letter-spacing: .2em; }
+  nav a:first-child { color: var(--ink); }
+
+  /* the photograph: small, low, a lot of room around it */
+  figure { left: 396px; top: 214px; width: 236px; height: 352px; overflow: hidden; }
+  figure img { width: 100%; height: 100%; object-fit: cover; object-position: 48% 62%; display: block; filter: saturate(.72) contrast(.96) brightness(1.03) sepia(.08); }
+  .figcap { left: 654px; top: 214px; color: var(--quiet); font-size: 11px; letter-spacing: .3em; }
+
+  /* reading order: right to left, like a vertical page */
+  .brand { right: 84px; top: 58px; font: 600 26px/1 "Shippori Mincho", serif; text-orientation: upright; letter-spacing: .32em; }
+  .rule { width: 1px; background: var(--hair); }
+  h1 { position: static; }
+  .h { font: 400 54px/1 "Shippori Mincho", serif; letter-spacing: .14em; white-space: nowrap; }
+  .h1a { right: 182px; top: 116px; }
+  .h1b { right: 272px; top: 236px; }
+  .lede { right: 392px; top: 122px; height: 420px; font-size: 14px; line-height: 2.35; letter-spacing: .16em; color: #4a453e; }
+  .meta { right: 512px; top: 122px; height: 300px; font-size: 11px; letter-spacing: .3em; color: var(--quiet); }
+
+  .seal { right: 66px; top: 246px; width: 84px; height: 84px; rotate: -3deg; }
+
+  .next { left: 80px; right: 80px; top: 704px; border-top: 1px solid var(--hair); padding-top: 22px; display: grid; grid-template-columns: 92px 1fr auto; align-items: baseline; }
+  .next .no { font: 400 13px/1 "Shippori Mincho", serif; color: var(--seal); letter-spacing: .2em; }
+  .next h2 { font: 400 24px/1.2 "Shippori Mincho", serif; letter-spacing: .08em; }
+  .next p { color: var(--quiet); letter-spacing: .2em; font-size: 12px; }
+
+  @media (max-width: 700px) {
+    nav { left: 20px; gap: 18px; } .brand { right: 20px; } .seal { right: 12px; top: 240px; width: 56px; height: 56px; }
+    figure { left: 20px; top: 380px; width: 150px; height: 220px; } .figcap, .meta, .rule { display: none; }
+    .h { font-size: 34px; } .h1a { right: 90px; top: 100px; } .h1b { right: 150px; top: 160px; } .lede { right: 250px; top: 100px; height: 260px; display: none; }
+    .next { left: 20px; right: 20px; grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <svg class="abs paper" viewBox="0 0 1280 800" aria-hidden="true">
+    <filter id="washi" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.05" numOctaves="4" seed="8" result="fib"/>
+      <feColorMatrix in="fib" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.5  0 0 0 0 0.42  1.4 0 0 0 -0.62" result="fibres"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.46  0 0 0 0 0.4  0 0 0 -1.1 0.62" result="grain"/>
+      <feMerge><feMergeNode in="fibres"/><feMergeNode in="grain"/></feMerge>
+    </filter>
+    <rect width="1280" height="800" filter="url(#washi)" opacity=".16"/>
+  </svg>
+
+  <nav class="abs" data-in="0,.3"><a>Kavurma</a><a>Çekirdekler</a><a>Menü</a><a>İskele</a></nav>
+
+  <div class="abs brand v" data-in=".05,.35">LODOS</div>
+  <svg class="abs seal" viewBox="0 0 76 76" aria-label="Lodos mührü" data-seal>
+    <defs>
+      <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="2" seed="5" result="w"/>
+        <feDisplacementMap in="SourceGraphic" in2="w" scale="3.2" result="d"/>
+        <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="9" result="s"/>
+        <feColorMatrix in="s" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -7 0 0 0 4.6" result="holes"/>
+        <feComposite in="d" in2="holes" operator="in"/>
+      </filter>
+      <mask id="carve">
+        <rect width="76" height="76" fill="#fff"/>
+        <rect x="6.5" y="6.5" width="63" height="63" fill="none" stroke="#000" stroke-width="1.6"/>
+        <text x="38" y="35" text-anchor="middle" font-family="Shippori Mincho, serif" font-weight="800" font-size="24" letter-spacing="1" fill="#000">LO</text>
+        <text x="38" y="61" text-anchor="middle" font-family="Shippori Mincho, serif" font-weight="800" font-size="21" letter-spacing="0" fill="#000">DOS</text>
+      </mask>
+    </defs>
+    <rect x="2" y="2" width="72" height="72" rx="3" fill="#b5302b" mask="url(#carve)" filter="url(#ink)"/>
+  </svg>
+  <div class="abs rule" style="right:146px;top:58px;height:560px" data-in=".1,.4"></div>
+
+  <h1 aria-label="Vapur kalkmadan kahven hazır."><span class="abs h h1a v mincho" data-write=".18,.42">Vapur kalkmadan</span><span class="abs h h1b v mincho" data-write=".32,.56">kahven hazır.</span></h1>
+  <div class="abs rule" style="right:362px;top:122px;height:420px" data-in=".3,.6"></div>
+  <p class="abs lede v" data-write=".42,.72">Her sabah yedide, tek kazanla kavururuz.<br>İskeleye doksan saniye.<br>Kalkışa altı dakika kala gelene sıra yok.</p>
+  <p class="abs meta v" data-write=".55,.8">Kemankeş Caddesi 12 · Karaköy</p>
+
+  <figure class="abs" data-in=".3,.7"><img src="../../assets/fincan.webp" alt="Beyaz masada tek küçük fincan"></figure>
+  <p class="abs figcap v" data-write=".6,.85">Sabah · 07.00 · ilk fincan</p>
+
+  <section class="abs next" data-in=".7,.95">
+    <span class="no">02</span>
+    <h2>Haftada dört çekirdek; her biri kendi sabahında.</h2>
+    <p>Lodos harmanı · Guji · Huila · Türk kahvesi</p>
+  </section>
+
+<script>
+  const fades = [...document.querySelectorAll("[data-in]")];
+  const writes = [...document.querySelectorAll("[data-write]")];
+  const seal = document.querySelector("[data-seal]");
+  const range = (el, k) => el.dataset[k].split(",").map(Number);
+  window.demo = {
+    duration: 3200, hold: 4500,
+    render(p) {
+      fades.forEach((el) => { const [a, b] = range(el, "in"); el.style.opacity = gl.easeOutQuart(gl.seg(p, a, b)); });
+      // vertical columns are "written" top to bottom, right column first
+      writes.forEach((el) => {
+        const [a, b] = range(el, "write");
+        const t = gl.easeInOutCubic(gl.seg(p, a, b));
+        el.style.clipPath = `inset(0 0 ${(1 - t) * 100}% 0)`;
+      });
+      // the seal is pressed last
+      const s = gl.seg(p, 0.82, 0.94);
+      seal.style.opacity = s > 0 ? 1 : 0;
+      seal.style.scale = gl.lerp(1.25, 1, gl.easeOutQuart(s));
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

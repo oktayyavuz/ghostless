@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manga / anime paneli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #fbf9f3; --ink: #0d0d0d; --hanko: #d7372b; --tone: #0d0d0d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); overflow: hidden;
+         font: 700 15px/1.35 "Zen Maru Gothic", "Hiragino Maru Gothic ProN", Arial, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .dela { font-family: "Dela Gothic One", "Arial Black", sans-serif; font-weight: 400; }
+
+  /* screentone: dot patterns live only inside panels */
+  .tone { background-image: radial-gradient(circle, var(--tone) 1.15px, transparent 1.6px); background-size: 6px 6px; }
+  .tone-fine { background-image: radial-gradient(circle, var(--tone) .9px, transparent 1.3px); background-size: 4px 4px; }
+
+  .page { position: relative; width: 1280px; height: 800px; }
+
+  header { position: absolute; left: 20px; right: 20px; top: 0; height: 56px; display: flex; align-items: center; gap: 26px;
+           border-bottom: 4px solid var(--ink); }
+  .logo { display: flex; align-items: baseline; gap: 10px; }
+  .logo b { font: 400 31px/1 "Dela Gothic One", sans-serif; letter-spacing: -.01em; }
+  .logo small { font: 900 12px/1 "Zen Maru Gothic", sans-serif; letter-spacing: .2em; }
+  header nav { display: flex; gap: 24px; margin-left: 18px; font-size: 15px; }
+  header nav a.on { background: var(--ink); color: var(--paper); padding: 4px 10px; margin: -4px -10px; transform: skew(-8deg); }
+  .ep { margin-left: auto; font-size: 13px; letter-spacing: .06em; }
+  .ep b { font: 400 13px/1 "Dela Gothic One", sans-serif; margin-right: 6px; }
+  .cta { border: 3px solid var(--ink); padding: 8px 16px; font-size: 15px; background: var(--ink); color: var(--paper); border-radius: 999px; }
+
+  /* the manga page: every panel spans the stage and is cut by clip-path in stage coordinates */
+  .stage { position: absolute; left: 20px; top: 68px; width: 1240px; height: 548px; }
+  .panel { position: absolute; inset: 0; background: #fff; overflow: hidden; }
+  .panel img { position: absolute; display: block; object-fit: cover; }
+  .ink { filter: grayscale(1) brightness(1.45) contrast(2.6); }
+  .outline { position: absolute; inset: 0; overflow: visible; pointer-events: none; z-index: 5; }
+  .over { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+  .over > * { position: absolute; }
+
+  .p1 { clip-path: polygon(0 0, 668px 0, 624px 318px, 0 318px); }
+  .p2 { clip-path: polygon(682px 0, 1240px 0, 1240px 318px, 638px 318px); }
+  .p3 { clip-path: polygon(0 332px, 470px 332px, 494px 548px, 0 548px); }
+  .p4 { clip-path: polygon(484px 332px, 850px 332px, 830px 548px, 508px 548px); }
+  .p5 { clip-path: polygon(864px 332px, 1240px 332px, 1240px 548px, 844px 548px); background: var(--ink); }
+
+  .narr { background: var(--ink); color: #fff; padding: 7px 12px 8px; font-size: 14px; letter-spacing: .02em; }
+  .narr.w { background: #fff; color: var(--ink); border: 3px solid var(--ink); }
+  .narr small { display: block; font-size: 10px; letter-spacing: .3em; opacity: .75; margin-top: 2px; }
+
+  h1 { position: absolute; left: 40px; top: 74px; font: 400 53px/1.02 "Dela Gothic One", sans-serif; letter-spacing: -.01em; }
+  h1 span { display: block; }
+  h1 .k { display: inline-block; background: var(--ink); color: #fff; padding: 2px 14px 8px; transform: skew(-6deg) rotate(-2deg); margin: 6px 0 4px -4px; }
+  .sub { left: 40px; top: 236px; width: 330px; font-size: 15.5px; line-height: 1.4; }
+
+  .hanko { width: 74px; height: 74px; border: 4px solid var(--hanko); color: var(--hanko); border-radius: 50%; display: grid; place-items: center;
+           font: 400 15px/1.05 "Dela Gothic One", sans-serif; text-align: center; transform: rotate(-12deg); background: transparent; }
+
+  .sfx { font-family: "Dela Gothic One", sans-serif; color: #fff; -webkit-text-stroke: 9px var(--ink); paint-order: stroke fill;
+         letter-spacing: -.02em; line-height: .9; white-space: nowrap; }
+  .sfx.b { color: var(--ink); -webkit-text-stroke: 7px #fff; }
+  .kana { font: 400 22px/1 "Dela Gothic One", sans-serif; writing-mode: vertical-rl; color: var(--ink); -webkit-text-stroke: 5px #fff; paint-order: stroke fill; letter-spacing: .05em; }
+
+  .bubble { background: #fff; border: 3px solid var(--ink); border-radius: 50%; display: grid; place-items: center; text-align: center;
+            font-size: 15px; line-height: 1.3; padding: 18px 26px; }
+  .bubble::after { content: ""; position: absolute; width: 26px; height: 34px; background: #fff; border: 3px solid var(--ink); border-top: 0; border-left: 0;
+                   clip-path: polygon(0 0, 100% 0, 30% 100%); }
+
+  .second { position: absolute; left: 20px; right: 20px; top: 634px; }
+  .second .head { display: flex; align-items: center; gap: 16px; padding-bottom: 12px; }
+  .chap { background: var(--ink); color: #fff; font: 400 15px/1 "Dela Gothic One", sans-serif; padding: 8px 12px; }
+  .second h2 { font: 400 26px/1 "Dela Gothic One", sans-serif; }
+  .second .head span { margin-left: auto; font-size: 13px; letter-spacing: .04em; }
+  .strip { display: grid; grid-template-columns: 1.15fr 1fr 1fr .9fr; gap: 14px; }
+  .cell { position: relative; height: 150px; border: 4px solid var(--ink); background: #fff; overflow: hidden; padding: 14px 16px; }
+  .cell:nth-child(1) { clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%); }
+  .cell:nth-child(2) { clip-path: polygon(0 0, 100% 0, 100% 100%, 3% 100%); }
+  .cell b { position: relative; display: block; font: 400 21px/1.1 "Dela Gothic One", sans-serif; }
+  .cell i { position: relative; font-style: normal; display: inline-block; margin-top: 8px; background: var(--ink); color: #fff; padding: 3px 9px; font-size: 14px; }
+  .cell .tone { position: absolute; inset: 0; opacity: .9;
+                -webkit-mask-image: linear-gradient(200deg, #000 0%, transparent 62%); mask-image: linear-gradient(200deg, #000 0%, transparent 62%); }
+  .cell.dark { background: var(--ink); color: #fff; } .cell.dark i { background: #fff; color: var(--ink); }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="#"><b>LODOS</b><small>ロドス珈琲焙煎所</small></a>
+    <nav><a class="on" href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+    <div class="ep"><b>第7話</b>Bölüm 7 · Karaköy, Kemankeş Cd. 12</div>
+    <a class="cta" href="#">Sipariş ver →</a>
+  </header>
+
+  <div class="stage">
+    <!-- P1 · title, focus lines -->
+    <div class="panel p1">
+      <svg id="focus" width="1240" height="548" style="position:absolute;left:0;top:0"></svg>
+      <div class="tone" style="position:absolute;left:0;top:200px;width:660px;height:120px;-webkit-mask-image:linear-gradient(0deg,#000,transparent);mask-image:linear-gradient(0deg,#000,transparent)"></div>
+      <div class="narr" style="position:absolute;left:0;top:0;padding-left:40px">Karaköy, sabah 07.00. Tek kazan ısınıyor…<small>カラキョイ · 午前7時</small></div>
+      <h1 aria-label="Vapur kalkmadan kahven hazır!"><span>Vapur kalkmadan</span><span><span class="k">kahven</span> hazır!</span></h1>
+      <p class="narr w" style="position:absolute" id="sub">Her sabah 07.00'de 12 kg'lık tek kazanla kavuruyoruz. İskeleye 90 saniye.</p>
+      <div class="hanko" style="position:absolute;left:560px;top:30px">ロドス<br>珈琲</div>
+    </div>
+
+    <!-- P2 · espresso, inked -->
+    <div class="panel p2">
+      <img class="ink" src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso" style="left:638px;top:-30px;width:602px;height:380px;object-position:70% 40%">
+      <div class="tone" style="position:absolute;left:638px;top:0;width:602px;height:318px;opacity:.55;mix-blend-mode:multiply;-webkit-mask-image:linear-gradient(90deg,#000,transparent 55%);mask-image:linear-gradient(90deg,#000,transparent 55%)"></div>
+    </div>
+
+    <!-- P3 · ferry, speed lines -->
+    <div class="panel p3">
+      <img class="ink" src="../../assets/deniz.webp" alt="Vapurdan Boğaz ve şehir" style="left:0;top:332px;width:500px;height:216px;object-position:50% 55%;filter:grayscale(1) brightness(1.1) contrast(2.3)">
+      <svg id="speed" width="1240" height="548" style="position:absolute;left:0;top:0"></svg>
+      <div class="narr" style="position:absolute;left:0;top:332px">İskeleye 90 saniye.</div>
+    </div>
+
+    <!-- P4 · roaster -->
+    <div class="panel p4">
+      <div class="tone-fine" style="position:absolute;left:484px;top:332px;width:366px;height:216px;opacity:.5;-webkit-mask-image:radial-gradient(circle at 50% 60%,transparent 30%,#000 75%);mask-image:radial-gradient(circle at 50% 60%,transparent 30%,#000 75%)"></div>
+      <img class="ink" src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu" style="left:560px;top:350px;width:250px;height:225px;object-position:50% 30%;mix-blend-mode:multiply;filter:grayscale(1) contrast(2.2) brightness(1.15)">
+      <div class="narr w" style="position:absolute;left:520px;top:344px;font-size:13px">Her sabah 07.00 · 12 kg</div>
+    </div>
+
+    <!-- P5 · inverted beat -->
+    <div class="panel p5">
+      <svg id="focus2" width="1240" height="548" style="position:absolute;left:0;top:0"></svg>
+      <div style="position:absolute;left:892px;top:346px;width:330px;color:#fff">
+        <div style="font-size:12px;letter-spacing:.3em;background:#0d0d0d;display:inline-block;padding:2px 6px 2px 0">ルール · TEK KURAL</div>
+        <div class="dela" style="font-size:24px;line-height:1.1;margin-top:8px">Kalkışa 6 dakika<br>kala gelene<br>sıra yok.</div>
+        <a href="#" style="display:inline-block;margin-top:12px;background:#fff;color:#0d0d0d;padding:9px 18px;font-size:16px;border-radius:999px">Menüye bak →</a>
+        <div style="font-size:12px;margin-top:8px;background:#0d0d0d;display:inline-block;padding:3px 6px 3px 0">Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</div>
+      </div>
+    </div>
+
+    <svg class="outline" width="1240" height="548" fill="none" stroke="#0d0d0d" stroke-width="5" stroke-linejoin="miter">
+      <polygon points="0,0 668,0 624,318 0,318"/>
+      <polygon points="682,0 1240,0 1240,318 638,318"/>
+      <polygon points="0,332 470,332 494,548 0,548"/>
+      <polygon points="484,332 850,332 830,548 508,548"/>
+      <polygon points="864,332 1240,332 1240,548 844,548"/>
+    </svg>
+
+    <!-- lettering that breaks out of the panels -->
+    <div class="over">
+      <div class="sfx" id="fsss" style="left:690px;top:150px;font-size:118px;transform:rotate(-9deg)">FŞŞŞ!</div>
+      <div class="kana" style="left:960px;top:24px;font-size:30px">シュー</div>
+      <div class="bubble" id="b1" style="left:1010px;top:14px;width:210px;height:116px">Sıradaki!<br>İki espresso,<br>tanesi ₺75.</div>
+      <div class="sfx b" id="duut" style="left:250px;top:384px;font-size:62px;transform:rotate(-6deg)">DÜÜÜT!</div>
+      <svg id="spiky" style="left:12px;top:446px;overflow:visible" width="260" height="98"></svg>
+      <div class="sfx" style="left:500px;top:486px;font-size:30px;transform:rotate(-7deg);-webkit-text-stroke-width:6px">ÇITIR ÇITIR</div>
+      <div class="kana" style="left:808px;top:368px;font-size:20px">パチパチ</div>
+    </div>
+  </div>
+
+  <section class="second">
+    <div class="head"><span class="chap">第8話</span><h2>Bölüm 8 · Haftanın dört çekirdeği</h2><span>Her hafta yeni bölüm, aynı kazan →</span></div>
+    <div class="strip">
+      <div class="cell"><div class="tone"></div><b>Lodos harmanı</b><i>250 g · ₺420</i></div>
+      <div class="cell dark"><b>Etiyopya Guji</b><i>250 g · ₺560</i></div>
+      <div class="cell"><div class="tone-fine tone" style="background-size:4px 4px"></div><b>Kolombiya Huila</b><i>Filtre · ₺95</i></div>
+      <div class="cell"><div class="tone"></div><b>Türk kahvesi kavrumu</b><i>Fincan · ₺80</i></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const NS = "http://www.w3.org/2000/svg";
+  const rnd = (seed) => () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  // concentration lines (集中線): thin wedges from far outside toward a calm centre
+  function focusLines(svg, cx, cy, n, rIn, rOut, color, seed) {
+    const r = rnd(seed);
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + r() * 0.03, w = 0.004 + r() * 0.012, ri = rIn + r() * rIn * 0.45;
+      const p = (ang, rad) => `${(cx + Math.cos(ang) * rad).toFixed(1)},${(cy + Math.sin(ang) * rad * 0.62).toFixed(1)}`;
+      const poly = document.createElementNS(NS, "polygon");
+      poly.setAttribute("points", `${p(a - w, rOut)} ${p(a + w, rOut)} ${p(a, ri)}`);
+      poly.setAttribute("fill", color);
+      svg.appendChild(poly);
+    }
+  }
+  focusLines(document.getElementById("focus"), 300, 150, 210, 250, 1100, "#0d0d0d", 7);
+  focusLines(document.getElementById("focus2"), 1050, 430, 150, 170, 900, "#fbf9f3", 11);
+  // horizontal speed lines over the ferry
+  (function () {
+    const s = document.getElementById("speed"), r = rnd(31);
+    for (let i = 0; i < 46; i++) {
+      const y = 340 + r() * 205, x0 = r() * 260, len = 120 + r() * 340, h = 0.8 + r() * 2.6;
+      const l = document.createElementNS(NS, "polygon");
+      l.setAttribute("points", `${x0},${y} ${x0 + len},${y - h / 2} ${x0 + len},${y + h / 2}`);
+      l.setAttribute("fill", r() < 0.55 ? "#fff" : "#0d0d0d");
+      s.appendChild(l);
+    }
+  })();
+  // spiky shout bubble
+  (function () {
+    const s = document.getElementById("spiky"), pts = [], n = 22, cx = 130, cy = 49;
+    for (let i = 0; i < n * 2; i++) {
+      const a = (i / (n * 2)) * Math.PI * 2, rr = i % 2 ? 1 : 1.24;
+      pts.push(`${(cx + Math.cos(a) * 118 * rr).toFixed(1)},${(cy + Math.sin(a) * 38 * rr).toFixed(1)}`);
+    }
+    s.innerHTML = `<polygon points="${pts.join(" ")}" fill="#fff" stroke="#0d0d0d" stroke-width="3" stroke-linejoin="miter"/>
+      <text x="130" y="57" text-anchor="middle" font-family="Dela Gothic One, sans-serif" font-size="21" fill="#0d0d0d">Vapur kalkıyor!!</text>`;
+  })();
+  // speech bubble tail
+  const b1 = document.getElementById("b1");
+  b1.insertAdjacentHTML("beforeend", "");
+  b1.style.setProperty("position", "absolute");
+  const tail = document.createElement("style");
+  tail.textContent = "#b1::after{left:58px;bottom:-30px;transform:rotate(18deg)}";
+  document.head.appendChild(tail);
+  const sub = document.getElementById("sub");
+  Object.assign(sub.style, { left: "40px", top: "236px", width: "410px", fontSize: "15px" });
+
+  // reading order: panels drop in one by one, lettering pops last
+  const panels = [...document.querySelectorAll(".panel")];
+  const pops = [...document.querySelectorAll(".over > *")];
+  const pbase = pops.map((el) => el.style.transform || "");
+  const second = document.querySelector(".second");
+  window.demo = {
+    duration: 2200,
+    render(p) {
+      panels.forEach((el, i) => {
+        const t = gl.easeOutQuart(gl.seg(p, i * 0.1, i * 0.1 + 0.3));
+        el.style.opacity = t;
+        el.style.transform = `translateY(${(1 - t) * 14}px)`;
+      });
+      pops.forEach((el, i) => {
+        const t = gl.seg(p, 0.45 + i * 0.05, 0.58 + i * 0.05);
+        const k = t >= 1 ? 1 : t * 1.18;
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.transform = `${pbase[i]} scale(${Math.max(0.2, k > 1.1 ? 1.1 : k)})`;
+        if (t >= 1) el.style.transform = `${pbase[i]} scale(1)`;
+      });
+      second.style.opacity = gl.easeOutQuart(gl.seg(p, 0.6, 1));
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

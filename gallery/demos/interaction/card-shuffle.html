@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karışan kart destesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Epilogue:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --terra: #b4472a; --deep: #7e2c18; --cream: #f6ecda; --ink: #22150f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--terra); color: var(--cream); font: 400 15px/1.45 Epilogue, system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 44px; right: 44px; top: 28px; display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
+  header b { font: 400 28px/1 "Alfa Slab One", Georgia, serif; letter-spacing: .01em; }
+  h1 { position: absolute; left: 44px; top: 96px; font: 400 clamp(36px, 4.4vw, 58px)/1 "Alfa Slab One", Georgia, serif; letter-spacing: -.01em; }
+  h1 em { font-style: normal; color: var(--ink); }
+  .card { position: absolute; left: 0; top: 0; width: 220px; height: 316px; margin: -158px 0 0 -110px; border-radius: 14px; background: var(--c, var(--cream)); color: var(--ink);
+          padding: 10px; display: flex; flex-direction: column; box-shadow: 0 1px 0 rgba(0,0,0,.18), 0 14px 26px -14px rgba(40,10,0,.6); will-change: transform; }
+  .card .ph { height: 170px; border-radius: 8px; overflow: hidden; position: relative; }
+  .card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card .no { position: absolute; left: 8px; top: 6px; font: 400 26px/1 "Alfa Slab One", Georgia, serif; color: var(--cream); }
+  .card h3 { font: 400 22px/1 "Alfa Slab One", Georgia, serif; margin-top: 12px; letter-spacing: -.01em; }
+  .card small { font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; margin-top: 6px; }
+  .card .pr { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid var(--ink); padding-top: 7px; font-weight: 600; font-size: 13px; }
+  .card .pr span { font: 400 20px/1 "Alfa Slab One", Georgia, serif; }
+  .btn { position: absolute; left: 0; top: 0; padding: 13px 26px; border-radius: 30px; background: var(--ink); color: var(--cream); font-weight: 800; letter-spacing: .04em; font-size: 15px; transform-origin: 50% 50%; white-space: nowrap; }
+  .pick { position: absolute; right: 44px; bottom: 36px; width: 330px; text-align: right; }
+  .pick small { display: block; font-weight: 800; letter-spacing: .1em; font-size: 12px; text-transform: uppercase; opacity: .8; }
+  .pick p { font: 400 30px/1.05 "Alfa Slab One", Georgia, serif; margin-top: 8px; }
+  .pick span { display: block; margin-top: 8px; font-size: 14px; }
+  .cur { position: absolute; left: 0; top: 0; width: 24px; height: 28px; z-index: 50; will-change: transform; }
+  .press { position: absolute; left: 0; top: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 2px solid var(--cream); z-index: 49; }
+  @media (max-width: 760px) { h1 { left: 16px; top: 70px; } header { left: 16px; right: 16px; } header span { display: none; } .pick { left: 16px; right: 16px; width: auto; bottom: 16px; } }
+</style>
+</head>
+<body>
+  <header><b>Lodos</b><span>Haftada 4 çekirdek · Kemankeş Cd. 12</span></header>
+  <h1>Bugün<br>hangi <em>çekirdek?</em></h1>
+  <div id="table"></div>
+  <div class="btn" id="btn">Karıştır</div>
+  <div class="pick" id="pick"><small>Bugünün kartı</small><p>Etiyopya Guji</p><span>250 g · ₺560 · Filtrede açılır, bergamot ve yaban mersini.</span></div>
+  <div class="press" id="press"></div>
+  <svg class="cur" id="cur" viewBox="0 0 24 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17.2 L11.6 26 L15 24.5 L11 15.9 L18 15.6 Z" fill="#141414" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>
+<script>
+  const data = [
+    ["01", "Lodos harmanı", "Ev harmanı", "250 g", "₺420", "cekirdek", "#f6ecda"],
+    ["02", "Etiyopya Guji", "Tek köken", "250 g", "₺560", "fincan", "#f3d77a"],
+    ["03", "Kolombiya Huila", "Tek köken", "250 g", "Tezgâhta", "espresso", "#c9d9c4"],
+    ["04", "Türk kahvesi kavrumu", "Cezve için", "Fincan", "₺80", "kavurucu", "#f2c9b4"],
+    ["05", "Filtre kahve", "Vapura", "Bardak", "₺95", "deniz", "#cfdbe6"],
+  ];
+  const table = document.getElementById("table");
+  const cards = data.map(([no, name, sub, unit, price, img, c]) => {
+    const el = document.createElement("article"); el.className = "card"; el.style.setProperty("--c", c);
+    el.innerHTML = `<div class="ph"><img src="../../assets/${img}.webp" alt=""><span class="no">${no}</span></div><h3>${name}</h3><small>${sub}</small><div class="pr">${unit}<span>${price}</span></div>`;
+    table.appendChild(el); return el;
+  });
+  // riffle: bottom three to the left, top two to the right, then they fall back interleaved
+  const riffle = (o) => { const a = o.slice(0, 3), b = o.slice(3); const n = []; for (let i = 0; i < 3; i++) { n.push(a[i]); if (b[i] !== undefined) n.push(b[i]); } return n; };
+  const o0 = [0, 1, 2, 3, 4], o1 = riffle(o0), o2 = riffle(o1);
+  const chosen = o2[o2.length - 1];
+  const WINS = [[0.15, 0.32, o0, o1], [0.32, 0.6, o1, o2]];
+  const btn = document.getElementById("btn"), cur = document.getElementById("cur"), press = document.getElementById("press"), pick = document.getElementById("pick");
+  const tilt = [-3, 2, -1.5, 3, -2];
+  function stack(k, cx, cy) { return { x: cx + k * 1.5, y: cy - k * 3, r: tilt[k] }; }
+  const lerp = (a, b, t) => a + (b - a) * t, eio = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  function cursorAt(p, P) {
+    // [time, x, y]
+    const keys = [[0, P.W * 0.82, P.H * 0.95], [0.09, P.bx, P.by], [0.16, P.bx, P.by], [0.26, P.bx + 120, P.by + 40], [0.54, P.bx + 120, P.by + 40], [0.62, P.cx + 10, P.cy - 30], [0.66, P.cx + 10, P.cy - 30], [0.84, P.tx + 10, P.ty - 30], [0.94, P.tx + 70, P.ty + 120], [1, P.tx + 70, P.ty + 120]];
+    let i = 0; while (i < keys.length - 2 && p > keys[i + 1][0]) i++;
+    const t = eio(gl.seg(p, keys[i][0], keys[i + 1][0]));
+    return [lerp(keys[i][1], keys[i + 1][1], t), lerp(keys[i][2], keys[i + 1][2], t)];
+  }
+  window.demo = {
+    duration: 5600,
+    render(p) {
+      const W = innerWidth, H = innerHeight, small = W < 760;
+      const P = { W, H, cx: small ? W * 0.5 : W * 0.33, cy: small ? H * 0.45 : H * 0.53 };
+      P.bx = P.cx; P.by = P.cy + (small ? 200 : 232);
+      P.tx = small ? W * 0.5 : W * 0.66; P.ty = small ? H * 0.45 : H * 0.44;
+      cards.forEach((el, ci) => {
+        let k = o0.indexOf(ci), s = stack(k, P.cx, P.cy), x = s.x, y = s.y, r = s.r, z = k, sc = 1;
+        for (const [a, b, from, to] of WINS) {
+          if (p < a) break;
+          const t = gl.seg(p, a, b), po = from.indexOf(ci), pn = to.indexOf(ci), side = po < 3 ? -1 : 1;
+          const s0 = stack(po, P.cx, P.cy), s1 = stack(pn, P.cx, P.cy);
+          const sp = eio(gl.seg(t, 0, 0.4)), back = gl.easeOutQuart(gl.seg(t, 0.42 + pn * 0.08, 0.7 + pn * 0.06));
+          const ox = side * (small ? 100 : 210) * sp * (1 - back), oy = -18 * sp * (1 - back) - 46 * Math.sin(Math.PI * back) * (back > 0 && back < 1 ? 1 : 0);
+          x = lerp(s0.x, s1.x, back) + ox; y = lerp(s0.y, s1.y, back) + oy;
+          r = lerp(s0.r, s1.r, back) + side * 14 * sp * (1 - back);
+          z = t < 0.42 ? po + (side > 0 ? 10 : 0) : pn + (back > 0 ? 20 : 0);
+          k = pn;
+        }
+        if (ci === chosen) {
+          const f = eio(gl.seg(p, 0.66, 0.84));
+          x = lerp(x, P.tx, f); y = lerp(y, P.ty, f) - 70 * Math.sin(Math.PI * f); r = lerp(r, 0, f); sc = 1 + (small ? 0.1 : 0.4) * f; z = 40;
+        }
+        el.style.zIndex = z;
+        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${r.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      });
+      const pressedBtn = p > 0.095 && p < 0.15, pressedCard = p > 0.625 && p < 0.84;
+      btn.style.transform = `translate(${(P.bx - btn.offsetWidth / 2).toFixed(1)}px, ${(P.by - btn.offsetHeight / 2).toFixed(1)}px) scale(${pressedBtn ? 0.92 : 1})`;
+      btn.style.background = pressedBtn ? "#3d261b" : "";
+      const [mx, my] = cursorAt(p, P);
+      cur.style.transform = `translate(${(mx - 2).toFixed(1)}px, ${(my - 2).toFixed(1)}px)`;
+      press.style.transform = `translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)`;
+      press.style.opacity = pressedBtn || pressedCard ? 1 : 0;
+      const q = gl.easeOutQuart(gl.seg(p, 0.84, 1));
+      pick.style.opacity = q.toFixed(3); pick.style.transform = `translateY(${((1 - q) * 20).toFixed(1)}px)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

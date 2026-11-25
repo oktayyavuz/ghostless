@@ -6,7 +6,7 @@
 // Exit code 1 if a required step is missing. Run it before presenting directions; never present
 // with a ✗ unless the person explicitly waived that step: add a line to DESIGN-LOG.md such as
 //   ghostless-waive: gallery  (Oktay: "galeriye gerek yok, şu stilleri biliyorum")
-// Waivable steps: gallery, references, images.
+// Waivable steps: references, sketches, gallery, images.
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -41,6 +41,12 @@ check(/hayalet|ghost/i.test(konuText) && (konuText.match(/^\|/gm) || []).length 
 const urls = [...new Set((konuText.match(/https?:\/\/[^\s)|>]+/g) || []).map((u) => u.replace(/[.,;]+$/, "")))];
 check(urls.length >= 6 || waived("references"), `Referans panosu: gerçek sitelerden ≥6 bağlantı (şu an ${urls.length})`,
   "Phase 2: search the web (Awwwards, Godly, Siteinspire, studio portfolios) this session; put each URL and the one technique to learn in KONU.md.");
+
+// 3a. project sketches: the styles rendered with THIS project's content
+const galeri = join(T, "galeri");
+const sketches = existsSync(galeri) ? readdirSync(galeri).filter((d) => existsSync(join(galeri, d, "index.html"))) : [];
+check(sketches.length >= 8 || waived("sketches"), `Proje örnekleri (tasarim/galeri: ${sketches.length}, en az 8)`,
+  "Phase 2 step 3: 8–12 first screens of THIS project in different styles, real copy and images, one folder each.", true);
 
 // 3. taste check in the gallery
 const secimFile = join(T, "secimler.json");

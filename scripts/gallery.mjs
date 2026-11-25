@@ -5,6 +5,8 @@
 //   node <skill-dir>/scripts/gallery.mjs                     open the catalog picker
 //   node <skill-dir>/scripts/gallery.mjs --directions tasarim/yonler   also show direction previews
 //                                                             (each subfolder with an index.html is one direction)
+//   --samples tasarim/galeri      project sketches shown first (default: tasarim/galeri if present);
+//                                 each subfolder with an index.html is one sketch
 //   --out tasarim/secimler.json   where choices are written (default: ./tasarim/secimler.json)
 //   --port 5600                   first port to try (skips busy ones and 3000, 4586, 5487, 80)
 //   --wait                        exit after the first submit and print the choice (run it in the background)
@@ -22,6 +24,8 @@ const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[
 const galleryDir = resolve(dirname(fileURLToPath(import.meta.url)), "..", "gallery");
 const outFile = resolve(opt("out", "tasarim/secimler.json"));
 const dirsRoot = opt("directions") ? resolve(opt("directions")) : null;
+// Project sketches: the styles rendered with THIS project's content (default: tasarim/galeri if it exists).
+const samplesRoot = opt("samples") ? resolve(opt("samples")) : existsSync(resolve("tasarim/galeri")) ? resolve("tasarim/galeri") : null;
 const project = opt("project", basename(process.cwd()));
 const wait = args.includes("--wait");
 const RESERVED = new Set([80, 3000, 4586, 5487]);
@@ -42,6 +46,19 @@ function directions() {
     });
 }
 
+function samples() {
+  if (!samplesRoot || !existsSync(samplesRoot)) return [];
+  return readdirSync(samplesRoot, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && existsSync(join(samplesRoot, d.name, "index.html")))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((d) => {
+      const html = readFileSync(join(samplesRoot, d.name, "index.html"), "utf8");
+      const meta = (n) => (html.match(new RegExp(`<meta\\s+name=["']${n}["']\\s+content=["']([^"']*)["']`, "i")) || [])[1] || "";
+      const title = (html.match(/<title>([^<]*)<\/title>/i) || [])[1]?.trim() || d.name;
+      return { id: d.name, title, style: meta("ghostless-style"), desc: meta("description"), url: `/ornek/${encodeURIComponent(d.name)}/` };
+    });
+}
+
 function sendFile(res, root, rel) {
   const p = normalize(join(root, rel));
   if (!p.startsWith(root + sep) && p !== root) { res.writeHead(403).end(); return; }
@@ -57,7 +74,7 @@ const server = createServer((req, res) => {
   const path = decodeURIComponent(url.pathname);
   if (path === "/api/info") {
     res.writeHead(200, { "content-type": "application/json" });
-    res.end(JSON.stringify({ project, directions: directions(), saved: existsSync(outFile) ? JSON.parse(readFileSync(outFile, "utf8")) : null }));
+    res.end(JSON.stringify({ project, key: outFile, directions: directions(), samples: samples(), saved: existsSync(outFile) ? JSON.parse(readFileSync(outFile, "utf8")) : null }));
     return;
   }
   if (path === "/api/secim" && req.method === "POST") {
@@ -79,6 +96,7 @@ const server = createServer((req, res) => {
     });
     return;
   }
+  if (path.startsWith("/ornek/") && samplesRoot) return sendFile(res, samplesRoot, path.slice("/ornek/".length));
   if (path.startsWith("/yonler/") && dirsRoot) return sendFile(res, dirsRoot, path.slice("/yonler/".length));
   return sendFile(res, galleryDir, path === "/" ? "index.html" : path.slice(1));
 });
@@ -94,6 +112,7 @@ function listen(port) {
   server.once("error", (e) => { if (e.code === "EADDRINUSE" && port < 65000) listen(port + 1); else throw e; });
   server.listen(port, "127.0.0.1", () => {
     console.log(`[ghostless] galeri açık: http://localhost:${port}/`);
+    if (samplesRoot) console.log(`[ghostless] proje örnekleri: ${samples().length} (${samplesRoot})`);
     if (dirsRoot) console.log(`[ghostless] yönler: ${directions().map((d) => d.id).join(", ") || "(klasörde index.html'li alt klasör yok)"}`);
     console.log(`[ghostless] seçimler şuraya yazılacak: ${outFile}${wait ? " (ilk gönderimde kapanır)" : ""}`);
   });

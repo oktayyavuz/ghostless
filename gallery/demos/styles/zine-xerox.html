@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotokopi fanzin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Abril+Fatface&family=Alfa+Slab+One&family=Bodoni+Moda:ital,wght@1,800&family=Ultra&family=Rubik+Dirt&family=Special+Elite&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #eeece6; --ink: #121211; --grey: #8d8b86; --pink: #ff2f7d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--paper); color: var(--ink); font: 400 17px/1.45 "Special Elite", "Courier New", monospace; }
+  .abs { position: absolute; }
+  .marker { font-family: "Sedgwick Ave Display", "Comic Sans MS", cursive; }
+  .xerox { filter: url(#xerox); }
+
+  /* fold + staples: it's a folded A4 spread */
+  .fold { left: 600px; width: 80px; top: 0; bottom: 0; background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.07) 46%, rgba(0,0,0,.16) 50%, rgba(0,0,0,.05) 54%, rgba(0,0,0,0)); }
+  .staple { left: 636px; width: 8px; height: 58px; border-radius: 2px;
+            background: linear-gradient(to right, #6c6c6a, #e8e8e4 40%, #9a9a96 70%, #4b4b49); box-shadow: 1px 2px 0 rgba(0,0,0,.55), 2px 4px 3px rgba(0,0,0,.25); }
+  .staple::before, .staple::after { content: ""; position: absolute; left: 1px; width: 6px; height: 4px; background: #1b1b1a; border-radius: 1px; }
+  .staple::before { top: -3px; } .staple::after { bottom: -3px; }
+
+  /* masthead + nav */
+  .mast { left: 44px; top: 26px; display: flex; align-items: center; gap: 16px; }
+  .mast b { font: 400 52px/1 "Rubik Dirt", Impact, sans-serif; letter-spacing: .02em; }
+  .mast span { font-size: 14px; line-height: 1.2; border-left: 3px solid var(--ink); padding-left: 12px; }
+  nav { right: 48px; top: 36px; display: flex; gap: 26px; font-size: 18px; }
+  nav a { position: relative; }
+  nav a.on::after { content: ""; position: absolute; left: -6px; right: -6px; bottom: -4px; height: 9px; background: var(--pink); mix-blend-mode: multiply; transform: rotate(-2deg); border-radius: 2px 6px 3px 8px; }
+
+  /* ransom headline */
+  .rp { display: inline-block; position: relative; padding: 2px 10px 6px; box-shadow: 1px 1px 0 var(--ink), -1px 0 0 rgba(0,0,0,.4); vertical-align: middle; }
+  .w { white-space: nowrap; position: absolute; }
+  .w1 { left: 40px; top: 104px; }
+  .w1 .rp { font-size: 98px; line-height: 1; height: 116px; }
+  .w2 { left: 30px; top: 234px; rotate: -1.6deg; }
+  .w3 { left: 48px; top: 368px; }
+  .w4 { left: 280px; top: 350px; }
+  .blk { background: var(--ink); color: var(--paper); }
+  .wht { background: #fbfaf6; }
+  .gry { background: #c9c7c1; }
+
+  .typed { left: 62px; top: 494px; width: 430px; background: #fbfaf6; padding: 12px 16px; rotate: .8deg; box-shadow: 1px 1px 0 rgba(0,0,0,.7); }
+  .typed mark { background: none; position: relative; color: inherit; }
+  .typed mark::before { content: ""; position: absolute; left: -3px; right: -3px; top: 4px; bottom: 1px; background: var(--pink); mix-blend-mode: multiply; z-index: -1; transform: skewX(-8deg); }
+  .typed p { position: relative; z-index: 0; }
+  .note { left: 76px; top: 634px; font-size: 30px; line-height: 1; rotate: -3deg; }
+  .arrow1 { left: 380px; top: 600px; width: 180px; height: 80px; overflow: visible; }
+  .ring { left: 492px; top: 470px; width: 120px; height: 120px; overflow: visible; }
+  .ring-t { left: 516px; top: 508px; font: 400 32px/1 "Anton", sans-serif; rotate: 8deg; }
+
+  /* right page */
+  .ph1 { left: 704px; top: 98px; width: 528px; height: 330px; rotate: 1.4deg; overflow: hidden; box-shadow: 0 0 0 2px var(--ink); background: #000; }
+  .ph1 img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; display: block; }
+  .ph1-cap { left: 1000px; top: 400px; font-size: 34px; line-height: .95; color: var(--paper); rotate: -4deg; }
+  .ph2 { left: 700px; top: 462px; width: 270px; height: 176px; rotate: -3deg; overflow: hidden; box-shadow: 0 0 0 2px var(--ink); }
+  .ph2 img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block; }
+  .ph2-cap { left: 712px; top: 646px; font-size: 26px; rotate: -2deg; }
+  .menu { left: 1006px; top: 468px; width: 234px; rotate: 1.2deg; }
+  .menu h3 { display: inline-block; font: 400 30px/1 "Anton", sans-serif; letter-spacing: .04em; background: var(--ink); color: var(--paper); padding: 4px 10px 6px; margin-bottom: 8px; rotate: -3deg; }
+  .menu li { list-style: none; display: flex; justify-content: space-between; font-size: 16px; line-height: 1.75; border-bottom: 1px dashed rgba(0,0,0,.5); }
+  .menu li b { font: 400 22px/1 "Sedgwick Ave Display", cursive; }
+  .x { left: 1112px; top: 470px; font: 400 30px/1 "Sedgwick Ave Display", cursive; color: var(--pink); mix-blend-mode: multiply; rotate: -12deg; }
+
+  /* second section */
+  .sec { left: -10px; right: -10px; top: 708px; height: 110px; background: var(--ink); color: var(--paper); rotate: -.6deg; padding: 18px 60px; display: flex; align-items: center; gap: 26px; }
+  .sec h2 { font: 400 46px/1 "Anton", sans-serif; letter-spacing: .01em; text-transform: uppercase; white-space: nowrap; }
+  .sec .cut { background: var(--paper); color: var(--ink); padding: 4px 10px; font-size: 16px; white-space: nowrap; }
+  .sec .cut:nth-of-type(2n) { rotate: 2deg; } .sec .cut:nth-of-type(2n+1) { rotate: -1.5deg; }
+  .sec .marker { font-size: 26px; color: var(--paper); white-space: nowrap; margin-left: auto; }
+
+  /* the copier's own marks, on top of everything */
+  .toner { left: 0; top: 0; width: 1280px; height: 800px; pointer-events: none; mix-blend-mode: multiply; }
+
+  @media (max-width: 700px) {
+    .fold, .staple, nav, .ph1-cap, .ph2, .ph2-cap, .menu, .x, .ring, .ring-t, .arrow1 { display: none; }
+    .mast span { display: none; } .w1 .rp { font-size: 58px; height: 70px; } .w2 { top: 200px; } .w2 .rp { font-size: 54px !important; }
+    .w3 { top: 280px; } .w4 { left: 20px; top: 360px; } .w3 .rp, .w4 .rp { font-size: 56px !important; }
+    .typed { left: 16px; width: 340px; top: 450px; } .ph1 { left: 16px; width: 340px; top: 620px; height: 200px; } .note { top: 590px; left: 20px; font-size: 22px; } .sec { display: none; }
+  }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="xerox" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feColorMatrix type="saturate" values="0" result="g"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="ng"/>
+      <feComposite in="g" in2="ng" operator="arithmetic" k1="0" k2="1.5" k3="0.5" k4="-0.42" result="m"/>
+      <feComponentTransfer in="m">
+        <feFuncR type="discrete" tableValues="0.07 0.07 0.07 0.45 0.93 0.93"/>
+        <feFuncG type="discrete" tableValues="0.07 0.07 0.07 0.45 0.92 0.92"/>
+        <feFuncB type="discrete" tableValues="0.07 0.07 0.07 0.44 0.9 0.9"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="speck" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="11"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.07  0 0 0 0 0.07  0 0 0 0 0.07  14 0 0 0 -9.4"/>
+    </filter>
+    <filter id="blotch" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="5" seed="23"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.07  0 0 0 0 0.07  0 0 0 0 0.07  16 0 0 0 -9.3"/>
+    </filter>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="2"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  </svg>
+
+  <div class="abs fold"></div>
+
+  <div class="abs mast" data-in="0,.25"><b>LODOS</b><span>kahve fanzini · sayı 07<br>Karaköy, iskelenin dibi</span></div>
+  <nav class="abs" data-in=".05,.3"><a class="on">menü</a><a>çekirdekler</a><a>iskele</a><a>bize yaz</a></nav>
+
+  <h1 aria-label="Vapur kalkmadan kahven hazır!">
+    <span class="w w1" data-in=".08,.3">
+      <span class="rp blk" style="font-family:'Abril Fatface';rotate:-4deg">V</span><span class="rp wht" style="font-family:'Alfa Slab One';rotate:3deg;margin-left:-4px">A</span><span class="rp gry" style="font-family:'Bodoni Moda';font-style:italic;font-weight:800;rotate:-2deg;margin-left:-2px">P</span><span class="rp wht" style="font-family:'Anton';rotate:5deg;margin-left:-6px;font-size:108px">U</span><span class="rp blk" style="font-family:'Ultra';rotate:-3deg;margin-left:-3px">R</span>
+    </span>
+    <span class="w w2" data-in=".14,.36"><span class="rp blk" style="font:400 100px/1 Anton,sans-serif;letter-spacing:.01em;padding:4px 18px 8px">KALKMADAN</span></span>
+    <span class="w w3" data-in=".2,.42"><span class="rp wht" style="font:400 64px/1 'Abril Fatface',serif;rotate:-4deg;padding:0 12px 10px">kahven</span></span>
+    <span class="w w4" data-in=".26,.48">
+      <span class="rp gry" style="font:400 72px/1 'Ultra',serif;rotate:4deg">H</span><span class="rp blk" style="font:italic 800 77px/1 'Bodoni Moda',serif;rotate:-5deg;margin-left:-4px">a</span><span class="rp wht" style="font:400 79px/1 'Rubik Dirt',sans-serif;rotate:2deg;margin-left:-3px">Z</span><span class="rp wht" style="font:400 82px/1 'Alfa Slab One',serif;rotate:-2deg;margin-left:-2px">I</span><span class="rp blk" style="font:400 77px/1 'Abril Fatface',serif;rotate:6deg;margin-left:-5px">R</span>
+    </span>
+  </h1>
+
+  <div class="abs typed" data-in=".34,.56">
+    <p>Her sabah 07.00'de kavuruyoruz. 12 kg'lık tek kazan, Kemankeş Cd. 12. Karaköy iskelesine <mark>90 saniye.</mark> Vapurun kalkışına 6 dakika kala gelene sıra yok.</p>
+  </div>
+  <svg class="abs ring" viewBox="0 0 120 120" aria-hidden="true" data-in=".5,.7"><path d="M60 8 C 100 6, 116 40, 110 70 C 102 108, 40 116, 16 88 C -4 62, 10 18, 54 10 C 70 8, 86 12, 96 22" fill="none" stroke="#ff2f7d" stroke-width="7" stroke-linecap="round" style="mix-blend-mode:multiply" filter="url(#rough)"/></svg>
+  <div class="abs ring-t" data-in=".5,.7">07.00</div>
+  <p class="abs note marker" data-in=".56,.78">gerçekten 90 sn.<br>saydık. koştuk.</p>
+  <svg class="abs arrow1" viewBox="0 0 180 80" aria-hidden="true" data-in=".6,.8"><path d="M4 70 C 60 78, 120 60, 160 16 M 140 20 L 162 12 L 160 38" fill="none" stroke="#121211" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"/></svg>
+
+  <div class="abs staple" style="top:150px" data-in=".02,.2"></div>
+  <div class="abs staple" style="top:560px" data-in=".02,.2"></div>
+
+  <figure class="abs ph1" data-in=".22,.46"><img class="xerox" src="../../assets/barista.webp" alt="Barista elleri ve portafiltre, fotokopi"></figure>
+  <p class="abs ph1-cap marker" data-in=".5,.72">07.12 — ilk shot</p>
+  <figure class="abs ph2" data-in=".3,.54"><img class="xerox" src="../../assets/deniz.webp" alt="Vapurdan şehir siluetine bakış, fotokopi"></figure>
+  <p class="abs ph2-cap marker" data-in=".58,.8">↑ 08.10 Kadıköy vapuru</p>
+
+  <div class="abs menu" data-in=".38,.6">
+    <h3>MENÜ</h3>
+    <ul>
+      <li><span>Türk kahvesi</span><b>₺80</b></li>
+      <li><span>Espresso</span><b>₺75</b></li>
+      <li><span>Filtre kahve</span><b>₺95</b></li>
+      <li><span>Lodos, 250 g</span><b>₺420</b></li>
+    </ul>
+  </div>
+  <div class="abs x" data-in=".62,.82">← bunu iç</div>
+
+  <section class="abs sec" data-in=".44,.66">
+    <h2>Bu hafta kazanda:</h2>
+    <span class="cut">Lodos harmanı</span><span class="cut">Etiyopya Guji</span><span class="cut">Kolombiya Huila</span><span class="cut">Türk kahvesi kavrumu</span>
+    <span class="marker">→ s. 2</span>
+  </section>
+
+  <svg class="abs toner" viewBox="0 0 1280 800" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="edgeL" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <mask id="edges">
+        <rect x="0" y="0" width="70" height="800" fill="url(#edgeL)"/>
+        <rect x="1210" y="0" width="70" height="800" fill="url(#edgeL)" transform="rotate(180 1245 400)"/>
+        <rect x="0" y="0" width="1280" height="22" fill="#fff" opacity=".6"/>
+      </mask>
+    </defs>
+    <rect width="1280" height="800" filter="url(#speck)" opacity=".75"/>
+    <rect width="1280" height="800" filter="url(#blotch)" mask="url(#edges)"/>
+    <rect x="0" y="0" width="9" height="800" fill="#121211"/>
+    <rect x="1273" y="0" width="7" height="800" fill="#121211"/>
+    <rect x="452" y="0" width="1.4" height="800" fill="#121211" opacity=".18"/>
+    <rect x="1118" y="0" width="2.2" height="800" fill="#121211" opacity=".12"/>
+    <rect x="884" y="0" width="1" height="800" fill="#121211" opacity=".2"/>
+  </svg>
+
+<script>
+  const items = [...document.querySelectorAll("[data-in]")];
+  window.demo = {
+    duration: 2200, hold: 5000,
+    render(p) {
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.seg(p, a, b), e = gl.easeOutQuart(t);
+        // pieces get pasted down: they appear, drop a few px and settle
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.scale = gl.lerp(1.06, 1, e);
+        el.style.translate = `0 ${(1 - e) * -10}px`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

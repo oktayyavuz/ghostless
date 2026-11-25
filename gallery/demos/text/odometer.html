@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sayaç tekerleği</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Martian+Mono:wdth,wght@87.5,400;87.5,600&display=swap" rel="stylesheet">
+<style>
+  :root { --green: #123528; --green2: #184534; --cream: #efe6cf; --brass: #c9a25a; --mute: #8fa597; --wheel: #141414; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--green); color: var(--cream); font: 400 12px/1.5 "Martian Mono", ui-monospace, monospace; overflow: hidden;
+         display: grid; grid-template-columns: 0.62fr 1.7fr; grid-template-rows: auto 1fr; padding: 30px 44px 36px; gap: 20px 40px; }
+  header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; color: var(--mute); letter-spacing: .04em; }
+  header b { color: var(--cream); font: 900 24px/1 Anybody, sans-serif; font-variation-settings: "wdth" 150; letter-spacing: .02em; }
+  .intro { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+  .intro figure { flex: 1; min-height: 0; border-radius: 6px; overflow: hidden; border: 1px solid rgba(201,162,90,.35); }
+  .intro figure img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; display: block; }
+  h1 { font: 800 clamp(36px, 4.6vw, 62px)/.92 Anybody, Impact, sans-serif; font-variation-settings: "wdth" 62; text-transform: uppercase; letter-spacing: -.005em; }
+  h1 em { font-style: normal; color: var(--brass); }
+  .intro p { color: var(--mute); max-width: 32ch; }
+  .intro p b { color: var(--cream); font-weight: 600; }
+  .board { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; align-content: stretch; min-height: 0; }
+  .unit { display: flex; flex-direction: column; justify-content: space-between; }
+  .unit { grid-column: span 2; background: var(--green2); border: 1px solid rgba(201,162,90,.35); border-radius: 6px; padding: 16px 18px 14px; }
+  .unit.wide { grid-column: span 3; }
+  .unit .lab { color: var(--mute); text-transform: uppercase; letter-spacing: .08em; font-size: 10.5px; display: flex; justify-content: space-between; }
+  .unit .lab span:last-child { color: var(--brass); }
+  .row { display: flex; align-items: center; gap: 7px; margin: 10px 0; }
+  .win { position: relative; height: 150px; width: 74px; overflow: hidden; background: var(--wheel); border-radius: 5px;
+         box-shadow: inset 0 0 0 2px var(--brass), inset 0 3px 0 2px #000; }
+  .win::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+                background: linear-gradient(#000 0%, rgba(0,0,0,.55) 18%, rgba(0,0,0,0) 38%, rgba(0,0,0,0) 62%, rgba(0,0,0,.55) 82%, #000 100%); }
+  .strip { position: absolute; left: 0; right: 0; top: 27px; will-change: transform; }
+  .strip b { display: block; height: 96px; text-align: center; font: 700 94px/96px Anybody, Impact, sans-serif; font-variation-settings: "wdth" 70; color: var(--cream); }
+  .fix { font: 800 76px/1 Anybody, Impact, sans-serif; font-variation-settings: "wdth" 70; color: var(--brass); padding: 0 2px; }
+  .fix.small { font-size: 26px; font-variation-settings: "wdth" 100; align-self: end; padding-bottom: 14px; text-transform: uppercase; }
+  .cap { color: var(--cream); font-size: 12px; }
+  @media (max-width: 760px) {
+    body { grid-template-columns: 1fr; padding: 16px; gap: 12px; } .intro p { display: none; }
+    .board { grid-template-columns: 1fr 1fr; gap: 8px; } .unit { grid-column: span 1; padding: 10px; } .unit.wide { grid-column: span 2; padding: 10px; } header span { display: none; }
+    .intro figure { display: none; } .win { width: 36px; height: 60px; } .strip { top: 10px; } .strip b { height: 40px; font-size: 38px; line-height: 40px; } .fix { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+  <header><b>LODOS</b><span>Kemankeş Cd. 12, Karaköy · 2019'dan beri</span></header>
+  <section class="intro">
+    <h1>Tezgâhın<br>arkasındaki<br><em>sayılar</em></h1>
+    <figure><img src="../../assets/barista.webp" alt="Barista portafiltreyi tutuyor, fincana espresso akıyor"></figure>
+    <p><b>Uydurma yok.</b> Fiyat, saat, mesafe, kazan: Lodos'u anlatan beş rakam, her gün aynı.</p>
+  </section>
+  <section class="board" id="board" aria-label="Lodos harmanı 420 lira, kavurma 07.00, tek kazan 12 kilo, iskeleye 90 saniye, vapura 6 dakika kala sıra yok"></section>
+<script>
+  // label, fixed bits ("₺", ".", "kg"), target digits, caption
+  const units = [
+    { lab: ["Lodos harmanı", "250 g"], parts: ["₺", "4", "2", "0"], cap: "Haftanın harmanı, paketi tezgâhta", wide: true },
+    { lab: ["Kavurma", "her sabah"], parts: ["0", "7", ".", "0", "0"], cap: "Kazan o saatte yanar", wide: true },
+    { lab: ["Kazan", "tek"], parts: ["1", "2", "kg"], cap: "Tek parti, tek kazan" },
+    { lab: ["İskele", "yürüyüş"], parts: ["9", "0", "sn"], cap: "Kapıdan iskeleye" },
+    { lab: ["Vapur", "kalkışa kala"], parts: ["6", "dk"], cap: "Bu sürede sıra yok" },
+  ];
+  const board = document.getElementById("board"), cols = [];
+  const svgNS = "http://www.w3.org/2000/svg";
+  const defs = document.createElementNS(svgNS, "svg"); defs.setAttribute("width", 0); defs.setAttribute("height", 0); defs.style.position = "absolute";
+  document.body.appendChild(defs);
+  units.forEach((u, ui) => {
+    const el = document.createElement("div"); el.className = "unit" + (u.wide ? " wide" : "");
+    el.innerHTML = `<div class="lab"><span>${u.lab[0]}</span><span>${u.lab[1]}</span></div><div class="row"></div><div class="cap">${u.cap}</div>`;
+    const row = el.querySelector(".row");
+    const digits = u.parts.filter((x) => /^\d$/.test(x)).length;
+    let di = 0;
+    u.parts.forEach((x) => {
+      if (!/^\d$/.test(x)) { const f = document.createElement("span"); f.className = "fix" + (x.length > 1 ? " small" : ""); f.textContent = x; row.appendChild(f); return; }
+      const win = document.createElement("div"); win.className = "win";
+      const strip = document.createElement("div"); strip.className = "strip";
+      for (let k = 0; k < 70; k++) { const b = document.createElement("b"); b.textContent = (k + 1) % 10; strip.appendChild(b); }
+      // vertical-only blur filter for this wheel, so a fast spin smears along its direction
+      const id = "vb" + cols.length;
+      defs.innerHTML += `<filter id="${id}" x="0" y="-20%" width="100%" height="140%"><feGaussianBlur stdDeviation="0 0"/></filter>`;
+      win.appendChild(strip); row.appendChild(win);
+      const fromRight = digits - 1 - di;
+      // the rightmost wheel spins most, like a real counter
+      cols.push({ strip, id, target: +x, spins: 1 + fromRight, start: 0.04 + ui * 0.085, end: 0.6 + ui * 0.085 - fromRight * -0.02 });
+      di++;
+    });
+    board.appendChild(el);
+  });
+  cols.forEach((c) => { c.blur = defs.querySelector("#" + c.id + " feGaussianBlur"); c.strip.style.filter = `url(#${c.id})`; });
+  const ease = (x) => 1 - Math.pow(1 - x, 4), dEase = (x) => 4 * Math.pow(1 - x, 3);
+  window.demo = {
+    duration: 3400,
+    render(p) {
+      const cell = cols[0].strip.firstChild.offsetHeight || 96;
+      cols.forEach((c) => {
+        const t = gl.seg(p, c.start, Math.min(1, c.end));
+        // strip starts at digit 0 (index 9) and rolls forward spins×10 + target
+        const total = c.spins * 10 + c.target;
+        const pos = 9 + total * ease(t);
+        c.strip.style.transform = `translateY(${(-pos * cell).toFixed(1)}px)`;
+        const speed = t > 0 && t < 1 ? (total * dEase(t)) / (Math.min(1, c.end) - c.start) : 0; // digits per unit p
+        c.blur.setAttribute("stdDeviation", `0 ${Math.min(14, speed * 0.05).toFixed(2)}`);
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

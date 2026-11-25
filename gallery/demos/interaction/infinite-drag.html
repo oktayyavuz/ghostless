@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sürüklenen sonsuz pano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;800&family=Azeret+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --board: #1a1815; --cream: #f2ead9; --rust: #c8532e; --sea: #2c5f7c; --butter: #eccd6a; --mute: #9a9284; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--board); color: var(--cream); font: 400 12px/1.4 "Azeret Mono", ui-monospace, monospace; overflow: hidden; position: relative; }
+  .tile { position: absolute; left: 0; top: 0; width: 260px; border-radius: 6px; overflow: hidden; will-change: transform; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile.ph figcaption { position: absolute; left: 10px; bottom: 8px; background: var(--board); color: var(--cream); padding: 3px 7px; border-radius: 3px; font-size: 11px; }
+  .tile.tx { padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+  .tile.tx b { font: 800 44px/.92 "Funnel Display", system-ui, sans-serif; letter-spacing: -.03em; }
+  .tile.tx span { font-size: 12px; }
+  .t-rust { background: var(--rust); } .t-sea { background: var(--sea); } .t-cream { background: var(--cream); color: var(--board); } .t-butter { background: var(--butter); color: var(--board); }
+  .hud { position: absolute; left: 28px; top: 24px; display: flex; gap: 10px; align-items: center; z-index: 20; }
+  .hud .logo { background: var(--cream); color: var(--board); padding: 10px 16px; border-radius: 6px; font: 800 22px/1 "Funnel Display", system-ui, sans-serif; letter-spacing: -.02em; }
+  .hud .lab { background: var(--board); padding: 10px 14px; border-radius: 6px; color: var(--cream); }
+  .xy { position: absolute; left: 28px; bottom: 24px; z-index: 20; background: var(--board); padding: 10px 14px; border-radius: 6px; display: flex; gap: 16px; font-weight: 600; }
+  .xy span { color: var(--mute); font-weight: 400; }
+  .state { position: absolute; right: 28px; bottom: 24px; z-index: 20; background: var(--cream); color: var(--board); padding: 10px 14px; border-radius: 6px; font-weight: 600; letter-spacing: .06em; }
+  .cur { position: absolute; left: 0; top: 0; width: 26px; height: 30px; z-index: 30; will-change: transform; }
+  .press { position: absolute; left: 0; top: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: rgba(242,234,217,.22); border: 2px solid var(--cream); z-index: 29; }
+</style>
+</head>
+<body>
+  <div id="board" role="img" aria-label="Lodos fotoğraf ve not panosu, her yöne sürükleniyor"></div>
+  <div class="hud"><span class="logo">Lodos arşivi</span><span class="lab">Her yöne sürükle, kenarı yok</span></div>
+  <div class="xy"><span>X</span><b id="vx">0</b><span>Y</span><b id="vy">0</b></div>
+  <div class="state" id="state">BEKLİYOR</div>
+  <div class="press" id="press"></div>
+  <svg class="cur" id="cur" viewBox="0 0 24 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17.2 L11.6 26 L15 24.5 L11 15.9 L18 15.6 Z" fill="#141414" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>
+<script>
+  const COLS = 6, ROWS = 5, CW = 300, CH = 280, PW = COLS * CW, PH = ROWS * CH;
+  const photos = [["kopru", "Boğaz, akşamüstü"], ["espresso", "Espresso · ₺75"], ["kavurucu", "İlk kazan"], ["deniz", "Vapurdan"], ["cekirdek", "Lodos harmanı"], ["barista", "Tezgâh, 07.00"], ["fincan", "Türk kahvesi · ₺80"]];
+  const texts = [["Karaköy", "Kemankeş Cd. 12", "t-rust"], ["07.00", "her sabah kavurma", "t-cream"], ["90 sn", "iskeleye yürüme", "t-sea"], ["₺420", "Lodos harmanı, 250 g", "t-butter"], ["6 dk", "kalkışa kala sıra yok", "t-rust"], ["12 kg", "tek kazan", "t-cream"]];
+  const board = document.getElementById("board"), tiles = [];
+  let ph = 0, tx = 0;
+  for (let c = 0; c < COLS; c++) for (let r = 0; r < ROWS; r++) {
+    const isText = (r + 2 * c) % 3 === 0;
+    const el = document.createElement("div");
+    const h = isText ? 210 : [230, 250, 200, 240][(r + c) % 4];
+    if (isText) { const [b, s, cls] = texts[tx++ % texts.length]; el.className = "tile tx " + cls; el.innerHTML = `<b>${b}</b><span>${s}</span>`; }
+    else { const [src, cap] = photos[ph++ % photos.length]; el.className = "tile ph"; el.innerHTML = `<img src="../../assets/${src}.webp" alt=""><figcaption>${cap}</figcaption>`; }
+    el.style.height = h + "px";
+    board.appendChild(el);
+    tiles.push({ el, bx: c * CW + 20, by: r * CH + (c % 2 ? CH / 2 : 0) + 20 });
+  }
+  const mod = (a, n) => ((a % n) + n) % n;
+  // two throws: up-left, then right-down; after each release the board keeps the speed and slows down
+  const K = 5;
+  const glide = (t) => (1 - Math.exp(-K * t)) / (1 - Math.exp(-K));
+  const D1 = [-300, -170], G1 = [-360, -200], D2 = [380, 230], G2 = [330, 210];
+  const T = { in: 0.07, p1: 0.1, r1: 0.3, e1: 0.5, p2: 0.56, r2: 0.74, e2: 0.96 };
+  function state(p, W, H) {
+    const s0 = [W * 0.6, H * 0.6];
+    const a = gl.seg(p, T.p1, T.r1), b = gl.seg(p, T.r1, T.e1), c = gl.seg(p, T.p2, T.r2), d = gl.seg(p, T.r2, T.e2);
+    const da = a * a * (3 - 2 * a) * 0.5 + a * a * 0.5;  // speeds up into the throw
+    const dc = c * c * (3 - 2 * c) * 0.5 + c * c * 0.5;
+    const off = [0, 1].map((i) => D1[i] * da + G1[i] * glide(b) + D2[i] * dc + G2[i] * glide(d));
+    const rel1 = [s0[0] + D1[0], s0[1] + D1[1]], s2 = [W * 0.34, H * 0.34], rel2 = [s2[0] + D2[0], s2[1] + D2[1]];
+    let m;
+    if (p < T.p1) { const t = gl.easeInOutCubic(gl.seg(p, 0, T.in)); m = [gl.lerp(W * 0.95, s0[0], t), gl.lerp(H * 1.02, s0[1], t)]; }
+    else if (p < T.r1) m = [s0[0] + D1[0] * da, s0[1] + D1[1] * da];
+    else if (p < T.p2) { const t = gl.easeInOutCubic(gl.seg(p, T.e1 - 0.06, T.p2 - 0.01)); m = [gl.lerp(rel1[0], s2[0], t), gl.lerp(rel1[1], s2[1], t)]; }
+    else if (p < T.r2) m = [s2[0] + D2[0] * dc, s2[1] + D2[1] * dc];
+    else m = rel2;
+    const down = (p >= T.p1 - 0.01 && p < T.r1) || (p >= T.p2 - 0.01 && p < T.r2);
+    const gliding = (p >= T.r1 && p < T.e1) || (p >= T.r2 && p < T.e2);
+    return { off, m, down, gliding };
+  }
+  const vx = document.getElementById("vx"), vy = document.getElementById("vy"), st = document.getElementById("state");
+  const cur = document.getElementById("cur"), press = document.getElementById("press");
+  window.demo = {
+    duration: 5600,
+    render(p) {
+      const W = innerWidth, H = innerHeight, { off, m, down, gliding } = state(p, W, H);
+      tiles.forEach(({ el, bx, by }) => {
+        const x = mod(bx + off[0], PW) - CW, y = mod(by + off[1], PH) - CH;
+        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      });
+      vx.textContent = Math.round(-off[0]); vy.textContent = Math.round(-off[1]);
+      st.textContent = down ? "SÜRÜKLENİYOR" : gliding ? "KAYIYOR" : p > 0.9 ? "DURDU" : "BEKLİYOR";
+      cur.style.transform = `translate(${(m[0] - 2).toFixed(1)}px, ${(m[1] - 2).toFixed(1)}px)`;
+      press.style.transform = `translate(${m[0].toFixed(1)}px, ${m[1].toFixed(1)}px) scale(${down ? 1 : 0.6})`;
+      press.style.opacity = down ? 1 : 0;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

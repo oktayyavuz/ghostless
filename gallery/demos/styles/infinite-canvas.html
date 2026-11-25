@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonsuz tuval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Caveat:wght@500;700&family=Mona+Sans:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root { --board: #e6e0d4; --ink: #1d1b18; --mute: #6f685d; --line: #cfc6b6; --blue: #2f6fd6; --rust: #c4512f;
+          --yellow: #ffe27a; --pink: #ffb7c5; --green: #b8e3b0; --paper: #fffdf8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--board); color: var(--ink); overflow: hidden; font: 500 15px/1.4 "Mona Sans", system-ui, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .page { position: relative; width: 1280px; height: 800px; overflow: hidden; }
+
+  header { position: absolute; left: 0; right: 0; top: 0; height: 64px; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line);
+           display: flex; align-items: center; gap: 22px; padding: 0 22px; }
+  .logo { font: 400 26px/1 Gloock, Georgia, serif; letter-spacing: -.01em; }
+  .crumb { color: var(--mute); font-size: 14px; padding-left: 18px; border-left: 1px solid var(--line); }
+  .crumb b { color: var(--ink); font-weight: 650; }
+  .jump { display: flex; gap: 6px; margin-left: 26px; }
+  .jump a { padding: 7px 12px; border-radius: 8px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 7px; }
+  .jump a i { width: 9px; height: 9px; border-radius: 2px; border: 1.5px solid currentColor; }
+  .jump a.on { background: var(--ink); color: var(--paper); }
+  .zoom { margin-left: auto; display: flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .zoom span { padding: 7px 10px; } .zoom span + span { border-left: 1px solid var(--line); min-width: 56px; text-align: center; }
+  .cta { background: var(--rust); color: #fff; padding: 9px 16px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+
+  .view { position: absolute; left: 0; top: 64px; right: 0; bottom: 0; overflow: hidden; }
+  .board { position: absolute; left: 0; top: 0; width: 3200px; height: 2200px; transform-origin: 0 0; }
+  .board > * { position: absolute; }
+  .board svg.links { left: 0; top: 0; width: 3200px; height: 2200px; overflow: visible; }
+
+  .frame-label { font: 600 22px/1 "Mona Sans", sans-serif; color: var(--mute); display: flex; gap: 10px; align-items: center; }
+  .frame-label b { color: var(--ink); }
+  .frame { background: var(--paper); border-radius: 6px; box-shadow: 0 2px 0 rgba(29,27,24,.06), 0 18px 40px rgba(29,27,24,.10); overflow: hidden; }
+
+  .hero { padding: 70px 64px; display: grid; grid-template-columns: 1fr 420px; gap: 52px; }
+  .hero .eyebrow { font: 700 22px/1 "Mona Sans", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--rust); }
+  .hero h1 { margin-top: 30px; font: 400 104px/.95 Gloock, Georgia, serif; letter-spacing: -.02em; }
+  .hero p { margin-top: 34px; font-size: 30px; line-height: 1.38; color: #4a443b; max-width: 24ch; }
+  .hero .btns { display: flex; gap: 18px; margin-top: 40px; }
+  .hero .btns a { padding: 20px 30px; border-radius: 14px; font-weight: 700; font-size: 26px; border: 2.5px solid var(--ink); }
+  .hero .btns a:first-child { background: var(--ink); color: var(--paper); }
+  .hero img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; display: block; }
+
+  .note { padding: 26px 26px; font: 700 44px/1.02 Caveat, "Comic Sans MS", cursive; box-shadow: 0 2px 0 rgba(0,0,0,.05), 0 14px 26px rgba(29,27,24,.14); }
+  .note small { display: block; margin-top: 14px; font: 600 18px/1 "Mona Sans", sans-serif; opacity: .65; }
+  .photo { background: var(--paper); padding: 12px 12px 0; box-shadow: 0 2px 0 rgba(0,0,0,.05), 0 14px 30px rgba(29,27,24,.12); border-radius: 4px; }
+  .photo img { width: 100%; display: block; object-fit: cover; border-radius: 2px; }
+  .photo figcaption { font: 600 19px/1 "Mona Sans", sans-serif; color: var(--mute); padding: 14px 4px 16px; }
+
+  .menu { padding: 44px 44px; }
+  .menu h3 { font: 400 58px/1 Gloock, serif; }
+  .menu ul { list-style: none; margin-top: 26px; }
+  .menu li { display: flex; justify-content: space-between; font-size: 25px; font-weight: 600; padding: 15px 0; border-bottom: 1.5px dashed var(--line); }
+  .menu li span { color: var(--rust); font-weight: 700; }
+
+  .beans { padding: 54px 64px; }
+  .beans h2 { font: 400 70px/1 Gloock, serif; letter-spacing: -.015em; }
+  .beans .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 36px; }
+  .beans .row div { border-radius: 8px; height: 300px; padding: 24px; font: 700 28px/1.1 "Mona Sans", sans-serif; }
+  .beans .row div span { display: block; font-weight: 500; font-size: 22px; margin-top: 10px; opacity: .75; }
+
+  .cursor { display: flex; align-items: flex-start; gap: 2px; }
+  .cursor svg { width: 34px; height: 34px; }
+  .cursor b { margin-top: 26px; padding: 6px 12px; border-radius: 8px; color: #fff; font: 700 20px/1 "Mona Sans", sans-serif; white-space: nowrap; }
+
+  .mini { position: absolute; right: 22px; bottom: 22px; width: 232px; z-index: 8; background: var(--paper); border-radius: 10px; padding: 10px;
+          box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 10px 24px rgba(29,27,24,.14); }
+  .mini .top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 650; color: var(--mute); margin-bottom: 8px; }
+  .mini svg { display: block; width: 212px; height: 146px; background: var(--board); border-radius: 4px; }
+  .hint { position: absolute; left: 22px; bottom: 22px; z-index: 8; background: var(--ink); color: var(--paper); border-radius: 10px; padding: 10px 14px;
+          font-size: 13px; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+  .hint kbd { font: 700 11px/1 "Mona Sans", sans-serif; border: 1px solid #6f685d; border-radius: 4px; padding: 3px 6px; }
+  .grab { position: absolute; z-index: 9; width: 30px; height: 30px; pointer-events: none; }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="#">Lodos</a>
+    <div class="crumb">Karaköy panosu · <b>Kahve Kavurma Evi</b></div>
+    <nav class="jump"><a class="on" href="#"><i></i>Kavurma</a><a href="#"><i></i>Çekirdekler</a><a href="#"><i></i>Menü</a><a href="#"><i></i>İskele</a></nav>
+    <div class="zoom"><span>−</span><span id="zoomv">%60</span><span>+</span></div>
+    <a class="cta" href="#">Sipariş ver</a>
+  </header>
+
+  <div class="view" id="view">
+    <div class="board" id="board">
+      <svg class="links" viewBox="0 0 3200 2200" fill="none" stroke="#1d1b18" stroke-width="3" stroke-linecap="round">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#1d1b18" stroke="none"/></marker></defs>
+        <path d="M640 560 C 700 640, 720 700, 800 720" marker-end="url(#ah)"/>
+        <path d="M2050 690 C 2080 740, 2090 760, 2100 790" marker-end="url(#ah)" stroke-dasharray="2 12"/>
+        <path d="M600 1130 C 640 1230, 700 1300, 800 1330" marker-end="url(#ah)" stroke-dasharray="2 12"/>
+        <text x="420" y="1250" font-family="Caveat, cursive" font-size="34" font-weight="700" fill="#1d1b18" stroke="none" transform="rotate(-6 420 1250)">aynı sabah kavruluyor</text>
+      </svg>
+
+      <!-- left edge, partly outside the slice -->
+      <figure class="photo" style="left:150px;top:520px;width:430px;transform:rotate(-2deg)"><img src="../../assets/kopru.webp" alt="Boğaz Köprüsü gün batımında" style="height:220px"><figcaption>Akşam 19.00 · kapanış</figcaption></figure>
+      <div class="note" style="left:400px;top:300px;width:250px;height:250px;background:var(--pink);transform:rotate(-4deg)">Her sabah 07.00, tek kazan.<small>12 kg</small></div>
+      <figure class="photo" style="left:330px;top:820px;width:330px;transform:rotate(2.5deg)"><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu" style="height:260px;object-position:50% 35%"><figcaption>Kazan, ilk kavrum öncesi</figcaption></figure>
+
+      <!-- hero frame -->
+      <div class="frame-label" style="left:760px;top:338px"><b>Ana sayfa</b> 1120 × 790</div>
+      <section class="frame hero" style="left:760px;top:380px;width:1120px;height:790px">
+        <div>
+          <div class="eyebrow">Kemankeş Cd. 12 · Karaköy</div>
+          <h1>Vapur kalkmadan kahven hazır.</h1>
+          <p>İskeleye doksan saniye. Kalkışa altı dakika kala gelene sıra yok.</p>
+          <div class="btns"><a href="#">Menüye bak</a><a href="#">Yol tarifi</a></div>
+        </div>
+        <img src="../../assets/barista.webp" alt="Barista portafiltreden espresso alıyor">
+      </section>
+
+      <!-- right side -->
+      <figure class="photo" style="left:2180px;top:150px;width:440px;transform:rotate(1.5deg)"><img src="../../assets/deniz.webp" alt="Vapurdan şehir" style="height:230px"><figcaption>Karaköy iskelesi, vapurdan</figcaption></figure>
+      <div class="note" style="left:1930px;top:420px;width:260px;height:260px;background:var(--yellow);transform:rotate(3deg)">Kalkışa 6 dk kala gelene sıra yok!<small>tek kuralımız</small></div>
+      <div class="frame-label" style="left:2060px;top:780px"><b>Menü</b> tezgâh</div>
+      <section class="frame menu" style="left:2060px;top:822px;width:500px;height:560px">
+        <h3>Bugün tezgâhta</h3>
+        <ul><li>Lodos harmanı, 250 g<span>₺420</span></li><li>Etiyopya Guji, 250 g<span>₺560</span></li><li>Filtre kahve<span>₺95</span></li><li>Türk kahvesi<span>₺80</span></li><li>Espresso<span>₺75</span></li></ul>
+      </section>
+      <div class="note" style="left:2610px;top:900px;width:240px;height:220px;background:var(--green);transform:rotate(-2deg);font-size:38px">Hafta içi 07.00–19.00<small>Cumartesi 08.00–18.00</small></div>
+
+      <!-- next frame, its top peeks into the slice -->
+      <div class="frame-label" style="left:760px;top:1262px"><b>Çekirdekler</b> haftada dört</div>
+      <section class="frame beans" style="left:760px;top:1304px;width:1120px;height:540px">
+        <h2>Haftanın dört çekirdeği</h2>
+        <div class="row">
+          <div style="background:#efd9b8">Lodos harmanı<span>₺420</span></div>
+          <div style="background:#cfe0f6">Etiyopya Guji<span>₺560</span></div>
+          <div style="background:#f4c9b8">Kolombiya Huila<span>Filtre ₺95</span></div>
+          <div style="background:#e3ddcf">Türk kahvesi kavrumu<span>₺80</span></div>
+        </div>
+      </section>
+      <figure class="photo" style="left:200px;top:1380px;width:380px;transform:rotate(-3deg)"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde kahve çekirdekleri" style="height:250px"><figcaption>Türk kahvesi kavrumu</figcaption></figure>
+      <figure class="photo" style="left:1960px;top:1460px;width:340px;transform:rotate(2deg)"><img src="../../assets/espresso.webp" alt="Fincana akan espresso" style="height:220px"><figcaption>Espresso · ₺75</figcaption></figure>
+
+      <!-- collaborators -->
+      <div class="cursor" style="left:2010px;top:690px"><svg viewBox="0 0 34 34"><path d="M4 3 L28 15 L17 18 L12 29z" fill="#2f6fd6" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg><b style="background:#2f6fd6">Barista</b></div>
+      <div class="cursor" style="left:600px;top:1040px"><svg viewBox="0 0 34 34"><path d="M4 3 L28 15 L17 18 L12 29z" fill="#c4512f" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg><b style="background:#c4512f">Kavurmacı</b></div>
+    </div>
+  </div>
+
+  <svg class="grab" id="grab" viewBox="0 0 30 30"><path d="M9 14 V7.5 a2 2 0 0 1 4 0 V13 V5.5 a2 2 0 0 1 4 0 V13 V7 a2 2 0 0 1 4 0 V14 V10 a2 2 0 0 1 4 0 V18 c0 6 -4 9 -9 9 c-4 0 -6 -2 -8 -5 l-4 -6 a2 2 0 0 1 3.4 -2z" fill="#fff" stroke="#1d1b18" stroke-width="1.8" stroke-linejoin="round"/></svg>
+
+  <div class="hint">Panoyu sürükleyerek gez <kbd>Boşluk</kbd> + sürükle</div>
+  <div class="mini"><div class="top"><span>Pano haritası</span><span>3200 × 2200</span></div><svg id="mini" viewBox="0 0 3200 2200"></svg></div>
+</div>
+
+<script>
+  const board = document.getElementById("board"), view = document.getElementById("view"), grab = document.getElementById("grab");
+  const mini = document.getElementById("mini"), zoomv = document.getElementById("zoomv");
+  const VW = 1280, VH = 736;
+
+  // minimap: every board item as a block in its own colour
+  const items = [...board.children].filter((el) => !el.matches("svg, .frame-label, .cursor"));
+  const parts = items.map((el) => {
+    const x = parseFloat(el.style.left), y = parseFloat(el.style.top), w = el.offsetWidth, h = el.offsetHeight;
+    const bg = el.classList.contains("note") ? getComputedStyle(el).backgroundColor : el.classList.contains("photo") ? "#8a7f70" : "#fffdf8";
+    return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="${bg}"/>`;
+  });
+  mini.innerHTML = parts.join("") + `<rect id="vp" fill="rgba(47,111,214,.10)" stroke="#2f6fd6" stroke-width="22" rx="18"/>`;
+  const vp = document.getElementById("vp");
+
+  const A = { cx: 1780, cy: 1180, s: 0.66 }, B = { cx: 1340, cy: 905, s: 0.6 };
+  window.demo = {
+    duration: 2600,
+    hold: 1600,
+    render(p) {
+      const e = gl.easeInOutCubic(p);
+      const cx = gl.lerp(A.cx, B.cx, e), cy = gl.lerp(A.cy, B.cy, e), s = gl.lerp(A.s, B.s, e);
+      const tx = VW / 2 - cx * s, ty = VH / 2 - cy * s;
+      board.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+      zoomv.textContent = "%" + Math.round(s * 100);
+      vp.setAttribute("x", cx - VW / 2 / s); vp.setAttribute("y", cy - VH / 2 / s);
+      vp.setAttribute("width", VW / s); vp.setAttribute("height", VH / s);
+      // the hand drags the board: it follows a fixed point on the board while panning
+      const hx = 1540 * s + tx, hy = 1030 * s + ty + 64;
+      grab.style.left = hx + "px"; grab.style.top = hy + "px";
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

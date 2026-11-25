@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D sahne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --back: #183450; --floor: #2b4f70; --cream: #f1e7d6; --ink: #10202f; --brass: #d9a54a; --mute: #9fb3c6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--back); color: var(--cream); overflow: hidden; font: 500 16px/1.45 Archivo, Arial, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .page { position: relative; width: 1280px; height: 800px; overflow: hidden; }
+
+  header { position: absolute; left: 44px; right: 44px; top: 24px; display: flex; align-items: center; gap: 30px; z-index: 5; }
+  .logo { font: 800 22px/1 Unbounded, sans-serif; letter-spacing: -.02em; }
+  .logo span { color: var(--brass); }
+  header nav { display: flex; gap: 26px; font-weight: 600; font-size: 15px; color: #d5dde6; }
+  header nav a.on { color: var(--cream); border-bottom: 2px solid var(--brass); padding-bottom: 3px; }
+  .cta { margin-left: auto; background: var(--cream); color: var(--ink); padding: 11px 18px; border-radius: 999px; font-weight: 700; font-size: 15px; }
+
+  .copy { position: absolute; left: 44px; top: 128px; width: 440px; z-index: 5; }
+  .eyebrow { font: 600 12px/1 Archivo, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--brass); }
+  h1 { margin-top: 18px; font: 800 54px/1.02 Unbounded, sans-serif; letter-spacing: -.035em; }
+  h1 span { color: var(--brass); }
+  .lede { margin-top: 20px; font-size: 18px; color: #c9d5e0; max-width: 34ch; }
+  .now { margin-top: 26px; display: flex; align-items: center; gap: 16px; padding: 14px 16px; border: 1.5px solid #3a5a78; border-radius: 14px; width: 390px; }
+  .now i { width: 40px; height: 52px; border-radius: 4px; flex: none; }
+  .now small { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+  .now b { display: block; font: 600 19px/1.2 Unbounded, sans-serif; letter-spacing: -.02em; margin-top: 4px; }
+  .now em { margin-left: auto; font: 600 20px/1 Unbounded, sans-serif; font-style: normal; color: var(--brass); }
+  .ctas { display: flex; gap: 12px; margin-top: 20px; }
+  .btn { padding: 13px 20px; border-radius: 999px; font-weight: 700; font-size: 15px; border: 1.5px solid var(--cream); }
+  .btn.solid { background: var(--brass); border-color: var(--brass); color: var(--ink); }
+
+  /* ---------- the 3D scene ---------- */
+  .scene { position: absolute; left: 430px; top: 40px; width: 850px; height: 640px; perspective: 1500px; perspective-origin: 50% 18%; }
+  .cam { position: absolute; left: 50%; top: 60%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(-14deg); }
+  .cam * { transform-style: preserve-3d; position: absolute; }
+  .cam .face * { position: relative; transform-style: flat; }
+  .wall { width: 4400px; height: 1600px; left: -2200px; top: -1574px; background: var(--back); transform: translateZ(-600px); }
+  .floor { width: 4400px; height: 1500px; left: -2200px; top: -750px; background: var(--floor); transform: translateY(26px) translateZ(150px) rotateX(90deg); }
+  .floor .pool { width: 760px; height: 760px; left: 1820px; top: 220px; border-radius: 50%; background: #0d1f30; opacity: .55; filter: blur(22px); }
+  .set { width: 300px; height: 190px; overflow: hidden; border: 8px solid var(--cream); backface-visibility: hidden; }
+  .set img { width: 100%; height: 100%; object-fit: cover; display: block; position: static; }
+  .set + .cap { font: 600 13px/1 Archivo, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); white-space: nowrap; }
+
+  .spin { width: 0; height: 0; }
+  .disc { width: 620px; height: 620px; left: -310px; top: -310px; border-radius: 50%; background: #e7dccb; transform: rotateX(90deg); }
+  .disc::after { content: ""; position: absolute; inset: 26px; border-radius: 50%; border: 2px solid #cdbfa8; }
+  .edge { width: 56px; height: 26px; left: -28px; top: 0; background: #b9a98f; backface-visibility: hidden; }
+  .shadow { background: #1a1410; filter: blur(10px); opacity: .45; }
+
+  .face { left: 0; top: 0; backface-visibility: hidden; overflow: hidden; }
+  .pack .front { padding: 18px 16px; display: flex; flex-direction: column; }
+  .pack .front .brand { display: flex; justify-content: space-between; font: 800 15px/1 Unbounded, sans-serif; letter-spacing: -.02em; }
+  .pack .front .brand small { font: 600 9px/1.3 Archivo, sans-serif; letter-spacing: .14em; text-align: right; }
+  .pack .front .band { margin: 22px -16px 0; padding: 14px 16px; }
+  .pack .front .band b { display: block; font: 600 22px/1.05 Unbounded, sans-serif; letter-spacing: -.03em; }
+  .pack .front .band span { display: block; margin-top: 8px; font: 600 10px/1.3 Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .pack .front .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: end; font: 600 10px/1.25 Archivo, sans-serif; letter-spacing: .06em; }
+  .pack .front .foot b { font: 800 24px/1 Unbounded, sans-serif; letter-spacing: -.03em; }
+  .pack .side { display: grid; place-items: center; }
+  .pack .side span { transform: rotate(-90deg); white-space: nowrap; font: 700 11px/1 Archivo, sans-serif; letter-spacing: .24em; text-transform: uppercase; }
+  .pack .back { padding: 22px 16px; font: 500 12px/1.45 Archivo, sans-serif; }
+  .pack .back b { display: block; font: 800 18px/1.1 Unbounded, sans-serif; margin-bottom: 10px; }
+  .pack .top { border: 0; }
+  .pack .top::after { content: ""; position: absolute; left: 10px; right: 10px; top: 50%; height: 6px; margin-top: -3px; background: rgba(0,0,0,.25); border-radius: 3px; }
+
+  .drum .seg { backface-visibility: hidden; }
+  .drum .lid { border-radius: 50%; background: #2a2724; border: 8px solid var(--brass); }
+
+  .second { position: absolute; left: 44px; right: 44px; top: 688px; z-index: 6; border-top: 1.5px solid #3a5a78; padding-top: 18px;
+            display: grid; grid-template-columns: 330px repeat(3, 1fr); gap: 22px; }
+  .second h2 { font: 800 26px/1.05 Unbounded, sans-serif; letter-spacing: -.03em; }
+  .item { display: flex; gap: 14px; align-items: center; }
+  .item img { width: 82px; height: 82px; border-radius: 12px; object-fit: cover; display: block; }
+  .item b { display: block; font: 600 16px/1.2 Unbounded, sans-serif; letter-spacing: -.02em; }
+  .item span { color: var(--mute); font-size: 14px; }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="scene" aria-label="Dönen tabla üstünde dört kahve kutusu ve ortada kavurma kazanı">
+    <div class="cam" id="cam">
+      <div class="wall"></div><div class="floor"><div class="pool"></div></div>
+      <div id="sets"></div>
+      <div class="spin" id="spin"></div>
+    </div>
+  </div>
+
+  <header>
+    <a class="logo" href="#">lodos<span>.</span></a>
+    <nav><a href="#">Kavurma</a><a class="on" href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+    <a class="cta" href="#">Sepete ekle</a>
+  </header>
+
+  <section class="copy">
+    <div class="eyebrow">Kahve Kavurma Evi · Karaköy</div>
+    <h1>Dört çekirdek, <span>tek kazan.</span></h1>
+    <p class="lede">Haftada dört çekirdek, her sabah 07.00'de 12 kg'lık tek kazanda kavruluyor. İskeleye 90 saniye.</p>
+    <div class="now"><i id="nowSw"></i><div><small>Şu an önde</small><b id="nowName">Lodos harmanı</b></div><em id="nowPrice">₺420</em></div>
+    <div class="ctas"><a class="btn solid" href="#">Bu kutuyu al</a><a class="btn" href="#">Hepsini gör</a></div>
+  </section>
+
+  <section class="second">
+    <h2>Tezgâhta, vapur kalkmadan</h2>
+    <div class="item"><img src="../../assets/espresso.webp" alt="Espresso"><div><b>Espresso</b><span>₺75 · makineden</span></div></div>
+    <div class="item"><img src="../../assets/cekirdek.webp" alt="Türk kahvesi ve çekirdekler"><div><b>Türk kahvesi</b><span>₺80 · fincanda</span></div></div>
+    <div class="item"><img src="../../assets/barista.webp" alt="Barista elleri"><div><b>Filtre kahve</b><span>₺95 · günün çekirdeği</span></div></div>
+  </section>
+</div>
+
+<script>
+  const beans = [
+    { name: "Lodos harmanı", price: "₺420", note: "Evin harmanı · 250 g", bg: "#c79a66", band: "#10202f", fg: "#10202f", bandFg: "#f1e7d6" },
+    { name: "Etiyopya Guji", price: "₺560", note: "Tek köken · 250 g", bg: "#2f7f78", band: "#f1e7d6", fg: "#f1e7d6", bandFg: "#10202f" },
+    { name: "Kolombiya Huila", price: "₺95", note: "Filtre kahve · fincan", bg: "#c8553d", band: "#f1e7d6", fg: "#f1e7d6", bandFg: "#10202f" },
+    { name: "Türk kahvesi kavrumu", price: "₺80", note: "Közde pişen · fincan", bg: "#efe4cf", band: "#183450", fg: "#10202f", bandFg: "#f1e7d6" },
+  ];
+  const W = 168, H = 250, D = 86, R = 200;
+  const spin = document.getElementById("spin");
+  const shadeables = []; // [el, worldAngleOffsetDeg, base]
+
+  function face(cls, w, h, transform, bg, html, normalDeg, base = 1) {
+    const f = document.createElement("div");
+    f.className = "face " + cls;
+    Object.assign(f.style, { width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h / 2 + "px", transform, background: bg });
+    f.innerHTML = html || "";
+    if (normalDeg !== null) shadeables.push([f, normalDeg, base]);
+    return f;
+  }
+
+  // turntable: disc + cylinder edge
+  const disc = document.createElement("div"); disc.className = "disc"; spin.appendChild(disc);
+  for (let i = 0; i < 36; i++) {
+    const e = document.createElement("div"); e.className = "edge";
+    e.style.transform = `rotateY(${i * 10}deg) translateZ(309px)`;
+    spin.appendChild(e); shadeables.push([e, i * 10, 0.95]);
+  }
+
+  // packs
+  beans.forEach((b, i) => {
+    const a = i * 90;
+    const pack = document.createElement("div"); pack.className = "pack";
+    pack.style.transform = `rotateY(${a}deg) translateZ(${R}px) translateY(${-H / 2}px)`;
+    // soft contact shadow on the disc
+    const sh = document.createElement("div"); sh.className = "shadow";
+    Object.assign(sh.style, { width: W + 20 + "px", height: D + 20 + "px", left: -(W + 20) / 2 + "px", top: -(D + 20) / 2 + "px", transform: `translateY(${H / 2 - 1}px) rotateX(90deg)` });
+    pack.appendChild(sh);
+    const front = `<div class="brand">lodos<small>KARAKÖY<br>2019'DAN BERİ</small></div>
+      <div class="band" style="background:${b.band};color:${b.bandFg}"><b>${b.name}</b><span>${b.note}</span></div>
+      <div class="foot"><span>Kavrum<br>her sabah<br>07.00</span><b>${b.price}</b></div>`;
+    pack.appendChild(face("front", W, H, `translateZ(${D / 2}px)`, b.bg, front, a, 1));
+    pack.firstChild.nextSibling.style.color = b.fg;
+    pack.appendChild(face("back", W, H, `rotateY(180deg) translateZ(${D / 2}px)`, b.bg, `<b>Lodos</b>Kemankeş Cd. 12, Karaköy. 12 kg'lık tek kazanda, her sabah 07.00'de kavrulur. Vapurun kalkışına 6 dakika kala gelene sıra yok.`, a + 180, 1));
+    pack.lastChild.style.color = b.fg;
+    pack.appendChild(face("side", D, H, `rotateY(90deg) translateZ(${W / 2}px)`, b.bg, `<span style="color:${b.fg}">Kemankeş Cd. 12 · Karaköy</span>`, a + 90, 1));
+    pack.appendChild(face("side", D, H, `rotateY(-90deg) translateZ(${W / 2}px)`, b.bg, `<span style="color:${b.fg}">${b.name} · 250 g</span>`, a - 90, 1));
+    pack.appendChild(face("top", W, D, `rotateX(90deg) translateZ(${H / 2}px)`, b.bg, "", null));
+    pack.lastChild.style.filter = "brightness(1.12)";
+    spin.appendChild(pack);
+  });
+
+  // the roaster drum in the middle: a 24-sided cylinder
+  (function () {
+    const drum = document.createElement("div"); drum.className = "drum";
+    const n = 24, r = 74, h = 190, sw = 2 * r * Math.tan(Math.PI / n) + 1;
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement("div"); s.className = "seg";
+      Object.assign(s.style, { width: sw + "px", height: h + "px", left: -sw / 2 + "px", top: -h + "px",
+        transform: `rotateY(${(i * 360) / n}deg) translateZ(${r}px)`, background: i % 6 === 0 ? "#d9a54a" : "#33302c" });
+      drum.appendChild(s); shadeables.push([s, (i * 360) / n, 1]);
+    }
+    const lid = document.createElement("div"); lid.className = "lid";
+    Object.assign(lid.style, { width: 2 * r + 8 + "px", height: 2 * r + 8 + "px", left: -r - 4 + "px", top: -r - 4 + "px", transform: `translateY(${-h}px) rotateX(90deg)` });
+    drum.appendChild(lid);
+    // label ring
+    const ring = document.createElement("div");
+    Object.assign(ring.style, { width: sw * 5 + "px", height: "34px", left: -sw * 2.5 + "px", top: -h * 0.62 + "px", transform: `translateZ(${r + 1}px)`, background: "#f1e7d6", color: "#10202f",
+      font: "800 13px/34px Unbounded, sans-serif", textAlign: "center", letterSpacing: ".02em", backfaceVisibility: "hidden" });
+    ring.textContent = "12 KG";
+    drum.appendChild(ring); shadeables.push([ring, 0, 1]);
+    const sh = document.createElement("div"); sh.className = "shadow";
+    Object.assign(sh.style, { width: "190px", height: "190px", left: "-95px", top: "-95px", borderRadius: "50%", transform: "translateY(-1px) rotateX(90deg)" });
+    drum.insertBefore(sh, drum.firstChild);
+    spin.appendChild(drum);
+  })();
+
+  // two photographs standing in the room, fixed while the table turns
+  document.getElementById("sets").innerHTML =
+    `<div class="set" style="left:-500px;top:-214px;transform:translateZ(-590px)"><img src="../../assets/kopru.webp" alt="Boğaz Köprüsü gün batımında"></div>
+     <div class="set" style="left:250px;top:-214px;transform:translateZ(-590px)"><img src="../../assets/deniz.webp" alt="Vapurdan şehir"></div>`;
+
+  const nowName = document.getElementById("nowName"), nowPrice = document.getElementById("nowPrice"), nowSw = document.getElementById("nowSw");
+  const LIGHT = -35; // light comes from the camera's left
+  window.demo = {
+    duration: 26000,
+    hold: 0,
+    render(p) {
+      const th = -24 - p * 360;
+      spin.style.transform = `rotateY(${th}deg)`;
+      for (const [el, n, base] of shadeables) {
+        const w = ((n + th) * Math.PI) / 180, l = (LIGHT * Math.PI) / 180;
+        const k = Math.max(0, Math.cos(w - l));
+        el.style.filter = `brightness(${((0.5 + 0.55 * k) * base).toFixed(3)})`;
+      }
+      // which pack faces the camera
+      let best = 0, bd = 1e9;
+      beans.forEach((b, i) => { const d = Math.abs(((((i * 90 + th) % 360) + 540) % 360) - 180); if (d < bd) { bd = d; best = i; } });
+      nowName.textContent = beans[best].name; nowPrice.textContent = beans[best].price; nowSw.style.background = beans[best].bg;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

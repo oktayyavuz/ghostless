@@ -10,7 +10,28 @@
       "Vapurun kalkışına 6 dakika kala sipariş verene sıra beklemeden",
       "Haftada 4 çekirdek: Lodos harmanı, Etiyopya Guji, Kolombiya Huila, Türk kahvesi kavrumu"
     ],
-    "menu": [["Lodos harmanı, 250 g", "₺420"], ["Etiyopya Guji, 250 g", "₺560"], ["Filtre kahve", "₺95"], ["Türk kahvesi", "₺80"], ["Espresso", "₺75"]],
+    "menu": [
+      [
+        "Lodos harmanı, 250 g",
+        "₺420"
+      ],
+      [
+        "Etiyopya Guji, 250 g",
+        "₺560"
+      ],
+      [
+        "Filtre kahve",
+        "₺95"
+      ],
+      [
+        "Türk kahvesi",
+        "₺80"
+      ],
+      [
+        "Espresso",
+        "₺75"
+      ]
+    ],
     "hours": "Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00",
     "phone": "0212 000 00 00",
     "images": {
@@ -24,77 +45,739 @@
     }
   },
   "groups": [
-    { "id": "styles", "title_tr": "Görsel stiller", "title_en": "Visual styles", "note_tr": "Her yön bir stilden yola çıkar. Beğendiklerini seç, hiç istemediklerini işaretle." },
-    { "id": "text", "title_tr": "Yazı hareketleri", "title_en": "Text motion" },
-    { "id": "forming", "title_tr": "Görselin oluşması", "title_en": "Image reveals and forming", "note_tr": "Piksel, şerit, nokta ve maske ile görselin ekrana gelişi." },
-    { "id": "scroll", "title_tr": "Kaydırma ve sayfa geçişleri", "title_en": "Scroll and page transitions" },
-    { "id": "interaction", "title_tr": "Etkileşim", "title_en": "Interaction" },
-    { "id": "treatment", "title_tr": "Görsel işleme", "title_en": "Image treatments", "note_tr": "Farklı kaynaklardan gelen fotoğrafları tek bir sete çeviren işlemler." }
+    {
+      "id": "styles",
+      "title_tr": "Görsel stiller",
+      "title_en": "Visual styles",
+      "note_tr": "Her yön bir stilden yola çıkar. Beğendiklerini seç, hiç istemediklerini işaretle."
+    },
+    {
+      "id": "text",
+      "title_tr": "Yazı hareketleri",
+      "title_en": "Text motion"
+    },
+    {
+      "id": "forming",
+      "title_tr": "Görselin oluşması",
+      "title_en": "Image reveals and forming",
+      "note_tr": "Piksel, şerit, nokta ve maske ile görselin ekrana gelişi."
+    },
+    {
+      "id": "scroll",
+      "title_tr": "Kaydırma ve sayfa geçişleri",
+      "title_en": "Scroll and page transitions"
+    },
+    {
+      "id": "interaction",
+      "title_tr": "Etkileşim",
+      "title_en": "Interaction"
+    },
+    {
+      "id": "treatment",
+      "title_tr": "Görsel işleme",
+      "title_en": "Image treatments",
+      "note_tr": "Farklı kaynaklardan gelen fotoğrafları tek bir sete çeviren işlemler."
+    }
   ],
   "items": [
-    { "id": "editorial", "group": "styles", "name_tr": "Editoryal / dergi", "name_en": "Editorial / magazine", "desc_tr": "Serif başlıklar, sütunlar, alıntılar, büyük fotoğraf", "fits_tr": "otel, restoran, medya, holding" },
-    { "id": "swiss", "group": "styles", "name_tr": "İsviçre / uluslararası", "name_en": "Swiss / International", "desc_tr": "Katı ızgara düzeni, sola yaslı grotesk, büyük sayılar, az renk", "fits_tr": "mimarlık, danışmanlık, kurum" },
-    { "id": "industrial", "group": "styles", "name_tr": "Endüstriyel / kullanım kılavuzu", "name_en": "Industrial / product manual", "desc_tr": "Keskin köşe, nesne fotoğrafı, mono detaylar, tek sinyal rengi", "fits_tr": "donanım, alet, ses, mühendislik" },
-    { "id": "neo-brutalism", "group": "styles", "name_tr": "Neo-brütalizm", "name_en": "Neo-brutalism", "desc_tr": "Kalın siyah kenar, sert gölge, düz ve bağıran renkler", "fits_tr": "üretici araçları, bağımsız yazılım" },
-    { "id": "kinetic-type", "group": "styles", "name_tr": "Kinetik tipografi", "name_en": "Kinetic typographic", "desc_tr": "Görselin yerini yazı alır, anlamı hareket taşır", "fits_tr": "kampanya, müzik, etkinlik" },
-    { "id": "scrollytelling", "group": "styles", "name_tr": "Kaydırarak anlatım", "name_en": "Scrollytelling", "desc_tr": "Yanındaki metinle değişen sabit görsel ya da grafik", "fits_tr": "rapor, süreç anlatımı, araştırma" },
-    { "id": "photo-documentary", "group": "styles", "name_tr": "Fotoğraf öncelikli belgesel", "name_en": "Photo-led documentary", "desc_tr": "Tam ekran gerçek fotoğraf, çok az arayüz, alt yazılar", "fits_tr": "yerel işletme, otel, dernek" },
-    { "id": "risograph", "group": "styles", "name_tr": "Risograf / baskı", "name_en": "Risograph / print", "desc_tr": "Üst üste basılmış 2–3 mürekkep, kayık baskı, gren", "fits_tr": "fanzin, festival, kafe, kitapçı" },
-    { "id": "dithered", "group": "styles", "name_tr": "Dither / 1-bit", "name_en": "Dithered / 1-bit", "desc_tr": "İki renkli noktalı görseller, eski ekran dokusu", "fits_tr": "karakterli teknoloji, arşiv" },
-    { "id": "pixel-art", "group": "styles", "name_tr": "Piksel art / 8-bit", "name_en": "Pixel art / 8-bit", "desc_tr": "Piksel çizimler, kalın piksel yazı, adım adım hareket", "fits_tr": "oyun, çocuk, retro" },
-    { "id": "terminal", "group": "styles", "name_tr": "Terminal / ASCII", "name_en": "Terminal / ASCII", "desc_tr": "Mono yazı, komut satırı arayüzü, karakterlerden görsel", "fits_tr": "yazılım araçları, altyapı, güvenlik" },
-    { "id": "retro-os", "group": "styles", "name_tr": "Eski işletim sistemi", "name_en": "Retro OS", "desc_tr": "Pencere çerçeveleri, masaüstü düzeni, piksel yazılar", "fits_tr": "müzik, nostalji, eğlenceli ürün" },
-    { "id": "skeuomorphic", "group": "styles", "name_tr": "Gerçek malzeme (skeuomorfik)", "name_en": "Skeuomorphic revival", "desc_tr": "Dokulu malzemeler, gerçek düğmeler ve kadranlar", "fits_tr": "ses, donanım, lüks" },
-    { "id": "collage", "group": "styles", "name_tr": "Kolaj / karalama defteri", "name_en": "Collage / scrapbook", "desc_tr": "Yırtık kâğıt, bant, kesilmiş fotoğraf, el yazısı", "fits_tr": "yemek, seyahat, kişisel marka" },
-    { "id": "memphis", "group": "styles", "name_tr": "Memphis", "name_en": "Memphis", "desc_tr": "Kıvrımlar, konfeti şekilleri, çatışan pastel ve canlı renkler", "fits_tr": "çocuk, etkinlik, eğlenceli perakende" },
-    { "id": "maximalist", "group": "styles", "name_tr": "Maksimalist", "name_en": "Maximalist", "desc_tr": "Yoğun katmanlar, çatışan desenler, çok yazı tipi", "fits_tr": "moda, kültür, gece hayatı" },
-    { "id": "organic", "group": "styles", "name_tr": "Organik / kuralsız", "name_en": "Organic / anti-design", "desc_tr": "Düzensiz yerleşim, el çizimi, doğal formlar", "fits_tr": "sağlıklı yaşam, el işi" },
-    { "id": "illustrated", "group": "styles", "name_tr": "İllüstrasyonlu / maskotlu", "name_en": "Illustrated / mascot-led", "desc_tr": "Tek elden çıkmış çizim sistemi, karakterler", "fits_tr": "uygulama, çocuk, tanıtım akışı" },
-    { "id": "luxury-minimal", "group": "styles", "name_tr": "Lüks sade", "name_en": "Luxury minimal", "desc_tr": "Çok boşluk, ince serif, tek büyük görsel, ağır ve sakin", "fits_tr": "mücevher, otel, parfüm, gayrimenkul" },
-    { "id": "bauhaus", "group": "styles", "warn": true, "name_tr": "Bauhaus", "name_en": "Bauhaus", "desc_tr": "Ana renkler, daire-kare-üçgen, geometrik yazı", "fits_tr": "tasarım okulu, eğitim (cetvelle çizilmiş geometri sık reddedilir)" },
-    { "id": "y2k-chrome", "group": "styles", "warn": true, "name_tr": "Y2K / krom", "name_en": "Y2K / chrome", "desc_tr": "Sıvı krom, kabarcıklı yazı, yanardöner yüzeyler", "fits_tr": "moda, müzik (parıltı ve gradyana kayar)" },
-    { "id": "bento", "group": "styles", "warn": true, "name_tr": "Bento ızgara", "name_en": "Bento grid", "desc_tr": "Farklı boyda kutulardan oluşan ızgara", "fits_tr": "yalnız içerik gerçekten modülerse (yapay zekâ sitelerinin varsayılanı)" },
-
-    { "id": "line-mask-rise", "group": "text", "name_tr": "Maskeli satır yükselişi", "name_en": "Line mask rise", "desc_tr": "Her satır kendi maskesinin arkasından yukarı kayar", "libs": "GSAP SplitText", "fits_tr": "editoryal, uzun başlıklar" },
-    { "id": "word-scrub", "group": "text", "name_tr": "Kaydırdıkça koyulaşan kelimeler", "name_en": "Word scrub", "desc_tr": "Okudukça kelimeler soluktan koyuya geçer", "libs": "SplitText + ScrollTrigger", "fits_tr": "manifesto, açıklama" },
-    { "id": "scramble-decode", "group": "text", "name_tr": "Karışık harflerden çözülme", "name_en": "Scramble / decode", "desc_tr": "Rastgele karakterler gerçek yazıya oturur", "libs": "GSAP ScrambleText", "fits_tr": "teknoloji, güvenlik, veri" },
-    { "id": "char-cascade", "group": "text", "name_tr": "Harf harf dökülme", "name_en": "Character cascade", "desc_tr": "Harfler kendi eğrisiyle tek tek gelir", "libs": "SplitText, Splitting", "fits_tr": "kısa büyük başlıklar" },
-    { "id": "variable-weight", "group": "text", "name_tr": "Kalınlığı akan yazı", "name_en": "Variable-font morph", "desc_tr": "Yazının kalınlığı ve genişliği akıcı biçimde değişir", "libs": "değişken font + CSS", "fits_tr": "tipografi odaklı, moda, müzik" },
-    { "id": "kinetic-sequence", "group": "text", "name_tr": "Kinetik sekans", "name_en": "Kinetic sequence", "desc_tr": "Kelimeler büyüyüp üst üste binerek ekranı doldurur", "libs": "GSAP timeline", "fits_tr": "kampanya, etkinlik" },
-    { "id": "split-flap", "group": "text", "name_tr": "Kalkış tabelası", "name_en": "Split-flap board", "desc_tr": "Harfler havalimanı tabelası gibi takır takır döner", "libs": "CSS 3D", "fits_tr": "ulaşım, saat, canlı veri" },
-    { "id": "handwriting-draw", "group": "text", "name_tr": "Kendini yazan el yazısı", "name_en": "Handwriting draw", "desc_tr": "Çizgi kendini çizerek imza ya da kelime olur", "libs": "GSAP DrawSVG", "fits_tr": "imza, kişisel marka" },
-
-    { "id": "strip-assemble", "group": "forming", "name_tr": "Şeritlerden birleşme", "name_en": "Strip assemble", "desc_tr": "Görsel dikey şeritler halinde, sırayla ve ters yönlerden gelir", "libs": "clip-path + GSAP", "fits_tr": "mimarlık, holding, iç mekân" },
-    { "id": "shape-morph-logo", "group": "forming", "name_tr": "Görselin logoya dönüşmesi", "name_en": "Shape morph to mark", "desc_tr": "Tam ekran görsel kaydırınca markanın şekline dönüşür", "libs": "clip-path polygon + ScrollTrigger", "fits_tr": "marka açılışları" },
-    { "id": "pixel-mosaic", "group": "forming", "name_tr": "Piksellerden netleşme", "name_en": "Pixel / mosaic resolve", "desc_tr": "Büyük bloklar küçülerek net görsele dönüşür", "libs": "canvas, OGL / three", "fits_tr": "dijital kültür, oyun, retro" },
-    { "id": "dither-reveal", "group": "forming", "name_tr": "Dither'dan açılma", "name_en": "Dithering reveal", "desc_tr": "1-bit nokta deseni tam tonlu görsele açılır", "libs": "Paper Shaders, shader", "fits_tr": "karakterli teknoloji, baskı hissi" },
-    { "id": "halftone-build", "group": "forming", "name_tr": "Noktalardan oluşma", "name_en": "Halftone build", "desc_tr": "Görsel büyüyen baskı noktalarından oluşur", "libs": "Paper Shaders HalftoneDots", "fits_tr": "baskı, müzik, afiş" },
-    { "id": "ascii-render", "group": "forming", "name_tr": "Karakterlerden görsel", "name_en": "ASCII render", "desc_tr": "Görsel harf ve işaretlerden çizilir, sonra fotoğrafa döner", "libs": "three AsciiEffect, canvas", "fits_tr": "yazılım araçları, arşiv" },
-    { "id": "particle-assemble", "group": "forming", "name_tr": "Parçacıklardan toplanma", "name_en": "Particle assemble", "desc_tr": "Binlerce nokta uçuşup görselin şeklini alır", "libs": "three Points, OGL", "fits_tr": "lansman, bilim" },
-    { "id": "noise-dissolve", "group": "forming", "name_tr": "Gürültüyle belirme", "name_en": "Noise dissolve", "desc_tr": "Görsel aşınarak, yanarak belirir", "libs": "shader, vfx-js", "fits_tr": "film, parfüm, atmosfer" },
-    { "id": "iris-expand", "group": "forming", "name_tr": "Pencereden açılma", "name_en": "Iris / window expand", "desc_tr": "Küçük çerçeve büyüyüp tam ekran olur, görsel içinde küçülür", "libs": "clip-path inset + scale", "fits_tr": "vizyon, otel, açılış" },
-    { "id": "curtain-parallax", "group": "forming", "name_tr": "Perde + ters hareket", "name_en": "Curtain + counter-parallax", "desc_tr": "Çerçeve aşağıdan açılırken içindeki görsel ters yöne kayar", "libs": "clip-path + GSAP", "fits_tr": "fotoğraf ağırlıklı her site" },
-    { "id": "svg-mask-wipe", "group": "forming", "name_tr": "Fırça darbesiyle açılma", "name_en": "SVG mask wipe", "desc_tr": "Organik, fırça biçimli bir maske görseli açar", "libs": "SVG mask + GSAP", "fits_tr": "el işi, yemek, illüstrasyon" },
-    { "id": "liquid-transition", "group": "forming", "name_tr": "Sıvı geçiş", "name_en": "Liquid / displacement transition", "desc_tr": "İki görsel dalgalı bir bozulmayla birbirine karışır", "libs": "WebGL shader, vfx-js", "fits_tr": "moda, galeri" },
-
-    { "id": "pinned-story", "group": "scroll", "name_tr": "Sabitlenmiş hikâye", "name_en": "Pinned story", "desc_tr": "Bölüm sabit kalır, içerik kaydırmayla adım adım ilerler", "libs": "ScrollTrigger pin + scrub", "fits_tr": "süreç, ürün anlatımı" },
-    { "id": "sticky-stack", "group": "scroll", "name_tr": "Üst üste yığılan paneller", "name_en": "Sticky stack", "desc_tr": "Paneller üst üste biner, alttaki küçülüp kararır", "libs": "position: sticky + scrub", "fits_tr": "hizmetler, adımlar, işler" },
-    { "id": "horizontal-rail", "group": "scroll", "name_tr": "Yatay ray", "name_en": "Horizontal rail", "desc_tr": "Aşağı kaydırınca bir şerit yana doğru ilerler", "libs": "ScrollTrigger containerAnimation", "fits_tr": "zaman çizelgesi, portfolyo" },
-    { "id": "scale-down-hero", "group": "scroll", "name_tr": "Küçülerek yerine oturan görsel", "name_en": "Scale-down hero", "desc_tr": "Tam ekran görsel küçülüp sayfadaki yerine yerleşir", "libs": "ScrollTrigger, GSAP Flip", "fits_tr": "gayrimenkul, otel" },
-    { "id": "rule-draw-count", "group": "scroll", "name_tr": "Çizgi çizilip sayı sayma", "name_en": "Rule draw + count", "desc_tr": "Çizgiler çizilir, gerçek sayılar değerine kadar sayar", "libs": "GSAP", "fits_tr": "rakamlar (yalnız gerçek sayılar)" },
-    { "id": "flip-layout", "group": "scroll", "name_tr": "Yerine kayan düzen", "name_en": "FLIP layout", "desc_tr": "Filtrelenince öğeler yeni yerlerine akıcı biçimde kayar", "libs": "GSAP Flip, Motion layout", "fits_tr": "mağaza, galeri, filtre" },
-    { "id": "motif-transition", "group": "scroll", "name_tr": "Motifli sayfa geçişi", "name_en": "Motif page transition", "desc_tr": "Logodan gelen şekiller ekranı kapatıp yeni sayfayı açar", "libs": "GSAP + yönlendirici", "fits_tr": "marka odaklı siteler" },
-    { "id": "shared-element", "group": "scroll", "name_tr": "Büyüyerek açılan kart", "name_en": "Shared-element transition", "desc_tr": "Küçük görsel büyüyüp bir sonraki sayfanın açılışı olur", "libs": "View Transitions, Motion layoutId", "fits_tr": "portfolyo, e-ticaret" },
-
-    { "id": "magnetic", "group": "interaction", "name_tr": "Mıknatıs buton", "name_en": "Magnetic control", "desc_tr": "Buton imlece doğru hafifçe çekilir", "libs": "GSAP quickTo, Motion", "fits_tr": "ajans, eğlenceli marka" },
-    { "id": "cursor-trail", "group": "interaction", "name_tr": "İmleç izinde görseller", "name_en": "Cursor image trail", "desc_tr": "İmlecin geçtiği yerde görseller belirip kaybolur", "libs": "GSAP", "fits_tr": "fotoğraf, moda" },
-    { "id": "drag-inertia", "group": "interaction", "name_tr": "Fırlatılabilen şerit", "name_en": "Drag with inertia", "desc_tr": "Sürükleyip bırakınca şerit savrulup yavaşça durur", "libs": "GSAP Draggable + Inertia, Embla", "fits_tr": "galeri, harita" },
-    { "id": "hover-distortion", "group": "interaction", "name_tr": "Dokununca dalgalanan görsel", "name_en": "Hover distortion", "desc_tr": "İmleç gezdikçe görsel su gibi kıpırdar", "libs": "vfx-js, OGL", "fits_tr": "portfolyo (yalnız masaüstü)" },
-
-    { "id": "duotone", "group": "treatment", "name_tr": "Çift ton", "name_en": "Duotone", "desc_tr": "Her fotoğraf markanın iki rengine çevrilir", "libs": "CSS filter, ImageMagick", "fits_tr": "farklı kaynaklı fotoğrafları birleştirmek" },
-    { "id": "film-grade", "group": "treatment", "name_tr": "Film tonu + gren", "name_en": "Film grade + grain", "desc_tr": "Ortak renk tonu, hafif gren, aynı kontrast", "libs": "CSS, ImageMagick", "fits_tr": "belgesel, otel, yemek" },
-    { "id": "riso-overprint", "group": "treatment", "name_tr": "Riso üst baskı", "name_en": "Riso overprint", "desc_tr": "İki mürekkep katmanı, hafif kayık baskı", "libs": "CSS blend modes", "fits_tr": "kafe, etkinlik, fanzin" },
-    { "id": "cutout", "group": "treatment", "name_tr": "Kesilmiş nesne", "name_en": "Cut-out object", "desc_tr": "Nesne zemininden ayrılıp renk alanı üstüne konur", "libs": "maske, PNG", "fits_tr": "ürün, kolaj, menü" },
-    { "id": "type-image-mask", "group": "treatment", "name_tr": "Fotoğrafla dolu yazı", "name_en": "Type × image", "desc_tr": "Dev başlık fotoğrafın içinden kesilir ya da onu keser", "libs": "CSS background-clip, SVG mask", "fits_tr": "afiş hissi, kampanya" }
+    {
+      "id": "editorial",
+      "group": "styles",
+      "name_tr": "Editoryal / dergi",
+      "name_en": "Editorial / magazine",
+      "desc_tr": "Serif başlıklar, sütunlar, alıntılar, büyük fotoğraf",
+      "fits_tr": "otel, restoran, medya, holding"
+    },
+    {
+      "id": "swiss",
+      "group": "styles",
+      "name_tr": "İsviçre / uluslararası",
+      "name_en": "Swiss / International",
+      "desc_tr": "Katı ızgara düzeni, sola yaslı grotesk, büyük sayılar, az renk",
+      "fits_tr": "mimarlık, danışmanlık, kurum"
+    },
+    {
+      "id": "industrial",
+      "group": "styles",
+      "name_tr": "Endüstriyel / kullanım kılavuzu",
+      "name_en": "Industrial / product manual",
+      "desc_tr": "Keskin köşe, nesne fotoğrafı, mono detaylar, tek sinyal rengi",
+      "fits_tr": "donanım, alet, ses, mühendislik"
+    },
+    {
+      "id": "neo-brutalism",
+      "group": "styles",
+      "name_tr": "Neo-brütalizm",
+      "name_en": "Neo-brutalism",
+      "desc_tr": "Kalın siyah kenar, sert gölge, düz ve bağıran renkler",
+      "fits_tr": "üretici araçları, bağımsız yazılım"
+    },
+    {
+      "id": "kinetic-type",
+      "group": "styles",
+      "name_tr": "Kinetik tipografi",
+      "name_en": "Kinetic typographic",
+      "desc_tr": "Görselin yerini yazı alır, anlamı hareket taşır",
+      "fits_tr": "kampanya, müzik, etkinlik"
+    },
+    {
+      "id": "scrollytelling",
+      "group": "styles",
+      "name_tr": "Kaydırarak anlatım",
+      "name_en": "Scrollytelling",
+      "desc_tr": "Yanındaki metinle değişen sabit görsel ya da grafik",
+      "fits_tr": "rapor, süreç anlatımı, araştırma"
+    },
+    {
+      "id": "photo-documentary",
+      "group": "styles",
+      "name_tr": "Fotoğraf öncelikli belgesel",
+      "name_en": "Photo-led documentary",
+      "desc_tr": "Tam ekran gerçek fotoğraf, çok az arayüz, alt yazılar",
+      "fits_tr": "yerel işletme, otel, dernek"
+    },
+    {
+      "id": "risograph",
+      "group": "styles",
+      "name_tr": "Risograf / baskı",
+      "name_en": "Risograph / print",
+      "desc_tr": "Üst üste basılmış 2–3 mürekkep, kayık baskı, gren",
+      "fits_tr": "fanzin, festival, kafe, kitapçı"
+    },
+    {
+      "id": "dithered",
+      "group": "styles",
+      "name_tr": "Dither / 1-bit",
+      "name_en": "Dithered / 1-bit",
+      "desc_tr": "İki renkli noktalı görseller, eski ekran dokusu",
+      "fits_tr": "karakterli teknoloji, arşiv"
+    },
+    {
+      "id": "pixel-art",
+      "group": "styles",
+      "name_tr": "Piksel art / 8-bit",
+      "name_en": "Pixel art / 8-bit",
+      "desc_tr": "Piksel çizimler, kalın piksel yazı, adım adım hareket",
+      "fits_tr": "oyun, çocuk, retro"
+    },
+    {
+      "id": "terminal",
+      "group": "styles",
+      "name_tr": "Terminal / ASCII",
+      "name_en": "Terminal / ASCII",
+      "desc_tr": "Mono yazı, komut satırı arayüzü, karakterlerden görsel",
+      "fits_tr": "yazılım araçları, altyapı, güvenlik"
+    },
+    {
+      "id": "retro-os",
+      "group": "styles",
+      "name_tr": "Eski işletim sistemi",
+      "name_en": "Retro OS",
+      "desc_tr": "Pencere çerçeveleri, masaüstü düzeni, piksel yazılar",
+      "fits_tr": "müzik, nostalji, eğlenceli ürün"
+    },
+    {
+      "id": "skeuomorphic",
+      "group": "styles",
+      "name_tr": "Gerçek malzeme (skeuomorfik)",
+      "name_en": "Skeuomorphic revival",
+      "desc_tr": "Dokulu malzemeler, gerçek düğmeler ve kadranlar",
+      "fits_tr": "ses, donanım, lüks"
+    },
+    {
+      "id": "collage",
+      "group": "styles",
+      "name_tr": "Kolaj / karalama defteri",
+      "name_en": "Collage / scrapbook",
+      "desc_tr": "Yırtık kâğıt, bant, kesilmiş fotoğraf, el yazısı",
+      "fits_tr": "yemek, seyahat, kişisel marka"
+    },
+    {
+      "id": "memphis",
+      "group": "styles",
+      "name_tr": "Memphis",
+      "name_en": "Memphis",
+      "desc_tr": "Kıvrımlar, konfeti şekilleri, çatışan pastel ve canlı renkler",
+      "fits_tr": "çocuk, etkinlik, eğlenceli perakende"
+    },
+    {
+      "id": "maximalist",
+      "group": "styles",
+      "name_tr": "Maksimalist",
+      "name_en": "Maximalist",
+      "desc_tr": "Yoğun katmanlar, çatışan desenler, çok yazı tipi",
+      "fits_tr": "moda, kültür, gece hayatı"
+    },
+    {
+      "id": "organic",
+      "group": "styles",
+      "name_tr": "Organik / kuralsız",
+      "name_en": "Organic / anti-design",
+      "desc_tr": "Düzensiz yerleşim, el çizimi, doğal formlar",
+      "fits_tr": "sağlıklı yaşam, el işi"
+    },
+    {
+      "id": "illustrated",
+      "group": "styles",
+      "name_tr": "İllüstrasyonlu / maskotlu",
+      "name_en": "Illustrated / mascot-led",
+      "desc_tr": "Tek elden çıkmış çizim sistemi, karakterler",
+      "fits_tr": "uygulama, çocuk, tanıtım akışı"
+    },
+    {
+      "id": "luxury-minimal",
+      "group": "styles",
+      "name_tr": "Lüks sade",
+      "name_en": "Luxury minimal",
+      "desc_tr": "Çok boşluk, ince serif, tek büyük görsel, ağır ve sakin",
+      "fits_tr": "mücevher, otel, parfüm, gayrimenkul"
+    },
+    {
+      "id": "bauhaus",
+      "group": "styles",
+      "warn": true,
+      "name_tr": "Bauhaus",
+      "name_en": "Bauhaus",
+      "desc_tr": "Ana renkler, daire-kare-üçgen, geometrik yazı",
+      "fits_tr": "tasarım okulu, eğitim (cetvelle çizilmiş geometri sık reddedilir)"
+    },
+    {
+      "id": "y2k-chrome",
+      "group": "styles",
+      "warn": true,
+      "name_tr": "Y2K / krom",
+      "name_en": "Y2K / chrome",
+      "desc_tr": "Sıvı krom, kabarcıklı yazı, yanardöner yüzeyler",
+      "fits_tr": "moda, müzik (parıltı ve gradyana kayar)"
+    },
+    {
+      "id": "bento",
+      "group": "styles",
+      "warn": true,
+      "name_tr": "Bento ızgara",
+      "name_en": "Bento grid",
+      "desc_tr": "Farklı boyda kutulardan oluşan ızgara",
+      "fits_tr": "yalnız içerik gerçekten modülerse (yapay zekâ sitelerinin varsayılanı)"
+    },
+    {
+      "id": "manga-panel",
+      "group": "styles",
+      "name_tr": "Manga / anime paneli",
+      "name_en": "Manga / anime panels",
+      "desc_tr": "Panel kareleri, ekran tonu, hız çizgileri, konuşma balonları",
+      "fits_tr": "anime, oyun, genç kültür, yaratıcı kişisel site"
+    },
+    {
+      "id": "pop-art-comic",
+      "group": "styles",
+      "name_tr": "Pop art / çizgi roman",
+      "name_en": "Pop art / comic",
+      "desc_tr": "Kalın kontur, Ben-Day noktaları, ses efekti yazıları, düz ana renkler",
+      "fits_tr": "eğlence, etkinlik, yiyecek"
+    },
+    {
+      "id": "isometric-world",
+      "group": "styles",
+      "name_tr": "İzometrik dünya",
+      "name_en": "Isometric world",
+      "desc_tr": "Her şey izometrik çizilmiş küçük bir dünyada; bina, araç, nesne",
+      "fits_tr": "teknoloji ürünü, şehir, süreç anlatımı"
+    },
+    {
+      "id": "css3d-scene",
+      "group": "styles",
+      "name_tr": "3D sahne",
+      "name_en": "3D scene",
+      "desc_tr": "Derinlikli, dönen ya da içinde dolaşılan üç boyutlu bir sahne",
+      "fits_tr": "lansman, ürün, deneyim odaklı site"
+    },
+    {
+      "id": "infinite-canvas",
+      "group": "styles",
+      "name_tr": "Sonsuz tuval",
+      "name_en": "Infinite canvas",
+      "desc_tr": "Sayfa yerine sürüklenip keşfedilen geniş bir pano",
+      "fits_tr": "portfolyo, arşiv, yaratıcı stüdyo"
+    },
+    {
+      "id": "generative-art",
+      "group": "styles",
+      "name_tr": "Üretken sanat",
+      "name_en": "Generative art",
+      "desc_tr": "Koddan, veriden üretilen desenler sayfanın görseli olur",
+      "fits_tr": "teknoloji, veri, müzik, kişisel geliştirici sitesi"
+    },
+    {
+      "id": "cinematic-dark",
+      "group": "styles",
+      "name_tr": "Sinematik karanlık",
+      "name_en": "Cinematic dark",
+      "desc_tr": "Film afişi gibi; geniş kadraj, sinema yazısı, karanlık ve dramatik ışık",
+      "fits_tr": "otel, film, lansman, gece mekânı"
+    },
+    {
+      "id": "zine-xerox",
+      "group": "styles",
+      "name_tr": "Fotokopi fanzin",
+      "name_en": "Xerox zine",
+      "desc_tr": "Fotokopi lekesi, kesik yazılar, el yazısı notlar, punk enerji",
+      "fits_tr": "müzik, sanat, bağımsız mekân"
+    },
+    {
+      "id": "art-deco",
+      "group": "styles",
+      "name_tr": "Art deco",
+      "name_en": "Art deco",
+      "desc_tr": "Altın çizgiler, simetri, yelpaze motifleri, zarif uzun harfler",
+      "fits_tr": "otel, bar, mücevher, etkinlik"
+    },
+    {
+      "id": "japanese-minimal",
+      "group": "styles",
+      "name_tr": "Japon sadeliği",
+      "name_en": "Japanese minimal (ma)",
+      "desc_tr": "Boşluk (ma), dikey yazı, mühür kırmızısı, kâğıt dokusu",
+      "fits_tr": "seramik, çay, el işi, sakin markalar"
+    },
+    {
+      "id": "sticker-bomb",
+      "group": "styles",
+      "name_tr": "Çıkartma kolajı",
+      "name_en": "Sticker bomb",
+      "desc_tr": "Üst üste yapıştırılmış çıkartmalar, rozetler, etiketler",
+      "fits_tr": "sokak kültürü, genç marka, etkinlik"
+    },
+    {
+      "id": "glitch",
+      "group": "styles",
+      "name_tr": "Dijital bozulma",
+      "name_en": "Glitch",
+      "desc_tr": "Kayan kanallar, bozuk pikseller, sinyal kesintisi",
+      "fits_tr": "müzik, oyun, gece hayatı (kolay klişeleşir)",
+      "warn": true
+    },
+    {
+      "id": "line-mask-rise",
+      "group": "text",
+      "name_tr": "Maskeli satır yükselişi",
+      "name_en": "Line mask rise",
+      "desc_tr": "Her satır kendi maskesinin arkasından yukarı kayar",
+      "libs": "GSAP SplitText",
+      "fits_tr": "editoryal, uzun başlıklar"
+    },
+    {
+      "id": "word-scrub",
+      "group": "text",
+      "name_tr": "Kaydırdıkça koyulaşan kelimeler",
+      "name_en": "Word scrub",
+      "desc_tr": "Okudukça kelimeler soluktan koyuya geçer",
+      "libs": "SplitText + ScrollTrigger",
+      "fits_tr": "manifesto, açıklama"
+    },
+    {
+      "id": "scramble-decode",
+      "group": "text",
+      "name_tr": "Karışık harflerden çözülme",
+      "name_en": "Scramble / decode",
+      "desc_tr": "Rastgele karakterler gerçek yazıya oturur",
+      "libs": "GSAP ScrambleText",
+      "fits_tr": "teknoloji, güvenlik, veri"
+    },
+    {
+      "id": "char-cascade",
+      "group": "text",
+      "name_tr": "Harf harf dökülme",
+      "name_en": "Character cascade",
+      "desc_tr": "Harfler kendi eğrisiyle tek tek gelir",
+      "libs": "SplitText, Splitting",
+      "fits_tr": "kısa büyük başlıklar"
+    },
+    {
+      "id": "variable-weight",
+      "group": "text",
+      "name_tr": "Kalınlığı akan yazı",
+      "name_en": "Variable-font morph",
+      "desc_tr": "Yazının kalınlığı ve genişliği akıcı biçimde değişir",
+      "libs": "değişken font + CSS",
+      "fits_tr": "tipografi odaklı, moda, müzik"
+    },
+    {
+      "id": "kinetic-sequence",
+      "group": "text",
+      "name_tr": "Kinetik sekans",
+      "name_en": "Kinetic sequence",
+      "desc_tr": "Kelimeler büyüyüp üst üste binerek ekranı doldurur",
+      "libs": "GSAP timeline",
+      "fits_tr": "kampanya, etkinlik"
+    },
+    {
+      "id": "split-flap",
+      "group": "text",
+      "name_tr": "Kalkış tabelası",
+      "name_en": "Split-flap board",
+      "desc_tr": "Harfler havalimanı tabelası gibi takır takır döner",
+      "libs": "CSS 3D",
+      "fits_tr": "ulaşım, saat, canlı veri"
+    },
+    {
+      "id": "handwriting-draw",
+      "group": "text",
+      "name_tr": "Kendini yazan el yazısı",
+      "name_en": "Handwriting draw",
+      "desc_tr": "Çizgi kendini çizerek imza ya da kelime olur",
+      "libs": "GSAP DrawSVG",
+      "fits_tr": "imza, kişisel marka"
+    },
+    {
+      "id": "elastic-type",
+      "group": "text",
+      "name_tr": "Lastik yazı",
+      "name_en": "Elastic type",
+      "desc_tr": "Harfler esneyip yaylanarak yerine oturur",
+      "fits_tr": "eğlenceli marka, çocuk, etkinlik",
+      "libs": "yay fiziği, Motion"
+    },
+    {
+      "id": "odometer",
+      "group": "text",
+      "name_tr": "Sayaç tekerleği",
+      "name_en": "Odometer roll",
+      "desc_tr": "Rakamlar mekanik sayaç gibi dönerek değişir",
+      "fits_tr": "fiyat, canlı veri, istatistik (gerçek sayılar)",
+      "libs": "CSS"
+    },
+    {
+      "id": "strip-assemble",
+      "group": "forming",
+      "name_tr": "Şeritlerden birleşme",
+      "name_en": "Strip assemble",
+      "desc_tr": "Görsel dikey şeritler halinde, sırayla ve ters yönlerden gelir",
+      "libs": "clip-path + GSAP",
+      "fits_tr": "mimarlık, holding, iç mekân"
+    },
+    {
+      "id": "shape-morph-logo",
+      "group": "forming",
+      "name_tr": "Görselin logoya dönüşmesi",
+      "name_en": "Shape morph to mark",
+      "desc_tr": "Tam ekran görsel kaydırınca markanın şekline dönüşür",
+      "libs": "clip-path polygon + ScrollTrigger",
+      "fits_tr": "marka açılışları"
+    },
+    {
+      "id": "pixel-mosaic",
+      "group": "forming",
+      "name_tr": "Piksellerden netleşme",
+      "name_en": "Pixel / mosaic resolve",
+      "desc_tr": "Büyük bloklar küçülerek net görsele dönüşür",
+      "libs": "canvas, OGL / three",
+      "fits_tr": "dijital kültür, oyun, retro"
+    },
+    {
+      "id": "dither-reveal",
+      "group": "forming",
+      "name_tr": "Dither'dan açılma",
+      "name_en": "Dithering reveal",
+      "desc_tr": "1-bit nokta deseni tam tonlu görsele açılır",
+      "libs": "Paper Shaders, shader",
+      "fits_tr": "karakterli teknoloji, baskı hissi"
+    },
+    {
+      "id": "halftone-build",
+      "group": "forming",
+      "name_tr": "Noktalardan oluşma",
+      "name_en": "Halftone build",
+      "desc_tr": "Görsel büyüyen baskı noktalarından oluşur",
+      "libs": "Paper Shaders HalftoneDots",
+      "fits_tr": "baskı, müzik, afiş"
+    },
+    {
+      "id": "ascii-render",
+      "group": "forming",
+      "name_tr": "Karakterlerden görsel",
+      "name_en": "ASCII render",
+      "desc_tr": "Görsel harf ve işaretlerden çizilir, sonra fotoğrafa döner",
+      "libs": "three AsciiEffect, canvas",
+      "fits_tr": "yazılım araçları, arşiv"
+    },
+    {
+      "id": "particle-assemble",
+      "group": "forming",
+      "name_tr": "Parçacıklardan toplanma",
+      "name_en": "Particle assemble",
+      "desc_tr": "Binlerce nokta uçuşup görselin şeklini alır",
+      "libs": "three Points, OGL",
+      "fits_tr": "lansman, bilim"
+    },
+    {
+      "id": "noise-dissolve",
+      "group": "forming",
+      "name_tr": "Gürültüyle belirme",
+      "name_en": "Noise dissolve",
+      "desc_tr": "Görsel aşınarak, yanarak belirir",
+      "libs": "shader, vfx-js",
+      "fits_tr": "film, parfüm, atmosfer"
+    },
+    {
+      "id": "iris-expand",
+      "group": "forming",
+      "name_tr": "Pencereden açılma",
+      "name_en": "Iris / window expand",
+      "desc_tr": "Küçük çerçeve büyüyüp tam ekran olur, görsel içinde küçülür",
+      "libs": "clip-path inset + scale",
+      "fits_tr": "vizyon, otel, açılış"
+    },
+    {
+      "id": "curtain-parallax",
+      "group": "forming",
+      "name_tr": "Perde + ters hareket",
+      "name_en": "Curtain + counter-parallax",
+      "desc_tr": "Çerçeve aşağıdan açılırken içindeki görsel ters yöne kayar",
+      "libs": "clip-path + GSAP",
+      "fits_tr": "fotoğraf ağırlıklı her site"
+    },
+    {
+      "id": "svg-mask-wipe",
+      "group": "forming",
+      "name_tr": "Fırça darbesiyle açılma",
+      "name_en": "SVG mask wipe",
+      "desc_tr": "Organik, fırça biçimli bir maske görseli açar",
+      "libs": "SVG mask + GSAP",
+      "fits_tr": "el işi, yemek, illüstrasyon"
+    },
+    {
+      "id": "liquid-transition",
+      "group": "forming",
+      "name_tr": "Sıvı geçiş",
+      "name_en": "Liquid / displacement transition",
+      "desc_tr": "İki görsel dalgalı bir bozulmayla birbirine karışır",
+      "libs": "WebGL shader, vfx-js",
+      "fits_tr": "moda, galeri"
+    },
+    {
+      "id": "glitch-transition",
+      "group": "forming",
+      "name_tr": "Bozulmalı geçiş",
+      "name_en": "Glitch transition",
+      "desc_tr": "Görsel kısa bir sinyal bozulmasıyla diğerine geçer",
+      "fits_tr": "müzik, oyun, teknoloji",
+      "libs": "canvas, CSS"
+    },
+    {
+      "id": "ink-bleed",
+      "group": "forming",
+      "name_tr": "Mürekkep yayılması",
+      "name_en": "Ink bleed",
+      "desc_tr": "Görsel kâğıda dökülen mürekkep gibi yayılarak belirir",
+      "fits_tr": "el işi, sanat, yemek",
+      "libs": "SVG filtre, canvas"
+    },
+    {
+      "id": "pinned-story",
+      "group": "scroll",
+      "name_tr": "Sabitlenmiş hikâye",
+      "name_en": "Pinned story",
+      "desc_tr": "Bölüm sabit kalır, içerik kaydırmayla adım adım ilerler",
+      "libs": "ScrollTrigger pin + scrub",
+      "fits_tr": "süreç, ürün anlatımı"
+    },
+    {
+      "id": "sticky-stack",
+      "group": "scroll",
+      "name_tr": "Üst üste yığılan paneller",
+      "name_en": "Sticky stack",
+      "desc_tr": "Paneller üst üste biner, alttaki küçülüp kararır",
+      "libs": "position: sticky + scrub",
+      "fits_tr": "hizmetler, adımlar, işler"
+    },
+    {
+      "id": "horizontal-rail",
+      "group": "scroll",
+      "name_tr": "Yatay ray",
+      "name_en": "Horizontal rail",
+      "desc_tr": "Aşağı kaydırınca bir şerit yana doğru ilerler",
+      "libs": "ScrollTrigger containerAnimation",
+      "fits_tr": "zaman çizelgesi, portfolyo"
+    },
+    {
+      "id": "scale-down-hero",
+      "group": "scroll",
+      "name_tr": "Küçülerek yerine oturan görsel",
+      "name_en": "Scale-down hero",
+      "desc_tr": "Tam ekran görsel küçülüp sayfadaki yerine yerleşir",
+      "libs": "ScrollTrigger, GSAP Flip",
+      "fits_tr": "gayrimenkul, otel"
+    },
+    {
+      "id": "rule-draw-count",
+      "group": "scroll",
+      "name_tr": "Çizgi çizilip sayı sayma",
+      "name_en": "Rule draw + count",
+      "desc_tr": "Çizgiler çizilir, gerçek sayılar değerine kadar sayar",
+      "libs": "GSAP",
+      "fits_tr": "rakamlar (yalnız gerçek sayılar)"
+    },
+    {
+      "id": "flip-layout",
+      "group": "scroll",
+      "name_tr": "Yerine kayan düzen",
+      "name_en": "FLIP layout",
+      "desc_tr": "Filtrelenince öğeler yeni yerlerine akıcı biçimde kayar",
+      "libs": "GSAP Flip, Motion layout",
+      "fits_tr": "mağaza, galeri, filtre"
+    },
+    {
+      "id": "motif-transition",
+      "group": "scroll",
+      "name_tr": "Motifli sayfa geçişi",
+      "name_en": "Motif page transition",
+      "desc_tr": "Logodan gelen şekiller ekranı kapatıp yeni sayfayı açar",
+      "libs": "GSAP + yönlendirici",
+      "fits_tr": "marka odaklı siteler"
+    },
+    {
+      "id": "shared-element",
+      "group": "scroll",
+      "name_tr": "Büyüyerek açılan kart",
+      "name_en": "Shared-element transition",
+      "desc_tr": "Küçük görsel büyüyüp bir sonraki sayfanın açılışı olur",
+      "libs": "View Transitions, Motion layoutId",
+      "fits_tr": "portfolyo, e-ticaret"
+    },
+    {
+      "id": "video-scrub",
+      "group": "scroll",
+      "name_tr": "Kaydırınca oynayan görüntü",
+      "name_en": "Scroll-scrubbed sequence",
+      "desc_tr": "Kaydırdıkça bir görüntü dizisi kare kare ilerler",
+      "fits_tr": "ürün tanıtımı, süreç",
+      "libs": "canvas görüntü dizisi, ScrollTrigger"
+    },
+    {
+      "id": "tilt-3d-scroll",
+      "group": "scroll",
+      "name_tr": "3D eğilen sayfa",
+      "name_en": "3D tilt on scroll",
+      "desc_tr": "Kartlar ve görseller kaydırırken derinlikte eğilip döner",
+      "fits_tr": "portfolyo, ürün",
+      "libs": "CSS 3D, ScrollTrigger"
+    },
+    {
+      "id": "magnetic",
+      "group": "interaction",
+      "name_tr": "Mıknatıs buton",
+      "name_en": "Magnetic control",
+      "desc_tr": "Buton imlece doğru hafifçe çekilir",
+      "libs": "GSAP quickTo, Motion",
+      "fits_tr": "ajans, eğlenceli marka"
+    },
+    {
+      "id": "cursor-trail",
+      "group": "interaction",
+      "name_tr": "İmleç izinde görseller",
+      "name_en": "Cursor image trail",
+      "desc_tr": "İmlecin geçtiği yerde görseller belirip kaybolur",
+      "libs": "GSAP",
+      "fits_tr": "fotoğraf, moda"
+    },
+    {
+      "id": "drag-inertia",
+      "group": "interaction",
+      "name_tr": "Fırlatılabilen şerit",
+      "name_en": "Drag with inertia",
+      "desc_tr": "Sürükleyip bırakınca şerit savrulup yavaşça durur",
+      "libs": "GSAP Draggable + Inertia, Embla",
+      "fits_tr": "galeri, harita"
+    },
+    {
+      "id": "hover-distortion",
+      "group": "interaction",
+      "name_tr": "Dokununca dalgalanan görsel",
+      "name_en": "Hover distortion",
+      "desc_tr": "İmleç gezdikçe görsel su gibi kıpırdar",
+      "libs": "vfx-js, OGL",
+      "fits_tr": "portfolyo (yalnız masaüstü)"
+    },
+    {
+      "id": "cursor-mask-reveal",
+      "group": "interaction",
+      "name_tr": "Fenerle keşif",
+      "name_en": "Cursor mask reveal",
+      "desc_tr": "İmlecin çevresinde alttaki ikinci görsel ya da metin açılır",
+      "fits_tr": "portfolyo, öncesi/sonrası",
+      "libs": "CSS mask, canvas"
+    },
+    {
+      "id": "lens-magnifier",
+      "group": "interaction",
+      "name_tr": "Büyüteç",
+      "name_en": "Lens magnifier",
+      "desc_tr": "İmlecin altı büyür, detaylar okunur",
+      "fits_tr": "ürün, harita, sanat",
+      "libs": "CSS, canvas"
+    },
+    {
+      "id": "card-shuffle",
+      "group": "interaction",
+      "name_tr": "Karışan kart destesi",
+      "name_en": "Card shuffle",
+      "desc_tr": "Kartlar deste gibi karışıp öne çıkar",
+      "fits_tr": "işler, ürünler, ekip",
+      "libs": "GSAP, Motion"
+    },
+    {
+      "id": "infinite-drag",
+      "group": "interaction",
+      "name_tr": "Sürüklenen sonsuz pano",
+      "name_en": "Infinite drag grid",
+      "desc_tr": "Her yöne sürüklenen, kenarı olmayan görsel panosu",
+      "fits_tr": "portfolyo, arşiv, galeri",
+      "libs": "GSAP Draggable, canvas"
+    },
+    {
+      "id": "duotone",
+      "group": "treatment",
+      "name_tr": "Çift ton",
+      "name_en": "Duotone",
+      "desc_tr": "Her fotoğraf markanın iki rengine çevrilir",
+      "libs": "CSS filter, ImageMagick",
+      "fits_tr": "farklı kaynaklı fotoğrafları birleştirmek"
+    },
+    {
+      "id": "film-grade",
+      "group": "treatment",
+      "name_tr": "Film tonu + gren",
+      "name_en": "Film grade + grain",
+      "desc_tr": "Ortak renk tonu, hafif gren, aynı kontrast",
+      "libs": "CSS, ImageMagick",
+      "fits_tr": "belgesel, otel, yemek"
+    },
+    {
+      "id": "riso-overprint",
+      "group": "treatment",
+      "name_tr": "Riso üst baskı",
+      "name_en": "Riso overprint",
+      "desc_tr": "İki mürekkep katmanı, hafif kayık baskı",
+      "libs": "CSS blend modes",
+      "fits_tr": "kafe, etkinlik, fanzin"
+    },
+    {
+      "id": "cutout",
+      "group": "treatment",
+      "name_tr": "Kesilmiş nesne",
+      "name_en": "Cut-out object",
+      "desc_tr": "Nesne zemininden ayrılıp renk alanı üstüne konur",
+      "libs": "maske, PNG",
+      "fits_tr": "ürün, kolaj, menü"
+    },
+    {
+      "id": "type-image-mask",
+      "group": "treatment",
+      "name_tr": "Fotoğrafla dolu yazı",
+      "name_en": "Type × image",
+      "desc_tr": "Dev başlık fotoğrafın içinden kesilir ya da onu keser",
+      "libs": "CSS background-clip, SVG mask",
+      "fits_tr": "afiş hissi, kampanya"
+    }
   ]
 }

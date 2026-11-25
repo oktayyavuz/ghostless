@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Üretken sanat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Chivo+Mono:wght@400;500;700&family=Archivo:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f1ede4; --ink: #12161b; --mute: #6c6a64; --night: #10161d;
+          --c1: #d08a4e; --c2: #ead9b4; --c3: #d4553a; --c4: #5fa3a3; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--ink); overflow: hidden; font: 500 16px/1.45 Archivo, Arial, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: "Chivo Mono", ui-monospace, monospace; }
+  .page { position: relative; width: 1280px; height: 800px; }
+
+  header { position: absolute; left: 48px; right: 48px; top: 0; height: 72px; display: flex; align-items: center; gap: 30px; }
+  .logo { font: 400 34px/1 "Instrument Serif", Georgia, serif; letter-spacing: -.01em; }
+  .logo i { font-style: italic; }
+  header nav { display: flex; gap: 26px; font-weight: 600; font-size: 15px; }
+  header nav a.on { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+  .seed { margin-left: auto; font: 500 12px/1 "Chivo Mono", monospace; color: var(--mute); }
+  .cta { background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 999px; font-weight: 700; font-size: 15px; }
+
+  .copy { position: absolute; left: 48px; top: 112px; width: 470px; }
+  .eyebrow { font: 500 12px/1 "Chivo Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--c3); }
+  h1 { margin-top: 18px; font: 400 76px/.96 "Instrument Serif", Georgia, serif; letter-spacing: -.02em; }
+  h1 em { font-style: italic; }
+  .lede { margin-top: 22px; font-size: 18px; line-height: 1.5; color: #34383d; max-width: 36ch; }
+  .ctas { display: flex; gap: 12px; margin-top: 26px; }
+  .btn { padding: 13px 20px; border-radius: 999px; font-weight: 700; font-size: 15px; border: 1.5px solid var(--ink); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .legend { margin-top: 30px; border-top: 1px solid #cfc9bd; padding-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px;
+            font: 400 12px/1.35 "Chivo Mono", monospace; color: #3f4247; }
+  .legend b { font-weight: 700; color: var(--ink); }
+
+  .art { position: absolute; left: 560px; top: 84px; width: 672px; height: 552px; background: var(--night); border-radius: 4px; overflow: hidden; }
+  .art canvas { display: block; width: 672px; height: 552px; }
+  .art .tag { position: absolute; left: 12px; top: 10px; background: var(--night); padding: 6px 8px; border-radius: 3px; font: 500 11.5px/1.5 "Chivo Mono", monospace; color: #b9c2cc; }
+  .art .tag b { color: #fff; font-weight: 700; }
+  .art .wind { position: absolute; right: 12px; top: 10px; background: var(--night); padding: 4px 8px; border-radius: 3px; display: flex; align-items: center; gap: 8px; font: 500 11.5px/1 "Chivo Mono", monospace; color: #b9c2cc; }
+  .art .wind svg { width: 28px; height: 28px; }
+  .caption { position: absolute; left: 560px; top: 646px; width: 672px; display: flex; justify-content: space-between; font: 400 11.5px/1 "Chivo Mono", monospace; color: var(--mute); }
+
+  .second { position: absolute; left: 48px; right: 48px; top: 682px; display: grid; grid-template-columns: 470px repeat(4, 1fr); gap: 18px; border-top: 1.5px solid var(--ink); padding-top: 16px; }
+  .second h2 { font: 400 40px/1 "Instrument Serif", serif; letter-spacing: -.01em; }
+  .second h2 small { display: block; margin-top: 8px; font: 400 12px/1.4 "Chivo Mono", monospace; color: var(--mute); }
+  .bean canvas { display: block; width: 100%; height: 74px; border-radius: 3px; background: var(--night); }
+  .bean b { display: flex; justify-content: space-between; margin-top: 9px; font-size: 14.5px; font-weight: 700; }
+  .bean b span { font: 500 13px/1.3 "Chivo Mono", monospace; }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="logo" href="#">Lodos <i>kavurma evi</i></a>
+    <nav><a class="on" href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+    <span class="seed">tohum 0700 · Karaköy</span>
+    <a class="cta" href="#">Sipariş ver</a>
+  </header>
+
+  <section class="copy">
+    <div class="eyebrow">Kemankeş Cd. 12 · Karaköy · 2019'dan beri</div>
+    <h1>Açık olduğumuz her dakika, <em>bir çizgi.</em></h1>
+    <p class="lede">Hafta içi 07.00–19.00: 720 dakika, 720 çizgi. Her biri lodos yönünde 90 adım yürür, dükkândan iskeleye 90 saniye gibi.</p>
+    <div class="ctas"><a class="btn solid" href="#">Menüye bak</a><a class="btn" href="#">Bu desenden poster</a></div>
+    <div class="legend">
+      <span><b>720</b> çizgi = açık dakika</span><span><b>90</b> adım = iskeleye saniye</span>
+      <span><b>45°</b> = lodos, güneybatıdan</span><span><b>kalın</b> = her 6. dakika</span>
+      <span><b>4</b> renk = haftanın çekirdekleri</span><span><b>0700</b> = ilk kavrum, tohum</span>
+    </div>
+  </section>
+
+  <figure class="art">
+    <canvas id="c" width="672" height="552" aria-label="Lodos'un açık olduğu 720 dakikadan üretilmiş akış çizgileri"></canvas>
+    <div class="tag"><b>Pazartesi</b><br>07.00 → 19.00</div>
+    <div class="wind"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12.5" fill="none" stroke="#5b6773"/><path d="M8 20 L20 8 M13 8 H20 V15" fill="none" stroke="#fff" stroke-width="1.8"/></svg>lodos · GB → KD</div>
+  </figure>
+  <div class="caption"><span>Her saat başı etiketli. Aynı tohum, hep aynı desen.</span><span id="count">720 / 720</span></div>
+
+  <section class="second">
+    <h2>Haftanın dört çekirdeği<small>Her paketin deseni çekirdeğin adından üretilir.</small></h2>
+    <div class="bean"><canvas width="170" height="74" data-name="Lodos harmanı" data-c="#d08a4e"></canvas><b>Lodos harmanı<span>₺420</span></b></div>
+    <div class="bean"><canvas width="170" height="74" data-name="Etiyopya Guji" data-c="#ead9b4"></canvas><b>Etiyopya Guji<span>₺560</span></b></div>
+    <div class="bean"><canvas width="170" height="74" data-name="Kolombiya Huila" data-c="#d4553a"></canvas><b>Kolombiya Huila<span>₺95</span></b></div>
+    <div class="bean"><canvas width="170" height="74" data-name="Türk kahvesi kavrumu" data-c="#5fa3a3"></canvas><b>Türk kahvesi<span>₺80</span></b></div>
+  </section>
+</div>
+
+<script>
+  // ---- deterministic value noise ----
+  function makeNoise(seed) {
+    let s = seed % 2147483647 || 1;
+    const r = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+    const perm = new Uint8Array(512), vals = new Float32Array(256);
+    for (let i = 0; i < 256; i++) { perm[i] = i; vals[i] = r(); }
+    for (let i = 255; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [perm[i], perm[j]] = [perm[j], perm[i]]; }
+    for (let i = 0; i < 256; i++) perm[i + 256] = perm[i];
+    const sm = (t) => t * t * (3 - 2 * t);
+    const v = (x, y) => vals[perm[(x & 255) + perm[y & 255]]];
+    const n = (x, y) => {
+      const xi = Math.floor(x), yi = Math.floor(y), xf = sm(x - xi), yf = sm(y - yi);
+      const a = v(xi, yi), b = v(xi + 1, yi), c = v(xi, yi + 1), d = v(xi + 1, yi + 1);
+      return a + (b - a) * xf + (c - a) * yf + (a - b - c + d) * xf * yf;
+    };
+    return { r, n: (x, y) => n(x, y) * 0.65 + n(x * 2.1 + 17, y * 2.1 + 5) * 0.35 };
+  }
+  const hash = (str) => [...str].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 2147483647, 7);
+
+  // ---- the big piece: 720 minutes, seed 0700 ----
+  const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  const W = cv.width, H = cv.height, N = 720, STEPS = 90, STEP = 5.2;
+  const colors = ["#d08a4e", "#ead9b4", "#d4553a", "#5fa3a3"];
+  const { r, n } = makeNoise(700);
+  const LODOS = -Math.PI / 4; // toward the north-east on screen
+  const paths = [];
+  for (let m = 0; m < N; m++) {
+    const t = m / (N - 1);
+    // start points spread along the south-west edge, one per minute
+    let x = 14 + t * (W * 0.72) + (r() - 0.5) * 22, y = H * 0.24 + t * (H * 0.7) + (r() - 0.5) * 22;
+    const pts = [[x, y]];
+    for (let k = 0; k < STEPS; k++) {
+      const a = LODOS + (n(x * 0.0055, y * 0.0055) - 0.5) * 3.2;
+      x += Math.cos(a) * STEP; y += Math.sin(a) * STEP;
+      pts.push([x, y]);
+    }
+    paths.push({ m, pts, c: colors[m % 4], w: m % 60 === 0 ? 2.6 : m % 6 === 0 ? 1.7 : 0.8, a: m % 6 === 0 ? 0.95 : 0.55 });
+  }
+  const countEl = document.getElementById("count");
+  function draw(p) {
+    ctx.fillStyle = "#10161d"; ctx.fillRect(0, 0, W, H);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    let shown = 0;
+    for (const L of paths) {
+      const k = Math.min(1, Math.max(0, p * 1.7 - (L.m / N) * 0.7));
+      const len = Math.floor(k * STEPS);
+      if (len < 1) continue;
+      shown++;
+      ctx.beginPath(); ctx.moveTo(L.pts[0][0], L.pts[0][1]);
+      for (let i = 1; i <= len; i++) ctx.lineTo(L.pts[i][0], L.pts[i][1]);
+      ctx.globalAlpha = L.m % 60 === 0 ? 1 : L.a;
+      ctx.strokeStyle = L.m % 60 === 0 ? "#ffffff" : L.c;
+      ctx.lineWidth = L.w; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    // hour labels at the start of each full-hour line
+    ctx.font = "500 11px 'Chivo Mono', monospace"; ctx.fillStyle = "#ffffff";
+    for (const L of paths) {
+      if (L.m % 60 || p * 1.7 - (L.m / N) * 0.7 <= 0.05) continue;
+      const [x, y] = L.pts[0], hh = String(7 + L.m / 60).padStart(2, "0") + ".00";
+      if (x > 4 && y < H - 6) {
+        ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillText(hh, x + 8, y + 14);
+      }
+    }
+    countEl.textContent = `${shown} / ${N}`;
+  }
+
+  // ---- small fingerprints, one per bean ----
+  document.querySelectorAll(".bean canvas").forEach((c) => {
+    const g = c.getContext("2d"), w = c.width, h = c.height, nz = makeNoise(hash(c.dataset.name));
+    g.fillStyle = "#10161d"; g.fillRect(0, 0, w, h);
+    g.strokeStyle = c.dataset.c; g.lineWidth = 1; g.lineCap = "round";
+    for (let i = 0; i < 70; i++) {
+      let x = nz.r() * w * 0.6 - 20, y = h * 0.3 + nz.r() * h;
+      g.globalAlpha = 0.4 + nz.r() * 0.6; g.beginPath(); g.moveTo(x, y);
+      for (let k = 0; k < 40; k++) {
+        const a = LODOS + (nz.n(x * 0.03, y * 0.03) - 0.5) * 3.4;
+        x += Math.cos(a) * 3; y += Math.sin(a) * 3; g.lineTo(x, y);
+      }
+      g.stroke();
+    }
+  });
+
+  window.demo = { duration: 3200, hold: 2000, render(p) { draw(p); } };
+  // the label font may arrive after the first frame
+  document.fonts && document.fonts.ready.then(() => { if (document.documentElement.dataset.frame) draw(+document.documentElement.dataset.frame); });
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

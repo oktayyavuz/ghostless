@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İzometrik dünya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f3ede2; --ink: #1c2833; --mute: #5d6670; --rust: #c8553d; --sea: #3c82c4; --line: #d8ccb8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--ink); overflow: hidden; font: 500 16px/1.45 "Bricolage Grotesque", system-ui, sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  .page { position: relative; width: 1280px; height: 800px; }
+  #world { position: absolute; left: 0; top: 0; width: 1280px; height: 800px; }
+
+  header { position: absolute; left: 40px; right: 40px; top: 22px; display: flex; align-items: center; gap: 30px; z-index: 2; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 800 24px/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.03em; font-variation-settings: "opsz" 96; }
+  .logo svg { width: 30px; height: 30px; }
+  header nav { display: flex; gap: 26px; font-weight: 600; font-size: 15px; }
+  header nav a.on { color: var(--rust); }
+  .cta { margin-left: auto; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 15px; }
+
+  .copy { position: absolute; left: 40px; top: 120px; width: 430px; z-index: 2; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: var(--rust); letter-spacing: .02em; }
+  .eyebrow i { width: 8px; height: 8px; background: var(--rust); transform: skewY(-30deg) rotate(45deg); }
+  h1 { margin-top: 16px; font: 800 62px/.96 "Bricolage Grotesque", sans-serif; letter-spacing: -.045em; font-variation-settings: "opsz" 96; }
+  h1 em { font-style: normal; color: var(--sea); }
+  .lede { margin-top: 20px; font-size: 18px; line-height: 1.45; color: #34404b; max-width: 36ch; }
+  .ctas { display: flex; gap: 12px; margin-top: 26px; }
+  .btn { padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 16px; border: 2px solid var(--ink); }
+  .btn.solid { background: var(--rust); border-color: var(--rust); color: #fff; }
+  .hours { margin-top: 18px; font-size: 13.5px; color: var(--mute); }
+
+  .second { position: absolute; left: 40px; right: 40px; top: 676px; z-index: 2; border-top: 2px solid var(--ink); padding-top: 16px;
+            display: grid; grid-template-columns: 300px repeat(4, 1fr); gap: 22px; align-items: start; }
+  .second h2 { font: 800 30px/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.035em; }
+  .second h2 small { display: block; font-size: 13px; font-weight: 600; color: var(--mute); letter-spacing: 0; margin-top: 8px; }
+  .bean { display: flex; gap: 12px; align-items: flex-start; }
+  .bean svg { width: 46px; height: 56px; flex: none; }
+  .bean b { display: block; font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+  .bean span { font-size: 13.5px; color: var(--mute); }
+
+  @media (max-width: 700px) { .page { zoom: .293; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <svg id="world" viewBox="0 0 1280 800" aria-label="İzometrik Karaköy: Lodos dükkânı, iskele ve vapur"></svg>
+
+  <header>
+    <a class="logo" href="#"><svg viewBox="0 0 30 30"><path d="M15 2 28 9.5v11L15 28 2 20.5v-11z" fill="#c8553d"/><path d="M15 2 28 9.5 15 17 2 9.5z" fill="#e07a5f"/><path d="M15 17v11l13-7.5v-11z" fill="#9e3f2c"/></svg>Lodos</a>
+    <nav><a class="on" href="#">Kavurma</a><a href="#">Çekirdekler</a><a href="#">Menü</a><a href="#">İskele</a></nav>
+    <a class="cta" href="#">Sipariş ver</a>
+  </header>
+
+  <section class="copy">
+    <span class="eyebrow"><i></i>Kemankeş Cd. 12 · Karaköy</span>
+    <h1>Kazandan iskeleye <em>doksan saniye.</em></h1>
+    <p class="lede">Her sabah 07.00'de 12 kg'lık tek kazanla kavuruyoruz. Vapurun kalkışına 6 dakika kala sipariş verene sıra yok.</p>
+    <div class="ctas"><a class="btn solid" href="#">Menüye bak</a><a class="btn" href="#">Yol tarifi</a></div>
+    <p class="hours">Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</p>
+  </section>
+
+  <section class="second">
+    <h2>Haftada dört çekirdek<small>Hepsi aynı kazandan, aynı sabah.</small></h2>
+    <div class="bean"><svg viewBox="0 0 46 56" data-c="#b0703f"></svg><div><b>Lodos harmanı</b><span>250 g · ₺420</span></div></div>
+    <div class="bean"><svg viewBox="0 0 46 56" data-c="#3c82c4"></svg><div><b>Etiyopya Guji</b><span>250 g · ₺560</span></div></div>
+    <div class="bean"><svg viewBox="0 0 46 56" data-c="#c8553d"></svg><div><b>Kolombiya Huila</b><span>Filtre · ₺95</span></div></div>
+    <div class="bean"><svg viewBox="0 0 46 56" data-c="#2f3a44"></svg><div><b>Türk kahvesi kavrumu</b><span>Fincan · ₺80</span></div></div>
+  </section>
+</div>
+
+<script>
+  // ---------- tiny isometric engine ----------
+  const U = 34, OX = 838, OY = 214, C30 = 0.866;
+  const P = (x, y, z = 0) => [OX + (x - y) * C30 * U, OY + (x + y) * 0.5 * U - z * U];
+  const pts = (a) => a.map((q) => q[0].toFixed(1) + "," + q[1].toFixed(1)).join(" ");
+  const poly = (a, fill, extra = "") => `<polygon points="${pts(a)}" fill="${fill}" stroke="${fill}" stroke-width=".6" stroke-linejoin="round" ${extra}/>`;
+  function shade(hex, k) {
+    const n = parseInt(hex.slice(1), 16), f = (v) => Math.max(0, Math.min(255, Math.round(v * k)));
+    return "#" + [f(n >> 16), f((n >> 8) & 255), f(n & 255)].map((v) => v.toString(16).padStart(2, "0")).join("");
+  }
+  // box with visible faces: top, front (y = y+dy, faces down-left), side (x = x+dx, faces down-right)
+  function box(x, y, z, dx, dy, dz, c, side, top) {
+    side = side || shade(c, 0.84); top = top || shade(c, 1.1);
+    return poly([P(x + dx, y, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x + dx, y, z + dz)], side) +
+           poly([P(x, y + dy, z), P(x + dx, y + dy, z), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], c) +
+           poly([P(x, y, z + dz), P(x + dx, y, z + dz), P(x + dx, y + dy, z + dz), P(x, y + dy, z + dz)], top);
+  }
+  const faceY = (y, x0, x1, z0, z1, f) => poly([P(x0, y, z0), P(x1, y, z0), P(x1, y, z1), P(x0, y, z1)], f);
+  const faceX = (x, y0, y1, z0, z1, f) => poly([P(x, y0, z0), P(x, y1, z0), P(x, y1, z1), P(x, y0, z1)], f);
+  const textY = (s, x, y, z, size, fill, w = 800) => { const [a, b] = P(x, y, z); return `<text transform="matrix(${C30},0.5,0,1,${a.toFixed(1)},${b.toFixed(1)})" font-family="Bricolage Grotesque, sans-serif" font-weight="${w}" font-size="${size}" fill="${fill}" letter-spacing="1.5">${s}</text>`; };
+  const textX = (s, x, y, z, size, fill, w = 800) => { const [a, b] = P(x, y, z); return `<text transform="matrix(${C30},-0.5,0,1,${a.toFixed(1)},${b.toFixed(1)})" font-family="Bricolage Grotesque, sans-serif" font-weight="${w}" font-size="${size}" fill="${fill}" letter-spacing="1.5">${s}</text>`; };
+  function person(x, y, z, shirt, cup) {
+    const [hx, hy] = P(x, y, z + 1.08);
+    let s = box(x - 0.12, y - 0.12, z, 0.24, 0.24, 0.4, "#2b3340") + box(x - 0.17, y - 0.17, z + 0.4, 0.34, 0.34, 0.5, shirt);
+    s += `<circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="${(0.19 * U).toFixed(1)}" fill="#e2a982"/>`;
+    s += `<path d="M${(hx - 0.19 * U).toFixed(1)} ${hy.toFixed(1)} a${(0.19 * U).toFixed(1)} ${(0.19 * U).toFixed(1)} 0 0 1 ${(0.38 * U).toFixed(1)} 0z" fill="#2a211c"/>`;
+    if (cup) s += box(x + 0.16, y - 0.05, z + 0.62, 0.14, 0.14, 0.2, "#ffffff", "#e6e0d6", "#6b3a1f");
+    return s;
+  }
+  function tree(x, y) {
+    const [cx, cy] = P(x, y, 1.7);
+    return box(x - 0.1, y - 0.1, 0, 0.2, 0.2, 1.2, "#7a5236") +
+      `<circle cx="${cx}" cy="${cy}" r="${0.78 * U}" fill="#5b8a4c"/><path d="M${cx} ${cy - 0.78 * U} a${0.78 * U} ${0.78 * U} 0 0 1 0 ${1.56 * U}z" fill="#4b7740"/>`;
+  }
+  function lamp(x, y) {
+    const [a, b] = P(x, y, 0), [c, d] = P(x, y, 1.9);
+    return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="#2b3340" stroke-width="2.4"/>` + box(x - 0.13, y - 0.13, 1.9, 0.26, 0.26, 0.26, "#f2c45a");
+  }
+
+  const groups = [];
+  const G = (id, svg) => groups.push({ id, svg });
+
+  // diorama base: land, then sea in front
+  G("base",
+    poly([P(0, 0, -1.25), P(12, 0, -1.25), P(12, 11.2, -1.25), P(0, 11.2, -1.25)].map((q) => [q[0] + 14, q[1] + 26]), "rgba(28,40,51,.10)") +
+    box(0, 0, -1.25, 12, 6.4, 1.25, "#cdb894", "#b39d78", "#e8dbc3") +
+    faceY(6.4, 0, 12, -1.25, -0.55, "#a48d69") +
+    box(0, 6.4, -1.25, 12, 4.8, 0.95, "#2f6ea8", "#285f92", "#3c82c4") +
+    faceY(11.2, 0, 12, -1.25, -1.0, "#22537f") +
+    // pavement by the quay + kerb
+    poly([P(0, 4.9, 0.01), P(12, 4.9, 0.01), P(12, 6.4, 0.01), P(0, 6.4, 0.01)], "#ddcdb0") +
+    poly([P(0, 6.15, 0.02), P(12, 6.15, 0.02), P(12, 6.4, 0.02), P(0, 6.4, 0.02)], "#bfa983"));
+
+  // waves
+  (function () {
+    let s = "", seed = 9;
+    const r = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+    for (let i = 0; i < 26; i++) {
+      const x = 0.4 + r() * 11, y = 6.8 + r() * 4.1, l = 0.4 + r() * 0.6;
+      if (x > 8.2 && x < 10.2) continue;
+      const [a, b] = P(x, y, -0.29), [c, d] = P(x + l, y, -0.29);
+      s += `<line x1="${a.toFixed(1)}" y1="${b.toFixed(1)}" x2="${c.toFixed(1)}" y2="${d.toFixed(1)}" stroke="#a9cdec" stroke-width="2" stroke-linecap="round" opacity=".8"/>`;
+    }
+    G("waves", s);
+  })();
+
+  // Lodos shop
+  (function () {
+    let s = box(1, 1.5, 0, 4, 3, 3.2, "#f3e5cf", "#dcc7a8", "#5a4636");
+    s += box(1, 1.5, 3.2, 4, 0.18, 0.25, "#4a382b") + box(4.82, 1.5, 3.2, 0.18, 3, 0.25, "#4a382b") + box(1, 4.32, 3.2, 4, 0.18, 0.25, "#4a382b");
+    // chimney of the roaster
+    s += box(1.7, 2.1, 3.2, 0.55, 0.55, 1.9, "#8b939b", "#6f777f", "#4b5258") + box(1.62, 2.02, 5.1, 0.71, 0.71, 0.18, "#5c636a");
+    // front: window, counter glimpse, door
+    s += faceY(4.5, 1.35, 3.6, 0.35, 1.95, "#2f3d4a") + faceY(4.5, 1.35, 3.6, 0.35, 0.8, "#c8553d") + faceY(4.5, 2.45, 2.52, 0.35, 1.95, "#f3e5cf");
+    s += faceY(4.5, 3.9, 4.6, 0, 1.95, "#6b3a26") + faceY(4.5, 4.45, 4.52, 0.8, 1.0, "#f2c45a");
+    // sign
+    s += faceY(4.5, 1.35, 4.65, 2.38, 2.98, "#2b2420") + textY("LODOS", 2.05, 4.5, 2.52, 17, "#f3e5cf");
+    // side windows
+    for (let i = 0; i < 3; i++) s += faceX(5, 1.9 + i * 0.85, 2.45 + i * 0.85, 1.0, 2.2, "#3a4a58");
+    // awning, striped
+    for (let i = 0; i < 8; i++) {
+      const x0 = 1.25 + i * 0.425, x1 = x0 + 0.425, col = i % 2 ? "#f3e5cf" : "#c8553d";
+      s += poly([P(x0, 4.5, 2.2), P(x1, 4.5, 2.2), P(x1, 5.25, 1.78), P(x0, 5.25, 1.78)], col);
+      s += faceY(5.25, x0, x1, 1.58, 1.78, i % 2 ? "#e3d2b6" : "#a8432f");
+    }
+    G("shop", s);
+  })();
+
+  // neighbours
+  (function () {
+    let s = box(5.5, 0.7, 0, 3, 2.6, 2.7, "#93a7b8", "#7b8fa1", "#55636f");
+    for (let r = 0; r < 2; r++) for (let i = 0; i < 4; i++) s += faceY(3.3, 5.75 + i * 0.7, 6.15 + i * 0.7, 0.5 + r * 1.1, 1.15 + r * 1.1, "#2f3d4a");
+    for (let i = 0; i < 2; i++) s += faceX(8.5, 1.1 + i * 1.0, 1.6 + i * 1.0, 1.6, 2.25, "#2f3d4a");
+    s += box(9.1, 0.4, 0, 2.5, 2.3, 4.5, "#c7654a", "#a9533c", "#7e3b2b");
+    for (let r = 0; r < 4; r++) for (let i = 0; i < 3; i++) s += faceY(2.7, 9.35 + i * 0.78, 9.8 + i * 0.78, 0.5 + r * 1.0, 1.05 + r * 1.0, "#3b2a24");
+    for (let r = 0; r < 4; r++) s += faceX(11.6, 0.9, 1.4, 0.5 + r * 1.0, 1.05 + r * 1.0, "#3b2a24"), s += faceX(11.6, 1.8, 2.3, 0.5 + r * 1.0, 1.05 + r * 1.0, "#3b2a24");
+    G("block", s);
+  })();
+
+  // street life
+  (function () {
+    let s = "";
+    // walking route shop door → pier, dashed
+    const route = [P(4.25, 4.75, 0.03), P(6.4, 5.55, 0.03), P(8.95, 5.9, 0.03), P(9.2, 8.6, 0.13)];
+    s += `<polyline points="${pts(route)}" fill="none" stroke="#c8553d" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>`;
+    s += `<circle cx="${route[0][0]}" cy="${route[0][1]}" r="5" fill="#c8553d"/>`;
+    s += tree(6.9, 4.4) + lamp(5.4, 6.0) + lamp(10.8, 6.0);
+    // tables + people at the shop front
+    s += box(1.7, 5.2, 0.55, 0.62, 0.62, 0.08, "#f3e5cf") + box(1.96, 5.46, 0, 0.1, 0.1, 0.55, "#2b3340");
+    s += person(1.4, 5.75, 0, "#3c82c4", true) + person(2.6, 5.4, 0, "#e0a43b", true);
+    s += tree(11.1, 4.2);
+    G("street", s);
+  })();
+
+  // ferry: hull along x, bow pointing to the pier
+  (function () {
+    let s = "";
+    const [w0, w1] = [P(0.4, 9.6, -0.29), P(1.8, 9.6, -0.29)];
+    for (let i = 0; i < 4; i++) {
+      const [a, b] = P(-0.4 + i * 0.35, 8.3 + i * 0.4, -0.29), [c, d] = P(1.6, 8.4 + i * 0.4, -0.29);
+      s += `<line x1="${a.toFixed(1)}" y1="${b.toFixed(1)}" x2="${c.toFixed(1)}" y2="${d.toFixed(1)}" stroke="#e8f2fb" stroke-width="3" stroke-linecap="round"/>`;
+    }
+    s += box(1.8, 8.1, -0.45, 5.8, 1.6, 0.8, "#f7f3ec", "#ddd5c7", "#e9e2d5");
+    s += faceY(9.7, 1.8, 7.6, -0.45, -0.08, "#1f3a5a");
+    // bow wedge
+    s += poly([P(7.6, 9.7, -0.45), P(8.3, 8.9, -0.45), P(8.3, 8.9, 0.35), P(7.6, 9.7, 0.35)], "#ebe5da");
+    s += poly([P(7.6, 9.7, -0.45), P(8.3, 8.9, -0.45), P(8.3, 8.9, -0.08), P(7.6, 9.7, -0.08)], "#1a3150");
+    s += poly([P(7.6, 8.1, 0.35), P(8.3, 8.9, 0.35), P(7.6, 9.7, 0.35)], "#e9e2d5");
+    s += textY("KARAKÖY", 2.3, 9.7, 0.03, 12, "#1f3a5a");
+    // decks
+    s += box(2.3, 8.3, 0.35, 4.9, 1.2, 0.9, "#ffffff", "#e3dccf", "#efe9de");
+    for (let i = 0; i < 9; i++) s += faceY(9.5, 2.5 + i * 0.52, 2.84 + i * 0.52, 0.62, 1.02, "#33465a");
+    s += faceX(7.2, 8.55, 9.3, 0.62, 1.02, "#33465a");
+    s += box(3.0, 8.5, 1.25, 3.8, 0.8, 0.55, "#ffffff", "#e3dccf", "#d9d1c3");
+    for (let i = 0; i < 6; i++) s += faceY(9.3, 3.2 + i * 0.6, 3.6 + i * 0.6, 1.4, 1.65, "#33465a");
+    // funnel
+    s += box(4.5, 8.62, 1.8, 0.6, 0.56, 1.15, "#e2762e", "#c45f1d", "#2b2420") + faceY(9.18, 4.5, 5.1, 2.65, 2.95, "#2b2420") + faceX(5.1, 8.62, 9.18, 2.65, 2.95, "#1f1915");
+    // mast + flag
+    const [m0, m1] = [P(6.4, 8.9, 1.8), P(6.4, 8.9, 3.3)];
+    s += `<line x1="${m0[0]}" y1="${m0[1]}" x2="${m1[0]}" y2="${m1[1]}" stroke="#2b3340" stroke-width="2"/>`;
+    s += poly([P(6.4, 8.9, 3.3), P(7.0, 8.9, 3.3), P(7.0, 8.9, 2.95), P(6.4, 8.9, 2.95)], "#d62b2b");
+    // passengers on deck
+    s += person(6.85, 9.0, 0.35, "#5b8a4c") ;
+    G("ferry", s);
+  })();
+
+  // pier + kiosk, in front of the ferry
+  (function () {
+    let s = "";
+    for (const y of [7.2, 8.7, 10.1]) for (const x of [8.5, 9.8]) s += box(x, y, -0.4, 0.16, 0.16, 0.35, "#5a3d27");
+    s += box(8.4, 6.2, -0.05, 1.6, 4.2, 0.14, "#c99a68", "#a77a4b", "#d7aa77");
+    for (let i = 0; i < 12; i++) { const y = 6.5 + i * 0.33, [a, b] = P(8.4, y, 0.091), [c, d] = P(10, y, 0.091); s += `<line x1="${a.toFixed(1)}" y1="${b.toFixed(1)}" x2="${c.toFixed(1)}" y2="${d.toFixed(1)}" stroke="#b98a58" stroke-width="1"/>`; }
+    s += box(8.62, 9.25, 0.09, 1.1, 0.95, 1.2, "#f3e5cf", "#dcc7a8") + box(8.5, 9.13, 1.29, 1.34, 1.2, 0.22, "#c8553d", "#a8432f", "#d9684f");
+    s += faceY(10.2, 8.8, 9.55, 0.4, 1.0, "#2f3d4a") + textY("İSKELE", 8.66, 10.2, 1.36, 8.5, "#fff");
+    for (const y of [7.0, 8.3]) s += box(8.4, y, 0.09, 0.14, 0.14, 0.25, "#2b3340");
+    s += person(9.35, 7.6, 0.09, "#c8553d", true) + person(9.05, 8.5, 0.09, "#2f3a44");
+    G("pier", s);
+  })();
+
+  // walker on the route (position driven by p)
+  G("walker", "");
+  // steam
+  G("steam", "");
+  // callouts (flat cards with leader lines)
+  function callout(id, ax, ay, bx, by, title, sub, w) {
+    G(id, `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by + 18}" stroke="#1c2833" stroke-width="1.5"/>
+      <circle cx="${ax}" cy="${ay}" r="4" fill="#fff" stroke="#1c2833" stroke-width="2"/>
+      <rect x="${bx - 10}" y="${by - 4}" width="${w}" height="46" rx="9" fill="#fff" stroke="#1c2833" stroke-width="1.5"/>
+      <text x="${bx + 4}" y="${by + 15}" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="15" fill="#1c2833">${title}</text>
+      <text x="${bx + 4}" y="${by + 33}" font-family="Bricolage Grotesque, sans-serif" font-weight="500" font-size="12.5" fill="#5d6670">${sub}</text>`);
+  }
+  const ch = P(1.97, 2.37, 5.3), rt = P(7.6, 5.75, 0.03), fn = P(4.8, 8.9, 2.95);
+  callout("c1", ch[0], ch[1] - 6, ch[0] + 70, 92, "Her sabah 07.00", "12 kg'lık tek kazan", 168);
+  callout("c2", rt[0], rt[1], 1060, 470, "İskeleye 90 saniye", "kapıdan vapura yürüyüş", 196);
+  callout("c3", fn[0], fn[1], 486, 566, "6 dk kala, sıra yok", "kalkışa yetişen kahve", 176);
+
+  const world = document.getElementById("world");
+  world.innerHTML = groups.map((g) => `<g id="g-${g.id}">${g.svg}</g>`).join("");
+
+  // mini iso packs for the second section
+  document.querySelectorAll(".bean svg").forEach((svg) => {
+    const c = svg.dataset.c, q = (x, y) => `${x},${y}`;
+    svg.innerHTML = `<polygon points="${q(4, 14)} ${q(23, 25)} ${q(23, 54)} ${q(4, 43)}" fill="${c}"/>
+      <polygon points="${q(23, 25)} ${q(42, 14)} ${q(42, 43)} ${q(23, 54)}" fill="${shade(c, 0.78)}"/>
+      <polygon points="${q(4, 14)} ${q(23, 3)} ${q(42, 14)} ${q(23, 25)}" fill="${shade(c, 1.18)}"/>
+      <polygon points="${q(8, 24)} ${q(19, 30)} ${q(19, 40)} ${q(8, 34)}" fill="#f3ede2"/>`;
+  });
+
+  // ---------- motion ----------
+  const order = ["base", "waves", "shop", "block", "street", "pier", "ferry", "c1", "c2", "c3"];
+  const el = Object.fromEntries(groups.map((g) => [g.id, document.getElementById("g-" + g.id)]));
+  const route = [[4.25, 4.75, 0.03], [6.4, 5.55, 0.03], [8.95, 5.9, 0.03], [9.2, 8.6, 0.13]];
+  function along(t) {
+    const segs = route.slice(1).map((b, i) => Math.hypot(b[0] - route[i][0], b[1] - route[i][1]));
+    let d = t * segs.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < segs.length; i++) {
+      if (d <= segs[i]) { const k = d / segs[i], a = route[i], b = route[i + 1]; return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]; }
+      d -= segs[i];
+    }
+    return route[route.length - 1];
+  }
+  window.demo = {
+    duration: 3200,
+    hold: 1800,
+    render(p) {
+      const E = (x) => 1 - Math.pow(1 - x, 4);
+      order.forEach((id, i) => {
+        const t = E(Math.min(1, Math.max(0, (p - i * 0.045) / 0.32)));
+        if (id === "ferry") return;
+        el[id].style.opacity = t;
+        el[id].style.transform = id.startsWith("c") ? "" : `translateY(${(1 - t) * -70}px)`;
+      });
+      ["c1", "c2", "c3"].forEach((id, i) => (el[id].style.opacity = Math.min(1, Math.max(0, (p - 0.7 - i * 0.07) / 0.15))));
+      // ferry glides in along +x and docks at p = 1
+      const f = E(Math.min(1, Math.max(0, (p - 0.1) / 0.9)));
+      const dx = (1 - f) * -4.5;
+      el.ferry.style.transform = `translate(${dx * C30 * U}px, ${dx * 0.5 * U}px)`;
+      el.ferry.style.opacity = Math.min(1, p / 0.15);
+      // a customer walking to the pier with a cup
+      const w = along(0.18 + 0.4 * E(p));
+      el.walker.innerHTML = person(w[0], w[1], w[2], "#e2762e", true);
+      el.walker.style.opacity = Math.min(1, Math.max(0, (p - 0.25) / 0.2));
+      // roaster steam
+      let s = "";
+      for (let i = 0; i < 4; i++) {
+        const k = (i / 4 + p * 0.5) % 1, [cx, cy] = P(1.97 - k * 0.6, 2.37 - k * 0.2, 5.5 + k * 2.1);
+        s += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${(7 + k * 13).toFixed(1)}" fill="#ffffff" stroke="#d8ccb8" stroke-width="1.5" opacity="${(1 - k * 0.75).toFixed(2)}"/>`;
+      }
+      el.steam.innerHTML = s;
+      el.steam.style.opacity = Math.min(1, Math.max(0, (p - 0.3) / 0.2));
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

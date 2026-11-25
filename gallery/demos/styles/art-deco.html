@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Art deco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;400;600&family=Poiret+One&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --green: #0d2620; --deep: #08130f; --gold: #c9a45c; --gold-hi: #e6cf96; --gold-lo: rgba(201,164,92,.42); --cream: #eee4cc; --mute: rgba(238,228,204,.66); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; color: var(--cream); font: 300 15px/1.6 "Josefin Sans", "Futura", sans-serif;
+         background: radial-gradient(70% 80% at 50% 46%, #123329 0%, var(--green) 55%, var(--deep) 100%); }
+  .abs { position: absolute; }
+  .caps { text-transform: uppercase; letter-spacing: .3em; font-size: 11.5px; font-weight: 400; }
+  .gold { color: var(--gold); }
+  svg.lines { left: 0; top: 0; width: 1280px; height: 800px; pointer-events: none; overflow: visible; }
+
+  /* header: symmetric around the wordmark */
+  header { left: 64px; right: 64px; top: 30px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+  header nav { display: flex; gap: 38px; align-items: center; }
+  header nav:last-child { justify-content: flex-end; }
+  header nav i { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .mark { text-align: center; padding: 0 56px; }
+  .mark b { display: block; font: 400 40px/1 "Poiret One", sans-serif; letter-spacing: .42em; padding-left: .42em; color: var(--gold-hi); }
+  .mark span { display: block; margin-top: 8px; font-size: 10px; letter-spacing: .5em; padding-left: .5em; color: var(--gold); }
+
+  /* split headline around the arch */
+  .col { top: 262px; width: 330px; }
+  .col.l { left: 68px; text-align: right; }
+  .col.r { right: 68px; text-align: left; }
+  .eyebrow { color: var(--gold); display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .col.l .eyebrow { justify-content: flex-end; }
+  .eyebrow i { width: 46px; height: 1px; background: var(--gold); }
+  h1 { font: 300 86px/.92 "Big Shoulders Display", "Arial Narrow", sans-serif; letter-spacing: .07em; text-transform: uppercase; color: var(--cream); }
+  h1 em { font-style: normal; color: var(--gold-hi); }
+  .col p { margin-top: 20px; color: var(--mute); max-width: 300px; }
+  .col.l p { margin-left: auto; }
+  .btn { display: inline-flex; align-items: center; margin-top: 24px; height: 42px; padding: 0 26px; border: 1px solid var(--gold); color: var(--gold-hi);
+         clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%); position: relative; }
+  .btn::before { content: ""; position: absolute; inset: 3px; border-top: 1px solid var(--gold-lo); border-bottom: 1px solid var(--gold-lo); }
+
+  /* the framed photograph: arch top, triple gold line */
+  .arch { left: 515px; top: 196px; width: 250px; height: 420px; border-radius: 125px 125px 0 0; overflow: hidden; }
+  .arch img { width: 100%; height: 100%; object-fit: cover; object-position: 66% 50%; display: block; filter: sepia(.25) saturate(.9) contrast(1.08) brightness(.92); }
+  .arch-line { border: 1px solid var(--gold); border-bottom: 0; }
+
+  /* second section */
+  .sec { left: 64px; right: 64px; top: 666px; }
+  .sec h2 { text-align: center; font: 400 26px/1 "Poiret One", sans-serif; letter-spacing: .32em; padding-left: .32em; color: var(--gold-hi); text-transform: uppercase; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 16px; }
+  .card { position: relative; height: 62px; padding: 12px 22px 0; text-align: center; border: 1px solid var(--gold-lo); border-bottom: 0; }
+  .card::before { content: ""; position: absolute; left: 6px; right: 6px; top: 6px; bottom: 0; border: 1px solid var(--gold-lo); border-bottom: 0; }
+  .card::after { content: ""; position: absolute; left: 50%; top: -5px; width: 9px; height: 9px; margin-left: -5px; background: var(--gold); transform: rotate(45deg); }
+  .card b { display: block; font: 400 23px/1 "Big Shoulders Display", sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+  .card span { display: block; margin-top: 3px; color: var(--gold); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; }
+
+  @media (max-width: 700px) {
+    header { left: 16px; right: 16px; grid-template-columns: 1fr; } header nav { display: none; } .mark { padding: 0; }
+    svg.lines, .arch-line, .col.r, .sec { display: none; }
+    .arch { left: 50%; margin-left: -110px; width: 220px; height: 300px; top: 120px; }
+    .col.l { left: 16px; right: 16px; width: auto; top: 440px; text-align: center; } .col.l .eyebrow { justify-content: center; } h1 { font-size: 58px; }
+  }
+</style>
+</head>
+<body>
+  <!-- page frame, fan and plinth, all drawn as gold hairlines -->
+  <svg class="abs lines" viewBox="0 0 1280 800" aria-hidden="true">
+    <g fill="none" stroke="#c9a45c" stroke-width="1">
+      <g id="frame" data-draw="0,.35">
+        <path d="M34 20 H1246 M1260 34 V766 M1246 780 H34 M20 766 V34" />
+        <path d="M20 34 H34 V20 M1246 20 V34 H1260 M1260 766 H1246 V780 M34 780 V766 H20" />
+        <path d="M30 44 H44 V30 M1236 30 V44 H1250 M1250 756 H1236 V770 M44 770 V756 H30" stroke-opacity=".55"/>
+        <path d="M44 30 H1236 M1250 44 V756 M1236 770 H44 M30 756 V44" stroke-opacity=".55"/>
+      </g>
+      <g id="fan" data-draw=".15,.6"></g>
+      <g data-draw=".3,.6" stroke-opacity=".9">
+        <path d="M470 632 H810 M486 642 H794 M502 652 H778" />
+      </g>
+      <g data-draw=".35,.7">
+        <path d="M498 616 V321 A142 142 0 0 1 782 321 V616" />
+        <path d="M490 624 V321 A150 150 0 0 1 790 321 V624" stroke-opacity=".5"/>
+        <path d="M506 616 V321 A134 134 0 0 1 774 321 V616" stroke-opacity=".35"/>
+      </g>
+    </g>
+  </svg>
+
+  <header class="abs caps" data-in=".25,.5">
+    <nav><a>Kavurma</a><i></i><a>Çekirdekler</a></nav>
+    <div class="mark"><b>LODOS</b><span>Kahve Kavurma Evi · 2019</span></div>
+    <nav><a>Menü</a><i></i><a>İskele</a></nav>
+  </header>
+
+  <figure class="abs arch" data-in=".3,.6"><img src="../../assets/espresso.webp" alt="Makineden iki fincana akan espresso"></figure>
+
+  <div class="abs col l" data-in=".45,.75">
+    <div class="eyebrow caps">Karaköy, 07.00<i></i></div>
+    <h1>Vapur<br>kalkmadan</h1>
+    <p>Her sabah 07.00'de, on iki kiloluk tek kazanla kavuruyoruz. Kemankeş Caddesi 12.</p>
+    <a class="btn caps">Menüyü gör</a>
+  </div>
+  <div class="abs col r" data-in=".5,.8">
+    <div class="eyebrow caps"><i></i>İskeleye 90 saniye</div>
+    <h1><em>kahven</em><br>hazır.</h1>
+    <p>Vapurun kalkışına altı dakika kala gelene sıra yok. Hafta içi 07.00–19.00.</p>
+    <a class="btn caps">Yol tarifi</a>
+  </div>
+
+  <section class="abs sec" data-in=".62,.95">
+    <h2>Haftanın dört çekirdeği</h2>
+    <div class="cards">
+      <div class="card"><b>Lodos harmanı</b><span>250 g · ₺420</span></div>
+      <div class="card"><b>Etiyopya Guji</b><span>250 g · ₺560</span></div>
+      <div class="card"><b>Kolombiya Huila</b><span>Filtrede · ₺95</span></div>
+      <div class="card"><b>Türk kahvesi</b><span>Cezvede · ₺80</span></div>
+    </div>
+  </section>
+
+<script>
+  // sunburst: rays fanning out of the arch's top, alternating lengths, symmetric
+  const NS = "http://www.w3.org/2000/svg";
+  const fan = document.getElementById("fan");
+  const cx = 640, cy = 321;
+  for (let i = 0; i <= 30; i++) {
+    const a = Math.PI * (195 + (i / 30) * 150) / 180;
+    const long = i % 2 === 0, r1 = 168;
+    // ray ends sit on three nested ellipses: wide and low, so the fan clears the wordmark
+    const [rx, ry] = long ? (i % 6 === 0 ? [312, 214] : [282, 192]) : [246, 176];
+    const ex = cx + rx * Math.cos(a), ey = cy + ry * Math.sin(a);
+    const l = document.createElementNS(NS, "path");
+    l.setAttribute("d", `M${(cx + r1 * Math.cos(a)).toFixed(1)} ${(cy + r1 * Math.sin(a)).toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)}`);
+    l.setAttribute("stroke-opacity", long ? ".85" : ".5");
+    fan.appendChild(l);
+  }
+  // concentric stepped arcs between the rays
+  [178, 186].forEach((r, k) => {
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", `M${cx - r} ${cy} A${r} ${r} 0 0 1 ${cx + r} ${cy}`);
+    p.setAttribute("stroke-opacity", k ? ".4" : ".8");
+    fan.appendChild(p);
+  });
+  // drawn lines: prepare dash lengths once
+  const draws = [...document.querySelectorAll("[data-draw]")].map((g) => {
+    const paths = [...g.querySelectorAll("path")].map((p) => { const L = p.getTotalLength(); p.style.strokeDasharray = L; return [p, L]; });
+    const [a, b] = g.dataset.draw.split(",").map(Number);
+    return { paths, a, b };
+  });
+  const items = [...document.querySelectorAll("[data-in]")];
+  window.demo = {
+    duration: 2800, hold: 4500,
+    render(p) {
+      draws.forEach(({ paths, a, b }) => {
+        const t = gl.easeInOutCubic(gl.seg(p, a, b));
+        paths.forEach(([el, L]) => { el.style.strokeDashoffset = L * (1 - t); });
+      });
+      items.forEach((el) => {
+        const [a, b] = el.dataset.in.split(",").map(Number);
+        const t = gl.easeOutQuart(gl.seg(p, a, b));
+        el.style.opacity = t;
+        el.style.translate = `0 ${(1 - t) * 14}px`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

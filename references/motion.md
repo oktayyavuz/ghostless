@@ -19,6 +19,7 @@ Four frames of each move on the same demo client (live: `node scripts/gallery.mj
 <tr><td width="50%" valign="top"><img src="../gallery/shots/scramble-decode-strip.webp" alt="Scramble / decode"><br><b>Scramble / decode</b><br><sub>Karışık harflerden çözülme</sub></td><td width="50%" valign="top"><img src="../gallery/shots/char-cascade-strip.webp" alt="Character cascade"><br><b>Character cascade</b><br><sub>Harf harf dökülme</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/variable-weight-strip.webp" alt="Variable-font morph"><br><b>Variable-font morph</b><br><sub>Kalınlığı akan yazı</sub></td><td width="50%" valign="top"><img src="../gallery/shots/kinetic-sequence-strip.webp" alt="Kinetic sequence"><br><b>Kinetic sequence</b><br><sub>Kinetik sekans</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/split-flap-strip.webp" alt="Split-flap board"><br><b>Split-flap board</b><br><sub>Kalkış tabelası</sub></td><td width="50%" valign="top"><img src="../gallery/shots/handwriting-draw-strip.webp" alt="Handwriting draw"><br><b>Handwriting draw</b><br><sub>Kendini yazan el yazısı</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/elastic-type-strip.webp" alt="Elastic type"><br><b>Elastic type</b><br><sub>Lastik yazı</sub></td><td width="50%" valign="top"><img src="../gallery/shots/odometer-strip.webp" alt="Odometer roll"><br><b>Odometer roll</b><br><sub>Sayaç tekerleği</sub></td></tr>
 </table>
 
 **Image reveals and forming**
@@ -30,6 +31,7 @@ Four frames of each move on the same demo client (live: `node scripts/gallery.mj
 <tr><td width="50%" valign="top"><img src="../gallery/shots/particle-assemble-strip.webp" alt="Particle assemble"><br><b>Particle assemble</b><br><sub>Parçacıklardan toplanma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/noise-dissolve-strip.webp" alt="Noise dissolve"><br><b>Noise dissolve</b><br><sub>Gürültüyle belirme</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/iris-expand-strip.webp" alt="Iris / window expand"><br><b>Iris / window expand</b><br><sub>Pencereden açılma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/curtain-parallax-strip.webp" alt="Curtain + counter-parallax"><br><b>Curtain + counter-parallax</b><br><sub>Perde + ters hareket</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/svg-mask-wipe-strip.webp" alt="SVG mask wipe"><br><b>SVG mask wipe</b><br><sub>Fırça darbesiyle açılma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/liquid-transition-strip.webp" alt="Liquid / displacement transition"><br><b>Liquid / displacement transition</b><br><sub>Sıvı geçiş</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/glitch-transition-strip.webp" alt="Glitch transition"><br><b>Glitch transition</b><br><sub>Bozulmalı geçiş</sub></td><td width="50%" valign="top"><img src="../gallery/shots/ink-bleed-strip.webp" alt="Ink bleed"><br><b>Ink bleed</b><br><sub>Mürekkep yayılması</sub></td></tr>
 </table>
 
 **Scroll and page transitions**
@@ -39,6 +41,7 @@ Four frames of each move on the same demo client (live: `node scripts/gallery.mj
 <tr><td width="50%" valign="top"><img src="../gallery/shots/horizontal-rail-strip.webp" alt="Horizontal rail"><br><b>Horizontal rail</b><br><sub>Yatay ray</sub></td><td width="50%" valign="top"><img src="../gallery/shots/scale-down-hero-strip.webp" alt="Scale-down hero"><br><b>Scale-down hero</b><br><sub>Küçülerek yerine oturan görsel</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/rule-draw-count-strip.webp" alt="Rule draw + count"><br><b>Rule draw + count</b><br><sub>Çizgi çizilip sayı sayma</sub></td><td width="50%" valign="top"><img src="../gallery/shots/flip-layout-strip.webp" alt="FLIP layout"><br><b>FLIP layout</b><br><sub>Yerine kayan düzen</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/motif-transition-strip.webp" alt="Motif page transition"><br><b>Motif page transition</b><br><sub>Motifli sayfa geçişi</sub></td><td width="50%" valign="top"><img src="../gallery/shots/shared-element-strip.webp" alt="Shared-element transition"><br><b>Shared-element transition</b><br><sub>Büyüyerek açılan kart</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/video-scrub-strip.webp" alt="Scroll-scrubbed sequence"><br><b>Scroll-scrubbed sequence</b><br><sub>Kaydırınca oynayan görüntü</sub></td><td width="50%" valign="top"><img src="../gallery/shots/tilt-3d-scroll-strip.webp" alt="3D tilt on scroll"><br><b>3D tilt on scroll</b><br><sub>3D eğilen sayfa</sub></td></tr>
 </table>
 
 **Interaction**
@@ -46,6 +49,8 @@ Four frames of each move on the same demo client (live: `node scripts/gallery.mj
 <table>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/magnetic-strip.webp" alt="Magnetic control"><br><b>Magnetic control</b><br><sub>Mıknatıs buton</sub></td><td width="50%" valign="top"><img src="../gallery/shots/cursor-trail-strip.webp" alt="Cursor image trail"><br><b>Cursor image trail</b><br><sub>İmleç izinde görseller</sub></td></tr>
 <tr><td width="50%" valign="top"><img src="../gallery/shots/drag-inertia-strip.webp" alt="Drag with inertia"><br><b>Drag with inertia</b><br><sub>Fırlatılabilen şerit</sub></td><td width="50%" valign="top"><img src="../gallery/shots/hover-distortion-strip.webp" alt="Hover distortion"><br><b>Hover distortion</b><br><sub>Dokununca dalgalanan görsel</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/cursor-mask-reveal-strip.webp" alt="Cursor mask reveal"><br><b>Cursor mask reveal</b><br><sub>Fenerle keşif</sub></td><td width="50%" valign="top"><img src="../gallery/shots/lens-magnifier-strip.webp" alt="Lens magnifier"><br><b>Lens magnifier</b><br><sub>Büyüteç</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="../gallery/shots/card-shuffle-strip.webp" alt="Card shuffle"><br><b>Card shuffle</b><br><sub>Karışan kart destesi</sub></td><td width="50%" valign="top"><img src="../gallery/shots/infinite-drag-strip.webp" alt="Infinite drag grid"><br><b>Infinite drag grid</b><br><sub>Sürüklenen sonsuz pano</sub></td></tr>
 </table>
 
 **Image treatments**
@@ -126,6 +131,8 @@ Difficulty: **S** an afternoon · **M** a day or two · **L** WebGL-heavy.
 | Split-flap board | characters flip like a departures board | CSS 3D, Rive | M | transport, time, live data |
 | Handwriting draw | an SVG stroke writes itself | GSAP DrawSVGPlugin | S | signatures, personal brands |
 | Glyph/logo morph | one shape morphs into another | GSAP MorphSVGPlugin | M | logo intros, transitions |
+| Elastic type | letters stretch and spring into place | spring physics, Motion | S | playful brands, events |
+| Odometer roll | digits roll like a mechanical counter | CSS | S | prices, live data (real numbers only) |
 
 ### Image and media: "forming from pieces"
 | Move | What you see | Tool | D | Fits |
@@ -146,6 +153,8 @@ Difficulty: **S** an afternoon · **M** a day or two · **L** WebGL-heavy.
 | Slit-scan | time-smeared strips of video | canvas/shader with frame history | L | art, experimental video |
 | Hover distortion | image ripples or bulges under the cursor | vfx-js, OGL | M | portfolios (desktop only) |
 | RGB split ⚠ | colour channels separate for a moment | vfx-js, postprocessing | S | music, nightlife; reads "cyber" fast |
+| Glitch transition ⚠ | a short signal break between two images | canvas, CSS | S | music, games |
+| Ink bleed | the image spreads in like ink on paper | SVG turbulence mask, canvas | M | craft, art, food |
 
 ### Layout and scroll
 | Move | What you see | Tool | D | Fits |
@@ -161,6 +170,8 @@ Difficulty: **S** an afternoon · **M** a day or two · **L** WebGL-heavy.
 | Motif page transition | strips/shapes from the brand mark cover and uncover the page | GSAP + router intercept | M | brand-led sites |
 | Scroll-driven CSS | progress and reveals with no JS | `animation-timeline: view()` | S | lightweight sites |
 | Velocity skew | content skews slightly with scroll speed | Lenis velocity + GSAP | S | editorial, galleries |
+| Scroll-scrubbed sequence | a frame sequence advances with scroll | canvas image sequence + ScrollTrigger | M | product, process |
+| 3D tilt on scroll | cards and images tilt in depth while scrolling | CSS 3D + ScrollTrigger | S | portfolios, products |
 
 ### Interaction and ambient
 | Move | What you see | Tool | D | Fits |
@@ -169,6 +180,10 @@ Difficulty: **S** an afternoon · **M** a day or two · **L** WebGL-heavy.
 | Cursor image trail | images spawn and fade along the cursor path | GSAP; Codrops image-trail demos | M | photography, fashion |
 | Drag with inertia | a track or canvas you can throw | GSAP Draggable + Inertia, Embla | M | galleries, maps (keyboard alternative) |
 | Physics toys | objects fall, collide, can be grabbed | GSAP Physics2D, Matter.js | M | playful brands, events |
+| Cursor mask reveal | a circle around the cursor reveals a second image or text | CSS mask, canvas | S | before/after, portfolios |
+| Lens magnifier | a round lens enlarges what's under the cursor | CSS, canvas | S | products, maps, art |
+| Card shuffle | a deck shuffles and one card comes forward | GSAP, Motion | S | work, products, team |
+| Infinite drag board | an edgeless board of images dragged in any direction | GSAP Draggable, canvas | M | portfolios, archives |
 | State-machine characters | icons/mascots react to input | Rive | M | apps, onboarding |
 | Data-driven canvas | generative image from real data (tide, traffic, sales) | p5.js, canvas, OGL | M | civic, science, logistics |
 | Flow field | particles follow a noise field | p5.js, three | M | art, research |

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Çıkartma kolajı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,600;125,800;125,900&family=Shrikhand&family=Bungee&family=Sedgwick+Ave+Display&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --surface: #26282d; --red: #ee3a2a; --blue: #2747d4; --yellow: #ffc93a; --mint: #38c49a; --pink: #ff8db0; --orange: #ff7a1c; --ink: #141414; --cream: #fff6e6; --navy: #1d3a8a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { overflow: hidden; position: relative; background: var(--surface); color: var(--ink); font: 600 15px/1.35 "Archivo", Arial, sans-serif; }
+  .surface { left: 0; top: 0; width: 1280px; height: 800px; pointer-events: none; }
+  .st { position: absolute; filter: url(#die); }
+  .st.thin { filter: url(#die-thin); }
+  .wide { font-family: "Archivo", sans-serif; font-stretch: 125%; font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; }
+  .pad { padding: 8px 14px; border-radius: 10px; }
+  .c { display: grid; place-items: center; text-align: center; border-radius: 50%; }
+
+  /* the headline label: big, white, slightly peeling */
+  .label { left: 236px; top: 196px; width: 640px; height: 346px; rotate: -2deg; background: var(--cream); border-radius: 18px; padding: 34px 44px;
+           clip-path: polygon(0 0, 100% 0, 100% calc(100% - 64px), calc(100% - 64px) 100%, 0 100%); }
+  .label h1 { font: 900 62px/.95 "Archivo", sans-serif; font-stretch: 125%; text-transform: uppercase; letter-spacing: -.02em; }
+  .label h1 em { display: block; font: 400 76px/1.05 "Shrikhand", serif; font-style: normal; white-space: nowrap; text-transform: none; color: var(--red); letter-spacing: 0; margin-top: 2px; }
+  .label p { margin-top: 12px; width: 440px; font: 600 15px/1.4 "Archivo", sans-serif; }
+  .curl { left: 236px; top: 196px; width: 640px; height: 346px; rotate: -2deg; pointer-events: none;
+          background: linear-gradient(135deg, #d9d4c9 0%, #f4f1ea 46%, #c9c3b6 50%, transparent 50.5%) right bottom / 64px 64px no-repeat;
+          filter: drop-shadow(-3px -2px 3px rgba(0,0,0,.35)); }
+  .cta { left: 262px; top: 520px; rotate: -2deg; background: var(--ink); color: #fff; font-size: 15px; }
+
+  @media (max-width: 700px) {
+    .label { left: 12px; width: 350px; top: 150px; height: 300px; padding: 22px; } .label h1 { font-size: 34px; } .label h1 em { font-size: 46px; } .label p { width: auto; }
+    .curl, .cta, .hide-m { display: none; }
+    .bump { left: 12px !important; width: 351px !important; }
+  }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- die-cut: grow the shape's alpha, fill it white, drop a soft shadow under it -->
+    <filter id="die" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="6" result="d"/>
+      <feFlood flood-color="#fbfaf7"/><feComposite in2="d" operator="in" result="white"/>
+      <feGaussianBlur in="d" stdDeviation="2.5" result="b"/><feOffset in="b" dx="2" dy="5" result="o"/>
+      <feFlood flood-color="#000" flood-opacity=".5"/><feComposite in2="o" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="die-thin" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="3.5" result="d"/>
+      <feFlood flood-color="#fbfaf7"/><feComposite in2="d" operator="in" result="white"/>
+      <feGaussianBlur in="d" stdDeviation="2" result="b"/><feOffset in="b" dx="1.5" dy="3.5" result="o"/>
+      <feFlood flood-color="#000" flood-opacity=".5"/><feComposite in2="o" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0"/>
+    </filter>
+  </svg>
+  <svg class="surface" style="position:absolute" viewBox="0 0 1280 800" aria-hidden="true"><rect width="1280" height="800" filter="url(#grain)"/></svg>
+
+  <!-- header stickers -->
+  <div class="st pad" style="left:38px;top:26px;background:var(--red);color:#fff;rotate:-4deg;font:400 46px/1 Shrikhand,serif;padding:6px 22px 14px" data-st>Lodos</div>
+  <div class="st thin pad" style="left:70px;top:104px;background:var(--ink);color:#fff;rotate:2deg;font:400 11px/1 'Space Mono',monospace;letter-spacing:.12em;padding:6px 10px" data-st>KAHVE KAVURMA EVİ · KARAKÖY</div>
+
+  <nav aria-label="Menü">
+    <a class="st pad wide" style="left:752px;top:34px;background:var(--yellow);font-size:15px;rotate:-4deg" data-st>Menü</a>
+    <a class="st pad wide" style="left:852px;top:26px;background:var(--blue);color:#fff;font-size:15px;rotate:3deg" data-st>Çekirdekler</a>
+    <a class="st pad wide" style="left:1050px;top:40px;background:var(--mint);font-size:15px;rotate:-2deg" data-st>İskele</a>
+    <a class="st pad wide" style="left:1150px;top:30px;background:var(--ink);color:#fff;font-size:15px;rotate:5deg" data-st>Sipariş</a>
+  </nav>
+
+  <div class="st hide-m" style="left:420px;top:34px;rotate:-3deg;padding:7px;border-radius:6px;background:repeating-linear-gradient(-45deg,var(--yellow) 0 12px,var(--ink) 12px 24px)" data-st><span class="wide" style="display:block;background:var(--ink);color:var(--yellow);font-size:15px;padding:5px 12px">Dikkat · sıcak</span></div>
+  <div class="st c hide-m" style="left:598px;top:22px;width:88px;height:88px;background:var(--pink);rotate:9deg" data-st><div><span style="font:700 10px/1.1 'Space Mono';display:block">TÜRK<br>KAHVESİ</span><b class="wide" style="font-size:20px">₺80</b></div></div>
+  <!-- left cluster -->
+  <div class="st c" style="left:44px;top:170px;width:176px;height:176px;overflow:hidden;rotate:-8deg" data-st><img src="../../assets/espresso.webp" alt="İki fincana akan espresso" style="width:100%;height:100%;object-fit:cover;object-position:62% 50%"></div>
+  <div class="st hide-m" style="left:36px;top:368px;width:214px;rotate:-7deg;border-radius:12px;overflow:hidden;background:#fff" data-st>
+    <div style="background:var(--red);color:#fff;text-align:center;padding:8px 0 4px"><b class="wide" style="font-size:22px;display:block">Merhaba</b><span style="font-size:11px;letter-spacing:.14em">BENİM ADIM</span></div>
+    <div style="font:400 50px/1 'Sedgwick Ave Display',cursive;text-align:center;padding:10px 0 16px;color:var(--navy)">Lodos</div>
+  </div>
+  <div class="st pad hide-m" style="left:34px;top:584px;background:var(--orange);rotate:6deg;clip-path:polygon(16% 0,84% 0,100% 50%,84% 100%,16% 100%,0 50%);padding:16px 30px;text-align:center" data-st><b class="wide" style="font-size:20px;display:block">Tek kazan</b><span style="font:700 13px/1 'Space Mono'">12 KG · 07.00</span></div>
+  <div class="st hide-m" style="left:210px;top:552px;rotate:9deg;background:var(--yellow);padding:10px 16px 10px 30px;border-radius:6px 16px 16px 6px;clip-path:polygon(18px 0,100% 0,100% 100%,18px 100%,0 50%)" data-st><b class="wide" style="font-size:24px">₺75</b><span style="display:block;font-size:12px">Espresso</span></div>
+
+  <!-- top middle -->
+  <svg class="st hide-m" style="left:356px;top:120px;width:150px;height:76px;rotate:-6deg" viewBox="0 0 150 76" aria-label="Vapur" data-st>
+    <rect x="0" y="0" width="150" height="76" rx="12" fill="#ff7a1c"/>
+    <path d="M14 50 H136 L124 64 H28 Z" fill="#141414"/><rect x="34" y="34" width="80" height="16" fill="#fff6e6"/><rect x="50" y="22" width="44" height="12" fill="#fff6e6"/>
+    <rect x="80" y="10" width="9" height="12" fill="#141414"/><g fill="#141414"><rect x="40" y="38" width="8" height="7"/><rect x="54" y="38" width="8" height="7"/><rect x="68" y="38" width="8" height="7"/><rect x="82" y="38" width="8" height="7"/><rect x="96" y="38" width="8" height="7"/></g>
+  </svg>
+  <svg class="st hide-m" style="left:600px;top:118px;width:84px;height:84px;rotate:12deg" viewBox="0 0 84 84" aria-label="Fincan" data-st>
+    <circle cx="42" cy="42" r="42" fill="#38c49a"/>
+    <path d="M20 34 H58 V50 C58 60 50 66 39 66 C28 66 20 60 20 50 Z" fill="#fff6e6"/><path d="M58 38 C70 38 70 54 57 54" fill="none" stroke="#fff6e6" stroke-width="5"/>
+    <path d="M32 18 C28 24 36 26 32 30 M44 16 C40 22 48 24 44 28" fill="none" stroke="#141414" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+
+  <!-- the headline -->
+  <section class="st label" data-st>
+    <h1>Vapur kalkmadan <em>kahven hazır.</em></h1>
+    <p>Her sabah 07.00'de, 12 kg'lık tek kazanla kavuruyoruz. Karaköy iskelesine 90 saniye.</p>
+  </section>
+  <div class="abs curl" style="position:absolute" data-st></div>
+  <a class="st thin pad cta" style="position:absolute" data-st>Menüye bak →</a>
+
+  <svg class="st" style="left:724px;top:88px;width:156px;height:156px;rotate:10deg" viewBox="0 0 156 156" aria-label="Her sabah 07.00" data-st>
+    <path id="scal" fill="#ffc93a"/>
+    <text x="78" y="68" text-anchor="middle" font-family="Archivo" font-stretch="125%" font-weight="900" font-size="15" letter-spacing="1">HER SABAH</text>
+    <text x="78" y="104" text-anchor="middle" font-family="Archivo" font-stretch="125%" font-weight="900" font-size="38">07.00</text>
+    <text x="78" y="122" text-anchor="middle" font-family="Space Mono" font-weight="700" font-size="10" letter-spacing="2">KAVRUM</text>
+  </svg>
+
+  <!-- right cluster -->
+  <div class="st hide-m" style="left:900px;top:150px;width:300px;height:176px;rotate:4deg;border-radius:10px;overflow:hidden;
+       -webkit-mask:radial-gradient(circle 14px at 0 50%,transparent 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 50%,transparent 97%,#000) right/51% 100% no-repeat;
+       mask:radial-gradient(circle 14px at 0 50%,transparent 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 14px at 100% 50%,transparent 97%,#000) right/51% 100% no-repeat" data-st>
+    <img src="../../assets/kopru.webp" alt="Gün batımında Boğaz Köprüsü" style="width:100%;height:100%;object-fit:cover;object-position:46% 50%;display:block">
+    <span class="wide" style="position:absolute;left:22px;bottom:12px;color:#fff;font-size:16px;text-shadow:0 1px 2px rgba(0,0,0,.6)">Karaköy ⇄ Kadıköy</span>
+  </div>
+  <div class="st c" style="left:1146px;top:286px;width:116px;height:116px;background:var(--blue);color:#fff;rotate:-12deg" data-st><div><b class="wide" style="font-size:34px;display:block;line-height:1">90</b><span style="font:700 11px/1.2 'Space Mono'">SANİYE<br>İSKELEYE</span></div></div>
+  <div class="st hide-m" style="left:900px;top:356px;width:216px;height:150px;rotate:-5deg;border-radius:22px;overflow:hidden" data-st><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde fincan ve çekirdekler" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+  <div class="st hide-m" style="left:1126px;top:426px;width:130px;height:118px;rotate:9deg;border-radius:14px;overflow:hidden;background:#fff" data-st><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block"></div>
+  <div class="st hide-m" style="left:850px;top:526px;rotate:-7deg;background:var(--pink);padding:12px 18px;border-radius:18px 18px 18px 4px" data-st><b class="wide" style="font-size:19px;display:block;line-height:1.05">Kalkışa 6 dk<br>kala gelene</b><span style="font:400 30px/1 'Sedgwick Ave Display';color:var(--ink)">sıra yok!</span></div>
+  <div class="st hide-m" style="left:1036px;top:574px;rotate:3deg;background:var(--navy);color:#fff;padding:8px 18px 9px;border-radius:5px;box-shadow:inset 0 0 0 2px #fff6e6" data-st><b class="wide" style="font-size:20px;letter-spacing:.02em;display:block">Kemankeş Cd.</b><span style="font:700 11px/1 'Space Mono';letter-spacing:.2em">KARAKÖY · NO 12</span></div>
+
+  <!-- bottom middle -->
+  <div class="st hide-m" style="left:560px;top:536px;rotate:-6deg;font:400 54px/1 Shrikhand,serif;color:var(--mint)" data-st>Karaköy</div>
+  <div class="st thin hide-m" style="left:336px;top:584px;width:206px;rotate:-3deg;background:#fff;padding:8px 12px;border-radius:4px;font:400 11px/1.3 'Space Mono',monospace" data-st>
+    <b style="font-weight:700">LODOS HARMANI · 250 G</b>
+    <svg viewBox="0 0 180 26" width="180" height="26" style="display:block;margin:4px 0"><g fill="#141414" id="bars"></g></svg>
+    <span style="display:flex;justify-content:space-between"><span>08690 2019 07</span><b style="font-size:16px">₺420</b></span>
+  </div>
+  <div class="st c hide-m" style="left:742px;top:612px;width:128px;height:76px;border-radius:50%;background:var(--ink);color:var(--yellow);rotate:6deg" data-st><div><span style="font:700 10px/1 'Space Mono';letter-spacing:.18em">KARAKÖY</span><b class="wide" style="display:block;font-size:17px">2019'dan</b><span style="font:700 10px/1 'Space Mono';letter-spacing:.18em">BERİ</span></div></div>
+
+  <!-- second section: a bumper sticker across the bottom -->
+  <section class="st bump" style="left:54px;top:704px;width:1172px;height:84px;rotate:-1.2deg;background:var(--yellow);border-radius:12px;display:flex;align-items:center;gap:22px;padding:0 30px" data-st>
+    <h2 class="wide" style="font-size:30px;white-space:nowrap">Bu hafta kazanda</h2>
+    <span style="font:400 14px/1.2 Bungee,sans-serif;display:flex;gap:12px;white-space:nowrap" class="hide-m"><span>Lodos harmanı</span><span>·</span><span>Etiyopya Guji</span><span>·</span><span>Kolombiya Huila</span><span>·</span><span>Türk kahvesi</span></span>
+  </section>
+  <div class="st c hide-m" style="left:1150px;top:660px;width:104px;height:104px;background:var(--red);color:#fff;rotate:14deg" data-st><div><span style="font:700 10px/1 'Space Mono';letter-spacing:.12em">GUJİ</span><b class="wide" style="display:block;font-size:24px">₺560</b><span style="font:700 10px/1 'Space Mono'">250 G</span></div></div>
+
+  <div class="st c hide-m" style="left:262px;top:650px;width:80px;height:80px;background:var(--mint);rotate:-10deg" data-st><div><span style="font:700 10px/1 'Space Mono';display:block">FİLTRE</span><b class="wide" style="font-size:19px">₺95</b></div></div>
+
+<script>
+  // scalloped badge edge
+  (function () {
+    const n = 22, R = 74, r = 66, c = 78; let d = "";
+    for (let i = 0; i <= n; i++) {
+      const a = (i / n) * Math.PI * 2, b = ((i + 0.5) / n) * Math.PI * 2;
+      const p = (x, y) => `${(c + x).toFixed(1)} ${(c + y).toFixed(1)}`;
+      d += (i ? " Q " + p(Math.cos(a - Math.PI / n) * (R + 8), Math.sin(a - Math.PI / n) * (R + 8)) + " " : "M ") + p(Math.cos(a) * r, Math.sin(a) * r);
+    }
+    document.getElementById("scal").setAttribute("d", d + " Z");
+    // barcode
+    const g = document.getElementById("bars"), rnd = gl0(7); let x = 0;
+    while (x < 176) { const w = 1 + Math.floor(rnd() * 3); const r2 = document.createElementNS("http://www.w3.org/2000/svg", "rect"); r2.setAttribute("x", x); r2.setAttribute("y", 0); r2.setAttribute("width", w); r2.setAttribute("height", 26); g.appendChild(r2); x += w + 1 + Math.floor(rnd() * 3); }
+    function gl0(s) { return () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646; }
+  })();
+
+  // entrance: stickers slap down one after another, in source order
+  const st = [...document.querySelectorAll("[data-st]")];
+  window.demo = {
+    duration: 2600, hold: 4500,
+    render(p) {
+      const n = st.length;
+      st.forEach((el, i) => {
+        const a = (i / n) * 0.78, t = gl.seg(p, a, a + 0.12);
+        const e = 1 - Math.pow(1 - t, 3);
+        el.style.opacity = t > 0 ? 1 : 0;
+        el.style.scale = gl.lerp(1.35, 1, e);
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

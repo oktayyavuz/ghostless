@@ -152,10 +152,18 @@
 </dialog>
 
 <script>
-const KEY = "ghostless-gallery-draft";
+// Drafts are kept per project (per output file), so one project's picks never leak into another.
+let KEY = "ghostless:default";
 let state = { items: {}, notes: "", direction: null, reasons: {} };
-try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+function loadState(info) {
+  KEY = "ghostless:" + (info.key || info.project || "default");
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch {}
+  if (!s && info.saved) s = { items: info.saved.items || {}, notes: info.saved.notes || "", direction: info.saved.direction || null, reasons: info.saved.reasons || {} };
+  if (s) Object.assign(state, s);
+  try { localStorage.removeItem("ghostless-gallery-draft"); } catch {} // old global draft
+}
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else if (v !== false && v != null) e.setAttribute(k, v === true ? "" : v); } kids.flat().forEach((k) => e.append(k)); return e; };
 
@@ -164,6 +172,9 @@ function fit(frameHost) {
   if (f) f.style.transform = `scale(${frameHost.clientWidth / 1280})`;
 }
 const ro = new ResizeObserver((es) => es.forEach((e) => fit(e.target)));
+// ResizeObserver doesn't fire reliably in every embedded browser: also fit on load/resize.
+const fitAll = () => document.querySelectorAll(".thumb, .stage").forEach(fit);
+addEventListener("resize", fitAll);
 
 function setMark(id, v) {
   state.items[id] = state.items[id] === v ? undefined : v;
@@ -188,15 +199,22 @@ const markButtons = (id) => [
 function liveFrame(src) { return el("iframe", { src, title: "Canlı önizleme", tabindex: "-1" }); }
 
 function card(it) {
-  const src = `demos/${it.group}/${it.id}.html`;
+  const src = it.src || `demos/${it.group}/${it.id}.html`;
   const thumb = el("button", { class: "thumb", "aria-label": `${it.name_tr}: büyük aç` });
+  if (it.live) {
+    thumb.append(liveFrame(src)); ro.observe(thumb);
+    thumb.addEventListener("click", () => openDialog(it));
+    return el("article", { class: "card", "data-card": it.id }, thumb,
+      el("div", { class: "meta" }, el("h4", {}, it.name_tr), it.name_en ? el("div", { class: "en" }, it.name_en) : "", it.desc_tr ? el("p", {}, it.desc_tr) : ""),
+      el("div", { class: "actions" }, markButtons(it.id)));
+  }
   // local server, ~2.5 MB in total: load eagerly (native lazy loading stalls in some embedded browsers)
   const img = el("img", { src: `shots/${it.id}.webp`, alt: "", decoding: "async" });
   img.onerror = () => { img.remove(); const f = liveFrame(src); thumb.prepend(f); ro.observe(thumb); fit(thumb); };
   thumb.append(img);
   if (it.group !== "styles") thumb.append(el("span", { class: "live" }, "hareketli"));
   let hoverFrame = null;
-  thumb.addEventListener("mouseenter", () => { if (it.group === "styles" || !img.isConnected) return; hoverFrame = liveFrame(src); thumb.append(hoverFrame); ro.observe(thumb); fit(thumb); });
+  thumb.addEventListener("mouseenter", () => { if (it.group === "styles" || !img.isConnected) return; hoverFrame = liveFrame(src); thumb.append(hoverFrame); fit(thumb); });
   thumb.addEventListener("mouseleave", () => { hoverFrame?.remove(); hoverFrame = null; });
   thumb.addEventListener("click", () => openDialog(it));
   return el("article", { class: "card", "data-card": it.id },
@@ -211,7 +229,7 @@ function card(it) {
 
 function openDialog(it) {
   const d = $("#dlg"), stage = $("#dlgStage");
-  stage.replaceChildren(liveFrame(`demos/${it.group}/${it.id}.html`));
+  stage.replaceChildren(liveFrame(it.src || `demos/${it.group}/${it.id}.html`));
   stage.querySelector("iframe").style.pointerEvents = "auto";
   $("#dlgTitle").textContent = it.name_tr;
   $("#dlgEn").textContent = it.name_en;
@@ -219,11 +237,11 @@ function openDialog(it) {
   $("#dlgFits").textContent = it.fits_tr ? "Uyar: " + it.fits_tr : "";
   $("#dlgLibs").textContent = it.libs ? "Araç: " + it.libs : "";
   const strip = $("#dlgStrip");
-  strip.hidden = it.group === "styles";
+  strip.hidden = it.group === "styles" || !!it.live;
   if (!strip.hidden) { strip.src = `shots/${it.id}-strip.webp`; strip.alt = "Hareketin dört karesi"; strip.onerror = () => (strip.hidden = true); }
   $("#dlgActions").replaceChildren(...markButtons(it.id));
   paintMarks();
-  d.showModal(); ro.observe(stage); requestAnimationFrame(() => fit(stage));
+  d.showModal(); ro.observe(stage); requestAnimationFrame(() => fit(stage)); setTimeout(() => fit(stage), 200);
 }
 $("#dlgClose").onclick = () => $("#dlg").close();
 $("#dlg").addEventListener("close", () => $("#dlgStage").replaceChildren());
@@ -261,6 +279,7 @@ function paintDirs() {
 async function boot() {
   const [catalog, info] = await Promise.all([fetch("catalog.json").then((r) => r.json()), fetch("api/info").then((r) => r.json()).catch(() => ({}))]);
   if (info.project) { $("#project").textContent = info.project; document.title = `${info.project} · stil seçimi`; }
+  loadState(info);
   const groups = $("#groups"), nav = $("#nav");
   const dirs = info.directions || [];
   if (dirs.length) {
@@ -268,6 +287,16 @@ async function boot() {
       el("div", { class: "group-head" }, el("h3", {}, "Tasarım yönleri"), el("p", {}, "Sitenin üç olası hali. Birini seç, diğerleri için neden olmadığını kısaca işaretle.")),
       directionsSection(dirs)));
     nav.append(el("a", { href: "#g-yonler" }, "Tasarım yönleri", el("span", {}, String(dirs.length))));
+  }
+  const samples = info.samples || [];
+  if (samples.length) {
+    groups.append(el("section", { class: "group", id: "g-proje" },
+      el("div", { class: "group-head" }, el("h3", {}, `Bu proje için`),
+        el("p", {}, "Bu örnekler senin projenin kendi metni ve görselleriyle hazırlandı. Asıl bunlara bak; aşağıdaki kütüphane fikir vermek için.")),
+      el("div", { class: "grid" }, samples.map((x) => card({ id: "ornek:" + x.id, live: true, src: x.url, name_tr: x.title, name_en: x.style || "", desc_tr: x.desc || "" })))));
+    nav.append(el("a", { href: "#g-proje" }, "Bu proje için", el("span", {}, String(samples.length))));
+    groups.append(el("div", { class: "intro", style: "margin-top:20px" }, el("h2", { style: "font-size:28px" }, "Kütüphane"),
+      el("p", {}, "Aynı hayali kahve dükkânı (Lodos) üzerinde tüm stiller ve hareketler. Projene uymasa da beğendiğin bir dil, bir hareket varsa işaretle.")));
   }
   for (const g of catalog.groups) {
     const items = catalog.items.filter((i) => i.group === g.id);
@@ -279,6 +308,7 @@ async function boot() {
   $("#notes").value = state.notes || "";
   $("#notes").oninput = (e) => { state.notes = e.target.value; save(); };
   paintMarks(); paintDirs();
+  requestAnimationFrame(fitAll); setTimeout(fitAll, 500);
 }
 
 $("#send").onclick = async () => {

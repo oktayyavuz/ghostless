@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lastik yazı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
+<style>
+  :root { --sun: #f3b23c; --ink: #1d1430; --cream: #fff6e6; --tomato: #e5482d; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--sun); color: var(--ink); font: 500 16px/1.45 "Bricolage Grotesque", system-ui, sans-serif;
+         overflow: hidden; position: relative; }
+  header { position: absolute; left: 48px; right: 48px; top: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+  header b { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  header nav { display: flex; gap: 26px; }
+  h1 { position: absolute; left: 44px; top: 150px; font-weight: 800; font-size: clamp(64px, 13.4vw, 188px); line-height: .86;
+       letter-spacing: -.045em; font-variation-settings: "opsz" 96, "wdth" 82; z-index: 2; }
+  h1 .row { display: block; white-space: nowrap; }
+  h1 .row + .row { color: var(--cream); padding-left: .55em; }
+  h1 i { display: inline-block; font-style: normal; transform-origin: 50% 92%; will-change: transform; }
+  .photo { position: absolute; right: 64px; top: 92px; width: 300px; height: 420px; border-radius: 150px 150px 18px 18px; overflow: hidden;
+           border: 6px solid var(--ink); transform-origin: 50% 100%; z-index: 1; background: #ddd; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .tag { position: absolute; right: 300px; top: 420px; width: 150px; height: 150px; border-radius: 50%; background: var(--tomato); color: var(--cream);
+         display: grid; place-items: center; text-align: center; font-weight: 800; font-size: 17px; line-height: 1.05; z-index: 3; transform-origin: 50% 50%; }
+  .tag span { display: block; font-size: 40px; letter-spacing: -.03em; }
+  footer { position: absolute; left: 48px; right: 48px; bottom: 34px; display: flex; justify-content: space-between; align-items: end; }
+  footer p { max-width: 38ch; font-size: 17px; }
+  footer p b { font-weight: 800; }
+  footer small { font-size: 14px; text-align: right; }
+  @media (max-width: 700px) {
+    header, footer { left: 18px; right: 18px; } header nav { display: none; } h1 { left: 14px; top: 120px; }
+    .photo { right: 18px; top: auto; bottom: 120px; width: 150px; height: 210px; } .tag { right: 150px; top: auto; bottom: 110px; width: 110px; height: 110px; font-size: 13px; } .tag span { font-size: 28px; }
+    footer small { display: none; }
+  }
+</style>
+</head>
+<body>
+  <header><b>lodos</b><nav><span>Kahveler</span><span>Kavurma</span><span>İskele</span></nav><span>Kemankeş Cd. 12</span></header>
+  <h1 aria-label="Günaydın, Karaköy!"><span class="row" aria-hidden="true">Günaydın,</span><span class="row" aria-hidden="true">Karaköy!</span></h1>
+  <figure class="photo"><img src="../../assets/fincan.webp" alt="Beyaz masada küçük bir fincan"></figure>
+  <div class="tag"><div><span>07.00</span>ilk kavrum</div></div>
+  <footer>
+    <p><b>Vapurdan in, 90 saniye yürü.</b> Kalkışa 6 dakika kala gelene sıra yok, fincanın elinde biner.</p>
+    <small>Hafta içi 07.00–19.00<br>Cumartesi 08.00–18.00</small>
+  </footer>
+<script>
+  // wrap every letter so each one can bounce on its own
+  const letters = [];
+  document.querySelectorAll("h1 .row").forEach((row, r) => {
+    const txt = row.textContent; row.textContent = "";
+    [...txt].forEach((ch) => { const i = document.createElement("i"); i.textContent = ch; row.appendChild(i); letters.push({ el: i, r }); });
+  });
+  const photo = document.querySelector(".photo"), tag = document.querySelector(".tag");
+  const W = 2 * Math.PI / 0.105, Z = 9.5; // spring: oscillation speed and damping (per unit of p)
+  // damped spring falling from A above the baseline: y < 0 above, y > 0 pressed into the floor
+  function spring(tau, A) {
+    if (tau <= 0) return { y: -A, v: 0 };
+    const e = Math.exp(-Z * tau), c = Math.cos(W * tau), s = Math.sin(W * tau);
+    return { y: -A * e * c, v: A * e * (Z * c + W * s) };
+  }
+  window.demo = {
+    duration: 3000,
+    render(p) {
+      letters.forEach(({ el, r }, k) => {
+        const d = r === 0 ? k * 0.024 : 0.2 + (k - 9) * 0.03;
+        const tau = p - d;
+        const { y, v } = spring(tau, 1.5);
+        const vn = Math.min(1, Math.abs(v) / (1.5 * W));
+        let sy = 1 + 0.5 * vn - 0.55 * Math.max(0, y);            // stretch while flying, squash on the floor
+        sy = Math.min(1.55, Math.max(0.5, sy));
+        const sx = 1 / Math.pow(sy, 0.85);
+        const rot = Math.sin(k * 2.3) * 9 * Math.exp(-Z * Math.max(0, tau)) * (tau > 0 ? Math.cos(W * tau * 0.5) : 1);
+        el.style.opacity = tau > -0.0001 ? 1 : 0;
+        el.style.transform = `translateY(${(Math.min(y, 0.12) * 100).toFixed(1)}%) scale(${sx.toFixed(3)}, ${sy.toFixed(3)}) rotate(${rot.toFixed(2)}deg)`;
+      });
+      // the photo pops up like a jack-in-the-box, the sticker boings in last
+      const ph = spring(p - 0.1, 1);
+      const grow = Math.max(0.001, 1 + ph.y);                       // 0 → overshoot → 1
+      const wide = Math.min(1.4, 1 / Math.sqrt(Math.max(0.5, grow)));
+      photo.style.transform = `scale(${wide.toFixed(3)}, ${grow.toFixed(3)})`;
+      photo.style.opacity = p < 0.1 ? 0 : 1;
+      const tg = spring(p - 0.48, 1);
+      const ts = Math.max(0, 1 + tg.y);
+      tag.style.transform = `scale(${Math.max(0, ts).toFixed(3)}) rotate(${(-14 + tg.y * 30).toFixed(1)}deg)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

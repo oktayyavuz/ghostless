@@ -46,9 +46,11 @@ ghostless yerelde site kurucusu gibi bir seçim sayfası açar:
 node ~/.claude/skills/ghostless/scripts/gallery.mjs            # 5600'den başlayarak boş bir portta açılır
 ```
 
-Aynı hayali müşterinin (iskele kenarında bir kahve kavurma evi) ~60 canlı demosu: 22 görsel stil, yazı
+Aynı hayali müşterinin (iskele kenarında bir kahve kavurma evi) ~80 canlı demosu: 34 görsel stil, yazı
 hareketleri, görselin oluşması (piksel, dither, halftone, şerit, parçacık), kaydırma hareketleri,
-etkileşim ve görsel işleme. **Beğendim** ya da **Asla** ile işaretle, not yaz, gönder: seçim
+etkileşim ve görsel işleme. Galeri açılmadan önce skill senin projenin ilk ekranını 8–12 farklı stilde (kendi adın, metnin ve
+görsellerinle) hazırlar; galeri bunları en üstte gösterir, böylece stilleri kendi içeriğinde görürsün.
+Seçimler her proje için ayrı saklanır. **Beğendim** ya da **Asla** ile işaretle, not yaz, gönder: seçim
 `tasarim/secimler.json` dosyasına yazılır ve üç yön buradan kurulur. `--directions tasarim/yonler` ile
 aynı sayfa üç yönün önizlemesini de gösterir; biri seçilir, diğerlerinin neden olmadığı işaretlenir.
 Tüm demoların ekran görüntüleri: [`gallery/GALLERY.md`](gallery/GALLERY.md).

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaydırınca oynayan görüntü</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #15110e; --cream: #efe3cf; --mute: #8d8173; --copper: #d08345; --line: rgba(239,227,207,.16); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--cream); font: 400 13px/1.5 "Spline Sans Mono", ui-monospace, monospace; overflow: hidden; position: relative; }
+  header { position: absolute; left: 36px; right: 52px; top: 22px; display: flex; justify-content: space-between; align-items: baseline; color: var(--mute); z-index: 3; }
+  header b { color: var(--cream); font: 600 24px/1 Newsreader, Georgia, serif; letter-spacing: .01em; }
+  .stage { position: absolute; left: 36px; top: 64px; width: 62%; bottom: 96px; border-radius: 4px; overflow: hidden; background: #000; }
+  canvas { display: block; width: 100%; height: 100%; }
+  .hud { position: absolute; left: 16px; right: 16px; top: 14px; display: flex; justify-content: space-between; font-weight: 600; font-size: 12px; letter-spacing: .06em; color: var(--cream); }
+  .hud span { background: rgba(21,17,14,.78); padding: 4px 8px; border-radius: 3px; }
+  .hud #fr { color: var(--copper); }
+  .reel { position: absolute; left: 36px; width: 62%; bottom: 40px; height: 34px; }
+  .reel i { position: absolute; bottom: 0; width: 2px; background: var(--line); }
+  .reel i.on { background: var(--cream); }
+  .reel .head { position: absolute; bottom: -6px; width: 12px; height: 46px; margin-left: -5px; border: 2px solid var(--copper); border-radius: 3px; }
+  .reel em { position: absolute; left: 0; top: -20px; font-style: normal; color: var(--mute); font-size: 11px; letter-spacing: .06em; }
+  .side { position: absolute; left: calc(62% + 72px); right: 56px; top: 64px; bottom: 40px; overflow: hidden; }
+  .track { position: absolute; left: 0; right: 0; top: 0; will-change: transform; }
+  .step { height: 360px; display: flex; flex-direction: column; justify-content: center; gap: 12px; border-top: 1px solid var(--line); }
+  .step:first-child { border-top: 0; height: 420px; }
+  .step small { color: var(--copper); letter-spacing: .08em; font-weight: 600; }
+  .step h2 { font: 400 clamp(28px, 3.3vw, 46px)/1.02 Newsreader, Georgia, serif; letter-spacing: -.01em; }
+  .step h2 em { color: var(--copper); }
+  .step p { color: var(--mute); max-width: 30ch; }
+  .step p b { color: var(--cream); font-weight: 600; }
+  .bar { position: absolute; right: 18px; top: 70px; bottom: 40px; width: 3px; border-radius: 2px; background: var(--line); }
+  .bar b { position: absolute; left: 0; width: 3px; height: 80px; border-radius: 2px; background: var(--cream); }
+  .hint { position: absolute; right: 34px; bottom: 14px; color: var(--mute); font-size: 11px; letter-spacing: .08em; }
+  @media (max-width: 700px) {
+    header { left: 16px; right: 30px; } header span { display: none; }
+    .stage { left: 16px; right: 30px; width: auto; top: 56px; bottom: auto; height: 46vh; } .reel { left: 16px; right: 30px; width: auto; top: calc(46vh + 70px); bottom: auto; }
+    .side { left: 16px; right: 30px; top: calc(46vh + 120px); } .step, .step:first-child { height: 260px; }
+  }
+</style>
+</head>
+<body>
+  <header><b>Lodos</b><span>Espresso · ₺75 · Kemankeş Cd. 12</span></header>
+  <div class="stage" role="img" aria-label="Makineden iki fincana espresso akışı, kaydırdıkça kare kare ilerliyor">
+    <canvas id="cv"></canvas>
+    <div class="hud"><span id="fr">KARE 001 / 096</span><span id="sec">00:00.0</span></div>
+  </div>
+  <div class="reel" id="reel"><em>KAYDIRDIKÇA İLERLER</em><div class="head" id="head"></div></div>
+  <aside class="side">
+    <div class="track" id="track">
+      <section class="step"><small>01 · KİLİTLE</small><h2>Portafiltre yerinde,<br><em>makine</em> hazır.</h2><p><b>Sabah 07.00'de kavrulan çekirdek</b>, öğlene öğütülüp bu fincana iner.</p></section>
+      <section class="step"><small>02 · İLK DAMLA</small><h2>Akış başlar,<br>ince ve <em>koyu.</em></h2><p>İki fincana birden. Biri senin, biri vapurdaki arkadaşının.</p></section>
+      <section class="step"><small>03 · KREMA</small><h2>Fincan dolar,<br><em>krema</em> oturur.</h2><p><b>Espresso ₺75.</b> Kalkışa 6 dakika kala gelene sıra yok.</p></section>
+      <section class="step"><small>04 · İSKELE</small><h2>Elinde fincan,<br>iskeleye 90 saniye.</h2><p>Hafta içi 07.00–19.00 · Cumartesi 08.00–18.00</p></section>
+    </div>
+  </aside>
+  <div class="bar"><b id="thumb"></b></div>
+  <div class="hint" id="hint">AŞAĞI KAYDIR</div>
+<script>
+  const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  const img = new Image(); img.src = "../../assets/espresso.webp";
+  const FRAMES = 96, IW = 1024, IH = 683;
+  const reel = document.getElementById("reel"), head = document.getElementById("head");
+  const ticks = [];
+  for (let i = 0; i < FRAMES; i++) { const t = document.createElement("i"); reel.appendChild(t); ticks.push(t); }
+  const track = document.getElementById("track"), thumb = document.getElementById("thumb"), bar = thumb.parentElement;
+  const frEl = document.getElementById("fr"), secEl = document.getElementById("sec"), hint = document.getElementById("hint");
+  const sm = (x) => x * x * (3 - 2 * x);
+  // the front cup's outline (rim top half + body), used to keep the back cup's coffee behind it
+  function frontCup(c) { c.moveTo(535, 373); c.ellipse(657, 373, 122, 30, 0, Math.PI, 2 * Math.PI); c.lineTo(779, 720); c.lineTo(535, 720); c.closePath(); }
+  function crema(cx, cy, rx, ry, a) {
+    const g = ctx.createRadialGradient(cx - rx * 0.2, cy - ry * 0.3, 1, cx, cy, rx);
+    g.addColorStop(0, `rgba(178,118,66,${a})`); g.addColorStop(0.55, `rgba(122,66,32,${a})`); g.addColorStop(0.9, `rgba(70,36,16,${a})`); g.addColorStop(1, `rgba(46,24,12,${a})`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI); ctx.fill();
+  }
+  // hide a stream below its head: fill its column with the picture from both sides of it, feathered at the edges
+  const oc = document.createElement("canvas"), ox = oc.getContext("2d");
+  function hideBelow(x, w, headY, yBot, sides) {
+    if (headY >= yBot) return;
+    const F = 10, h = Math.ceil(yBot - headY), ww = w + 2 * F;
+    oc.width = ww; oc.height = h;
+    ox.globalCompositeOperation = "source-over"; ox.globalAlpha = 1;
+    sides.forEach((sh, i) => { ox.globalAlpha = 1 / (i + 1); ox.drawImage(img, x - F + sh, headY, ww, h, 0, 0, ww, h); });
+    ox.globalAlpha = 1; ox.globalCompositeOperation = "destination-in";
+    const g = ox.createLinearGradient(0, 0, ww, 0);
+    g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(F / ww, "#000"); g.addColorStop(1 - F / ww, "#000"); g.addColorStop(1, "rgba(0,0,0,0)");
+    ox.fillStyle = g; ox.fillRect(0, 0, ww, h);
+    ctx.drawImage(oc, x - F, headY);
+  }
+  function draw(q) {
+    const W = cv.clientWidth, H = cv.clientHeight;
+    if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+    if (!img.complete || !img.naturalWidth) return;
+    const s0 = Math.max(W / IW, H / IH), zt = sm(gl.seg(q, 0.04, 0.96));
+    const z = gl.lerp(1.9, 1, zt), s = s0 * z;
+    let fx = gl.lerp(600, IW / 2, zt), fy = gl.lerp(300, IH / 2, zt);
+    fx = gl.clamp(fx, W / (2 * s), IW - W / (2 * s)); fy = gl.clamp(fy, H / (2 * s), IH - H / (2 * s));
+    ctx.setTransform(s, 0, 0, s, W / 2 - fx * s, H / 2 - fy * s);
+    ctx.drawImage(img, 0, 0);
+    // pour: both streams run from the spouts down into the cups
+    const pour2 = sm(gl.seg(q, 0.14, 0.46)), pour1 = sm(gl.seg(q, 0.2, 0.5));
+    const h2 = gl.lerp(272, 398, pour2), h1 = gl.lerp(250, 347, pour1);
+    hideBelow(627, 32, h2, 343, [44]);
+    hideBelow(627, 32, Math.max(h2, 343), 398, [-44, 44]);
+    hideBelow(549, 20, h1, 347, [-32, 32]);
+    // cups fill with crema once the coffee reaches them
+    const l = sm(gl.seg(q, 0.42, 0.98));
+    if (l > 0) {
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, IW, IH); frontCup(ctx); ctx.clip("evenodd");
+      crema(538, 336 - 6 * l, 50 + 38 * l, 10 + 10 * l, Math.min(0.96, l * 2.5));
+      ctx.restore();
+      crema(657, 386 - 10 * l, 58 + 50 * l, 12 + 13 * l, Math.min(0.96, l * 2.5));
+      // keep the stream on top of the crema
+      if (l < 0.97) { ctx.save(); ctx.beginPath(); ctx.rect(633, 340, 11, 50); ctx.clip(); ctx.drawImage(img, 0, 0); ctx.restore();
+        ctx.save(); ctx.beginPath(); ctx.rect(554, 300, 11, 40); ctx.clip(); ctx.drawImage(img, 0, 0); ctx.restore(); }
+    }
+  }
+  window.demo = {
+    duration: 4200,
+    render(p) {
+      const f = Math.min(FRAMES - 1, Math.floor(p * FRAMES)), q = f / (FRAMES - 1);
+      draw(q);
+      frEl.textContent = `KARE ${String(f + 1).padStart(3, "0")} / ${FRAMES}`;
+      const t = q * 24; secEl.textContent = `00:${String(Math.floor(t)).padStart(2, "0")}.${Math.floor((t % 1) * 10)}`;
+      const rw = reel.clientWidth;
+      ticks.forEach((el, i) => { el.style.left = (i / (FRAMES - 1)) * (rw - 2) + "px"; el.style.height = (i % 8 === 0 ? 34 : 18) + "px"; el.classList.toggle("on", i <= f); });
+      head.style.left = (q * (rw - 2)) + "px";
+      // the page itself scrolls: text column and scrollbar follow p continuously
+      const travel = track.scrollHeight - track.parentElement.clientHeight * 0.95;
+      track.style.transform = `translateY(${(-p * travel).toFixed(1)}px)`;
+      thumb.style.top = (p * (bar.clientHeight - 80)).toFixed(1) + "px";
+      hint.style.opacity = (1 - gl.seg(p, 0, 0.15)).toFixed(2);
+    },
+  };
+  img.onload = () => { if (document.documentElement.dataset.frame) window.demo.render(+document.documentElement.dataset.frame); };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Büyüteç</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --desk: #6e8a7a; --paper: #f6efe1; --ink: #201a14; --red: #b8362a; --mute: #7a6e5f; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--desk); color: var(--ink); font: 400 14px/1.45 "Courier Prime", ui-monospace, monospace; overflow: hidden; position: relative; }
+  .side { position: absolute; right: 48px; top: 54px; width: 380px; color: var(--paper); }
+  .side b.logo { font: 400 30px/1 "Young Serif", Georgia, serif; display: block; margin-bottom: 70px; }
+  .side h1 { font: 400 clamp(40px, 4.4vw, 60px)/1 "Young Serif", Georgia, serif; letter-spacing: -.015em; }
+  .side p { margin-top: 18px; max-width: 32ch; color: #e3e7dc; font-size: 15px; }
+  .side figure { margin-top: 34px; height: 250px; overflow: hidden; border-radius: 3px; }
+  .side figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .stage { position: absolute; left: 56px; top: 40px; width: 700px; height: 720px; }
+  .menu { position: absolute; left: 0; top: 0; width: 700px; height: 720px; background: var(--paper); padding: 46px 52px 34px; transform-origin: 0 0;
+          box-shadow: 0 18px 40px -18px rgba(10,20,14,.55); }
+  .menu .hd { display: flex; justify-content: space-between; align-items: end; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+  .menu .hd h2 { font: 400 58px/.9 "Young Serif", Georgia, serif; letter-spacing: -.02em; }
+  .menu .hd span { font-size: 12px; text-align: right; color: var(--mute); }
+  .menu ol { list-style: none; padding: 0; margin-top: 10px; }
+  .menu li { padding: 13px 0 11px; border-bottom: 1px dashed rgba(32,26,20,.35); }
+  .menu .ln { display: flex; justify-content: space-between; font: 400 24px/1.1 "Young Serif", Georgia, serif; }
+  .menu .ln b { font-weight: 400; color: var(--red); }
+  .menu .fine { font-size: 8.5px; line-height: 1.35; color: var(--mute); margin-top: 4px; letter-spacing: .02em; }
+  .menu .ft { position: absolute; left: 52px; right: 52px; bottom: 30px; font-size: 8px; line-height: 1.45; color: var(--mute); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .menu .ft b { color: var(--ink); }
+  .stamp { position: absolute; right: 54px; top: 150px; width: 0; }
+  .lens { position: absolute; left: 0; top: 0; width: 240px; height: 240px; z-index: 5; will-change: transform; pointer-events: none; }
+  .lens .glass { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: var(--paper); box-shadow: 0 0 0 9px #1d1d1b, 0 0 0 11px #4b4b47, 0 22px 40px 0 rgba(0,0,0,.35); }
+  .lens .glass .menu { box-shadow: none; }
+  .lens .handle { position: absolute; left: 50%; top: 50%; width: 30px; height: 150px; margin-left: -15px; border-radius: 10px; background: #8a4b26;
+                  transform: rotate(-45deg) translateY(140px); transform-origin: 50% 0; box-shadow: inset -6px 0 0 rgba(0,0,0,.25); }
+  .lens .handle::before { content: ""; position: absolute; left: -2px; right: -2px; top: -4px; height: 26px; border-radius: 4px; background: #1d1d1b; }
+  .cur { position: absolute; left: 0; top: 0; width: 22px; height: 26px; z-index: 9; will-change: transform; }
+  @media (max-width: 760px) { .side { display: none; } .stage { left: 0; top: 0; transform: scale(.52); transform-origin: 0 0; } }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="menu" id="menu">
+      <div class="hd"><h2>Lodos<br>tezgâhı</h2><span>Kemankeş Cd. 12, Karaköy<br>Hafta içi 07.00–19.00<br>Cumartesi 08.00–18.00</span></div>
+      <ol>
+        <li><div class="ln"><span>Lodos harmanı, 250 g</span><b>₺420</b></div><div class="fine">Ev harmanı. Kavrum: orta-koyu, her sabah 07.00'de 12 kg'lık tek kazanda. Notlar: bitter çikolata, fındık. Sütlüye ve sade içime uygun; çekirdek ya da öğütülmüş.</div></li>
+        <li><div class="ln"><span>Etiyopya Guji, 250 g</span><b>₺560</b></div><div class="fine">Tek köken. Kavrum: açık-orta. Notlar: bergamot, yaban mersini, çiçeksi. Filtrede en iyi hâlinde; V60 ya da Chemex için orta-ince öğütüyoruz.</div></li>
+        <li><div class="ln"><span>Filtre kahve</span><b>₺95</b></div><div class="fine">Haftanın çekirdeğiyle, bardakta. Vapura yetişecekler için kapaklı karton bardak var; iskeleye 90 saniye.</div></li>
+        <li><div class="ln"><span>Türk kahvesi</span><b>₺80</b></div><div class="fine">Kendi kavrumumuz, cezvede, közde değil ocakta. Yanında bir bardak su ve lokum. Şekeri sipariş verirken söyle: sade, az, orta, şekerli.</div></li>
+        <li><div class="ln"><span>Espresso</span><b>₺75</b></div><div class="fine">Lodos harmanıyla, çift shot. İstersen bir damla süt. Makine sabah 07.00'de ısınır, ilk fincan kavurmayla aynı saatte.</div></li>
+      </ol>
+      <div class="ft">
+        <span><b>Vapur kuralı.</b> Kalkışa 6 dakika kala tezgâha gelene sıra yok: siparişini söyle, fincanın elinde biner. Kadıköy ve Üsküdar vapurlarının saatleri kasanın yanında asılı.</span>
+        <span><b>Çekirdekler.</b> Haftada 4 çekirdek: Lodos harmanı, Etiyopya Guji, Kolombiya Huila, Türk kahvesi kavrumu. 2019'dan beri Karaköy'de. Telefon: 0212 000 00 00.</span>
+      </div>
+    </div>
+  </div>
+  <aside class="side">
+    <b class="logo">Lodos</b>
+    <h1>Küçük yazıyı da okuyun.</h1>
+    <p>Menünün dipnotları kısa ama dolu: kavrum saati, notlar, vapur kuralı. Büyüteç gezdikçe açılır.</p>
+    <figure><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu"></figure>
+  </aside>
+  <div class="lens" id="lens"><div class="handle"></div><div class="glass" id="glass"></div></div>
+  <svg class="cur" id="cur" viewBox="0 0 24 28" aria-hidden="true"><path d="M2 2 L2 22 L7.5 17.2 L11.6 26 L15 24.5 L11 15.9 L18 15.6 Z" fill="#141414" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>
+<script>
+  const stage = document.getElementById("stage"), menu = document.getElementById("menu"), lens = document.getElementById("lens"), glass = document.getElementById("glass"), cur = document.getElementById("cur");
+  const big = menu.cloneNode(true); big.removeAttribute("id"); big.setAttribute("aria-hidden", "true"); glass.appendChild(big);
+  const S = 2.3, L = 240;
+  // path in menu coordinates (px of the 700×720 card): [time, x, y]
+  const keys = [[0, 760, 120], [0.16, 560, 236], [0.4, 300, 314], [0.56, 430, 392], [0.74, 330, 458], [0.9, 200, 662], [1, 200, 662]];
+  const cr = (a, b, c, d, t) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+  function at(p) {
+    let i = 0; while (i < keys.length - 2 && p > keys[i + 1][0]) i++;
+    const k0 = keys[Math.max(0, i - 1)], k1 = keys[i], k2 = keys[i + 1], k3 = keys[Math.min(keys.length - 1, i + 2)];
+    const t = gl.easeInOutCubic(gl.seg(p, k1[0], k2[0]));
+    return [cr(k0[1], k1[1], k2[1], k3[1], t), cr(k0[2], k1[2], k2[2], k3[2], t)];
+  }
+  window.demo = {
+    duration: 5200,
+    render(p) {
+      const [mx, my] = at(p);
+      const sr = stage.getBoundingClientRect(), k = sr.width / 700;      // stage may be scaled on phones
+      const sx = sr.left + mx * k, sy = sr.top + my * k;
+      const grow = gl.easeOutQuart(gl.seg(p, 0.02, 0.2));
+      lens.style.transform = `translate(${(sx - L / 2).toFixed(1)}px, ${(sy - L / 2).toFixed(1)}px) scale(${(0.35 + 0.65 * grow).toFixed(3)})`;
+      lens.style.opacity = grow > 0.01 ? 1 : 0;
+      big.style.transform = `translate(${(L / 2 - mx * S).toFixed(1)}px, ${(L / 2 - my * S).toFixed(1)}px) scale(${S})`;
+      cur.style.transform = `translate(${(sx - 2).toFixed(1)}px, ${(sy - 2).toFixed(1)}px)`;
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

@@ -40,9 +40,11 @@ see it. ghostless ships a local picker, like a site builder:
 node ~/.claude/skills/ghostless/scripts/gallery.mjs            # opens on a free port, from 5600
 ```
 
-~60 live demos of one fictional client (a coffee roastery by a ferry pier): 22 visual styles, text
+~80 live demos of one fictional client (a coffee roastery by a ferry pier): 34 visual styles, text
 motion, image reveals (pixels, dithering, halftone, strips, particles), scroll moves, interaction and
-image treatments. Mark **Beğendim** (like) or **Asla** (never), add a note, press send: the choice is
+image treatments. Before opening it, the agent builds 8–12 quick first screens of *your* project in different
+styles (your name, copy and images) and the gallery shows those on top, so you judge styles on your
+own content; choices are stored per project. Mark **Beğendim** (like) or **Asla** (never), add a note, press send: the choice is
 saved to `tasarim/secimler.json` and the agent builds the three directions from it. With
 `--directions tasarim/yonler` the same page shows the three direction previews, so the person picks
 one and ticks why the others didn't work. Screenshots of every demo: [`gallery/GALLERY.md`](gallery/GALLERY.md).

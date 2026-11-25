@@ -54,6 +54,10 @@ Spacing: a 4- or 8-based scale, but section spacing should come from content (se
 - Choose 1–2 families with a reason from the dossier; write the reason down.
 - **Glyph test** before committing: render `Ğğ Şş İı Öö Üü Çç 0123456789 ₺ € — “” ‘’` (adjust for the
   locale) at display and body size. Reject faces with missing or fallback glyphs.
+  Google Fonts that failed this test for Turkish (missing ş ğ ı İ, wrong dotted/dotless i, or
+  letters that read wrong): Tenor Sans, Coiny, Bagel Fat One, Caprasimo, Permanent Marker,
+  Rock Salt, Reenie Beanie, Lilita One, Bowlby One, Titan One, Chango, Rubik Mono One, Italiana,
+  Federo, Rampart One, Nothing You Could Do. Retest anyway: font files change.
 - Scale: 5–7 steps, ratio picked for density (1.2 dense UI, 1.25–1.333 marketing). Line length
   45–80ch for body; serif body gets a bit more line-height.
 - Tabular figures (`font-variant-numeric: tabular-nums`) for prices, times, tables.

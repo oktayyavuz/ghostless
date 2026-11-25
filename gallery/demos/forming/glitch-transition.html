@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bozulmalı geçiş</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #0e0e10; --bone: #ece6da; --mute: #85817a; --red: #e4462b; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--ink); color: var(--bone); font: 400 13px/1.45 "JetBrains Mono", ui-monospace, monospace;
+         overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; padding: 22px 32px 28px; gap: 18px; }
+  header { display: flex; justify-content: space-between; align-items: center; color: var(--mute); letter-spacing: .04em; }
+  header b { color: var(--bone); font: 800 20px/1 Unbounded, system-ui, sans-serif; letter-spacing: .02em; }
+  .ch { display: flex; gap: 10px; align-items: center; }
+  .ch i { width: 9px; height: 9px; border-radius: 50%; background: var(--red); display: inline-block; }
+  .ch span { color: var(--bone); }
+  .panel { position: relative; min-height: 0; overflow: hidden; background: #000; }
+  .band { position: absolute; left: 0; right: 0; overflow: hidden; will-change: transform; }
+  .band img { position: absolute; left: 0; width: 100%; object-fit: cover; }
+  .block { position: absolute; background-repeat: no-repeat; display: none; }
+  .tc { position: absolute; left: 18px; top: 16px; color: #fff; font-weight: 600; font-size: 12px; letter-spacing: .08em; mix-blend-mode: difference; }
+  footer { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px; }
+  h1 { font: 800 clamp(30px, 5.2vw, 70px)/.95 Unbounded, system-ui, sans-serif; letter-spacing: -.03em; position: relative; height: 2em; }
+  h1 span { position: absolute; left: 0; bottom: 0; white-space: nowrap; }
+  h1 em { font-style: normal; color: var(--red); }
+  footer p { color: var(--mute); text-align: right; max-width: 34ch; }
+  footer p b { color: var(--bone); font-weight: 600; }
+  @media (max-width: 700px) { body { padding: 16px; } header nav { display: none; } footer { grid-template-columns: 1fr; } footer p { text-align: left; } h1 { white-space: normal; } }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rgb" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
+      <feOffset id="offR" in="r" dx="0" dy="0" result="ro"/>
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+      <feOffset id="offB" in="b" dx="0" dy="0" result="bo"/>
+      <feBlend in="ro" in2="g" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="bo" mode="screen"/>
+    </filter>
+  </svg>
+  <header>
+    <b>LODOS</b>
+    <div class="ch"><i></i>KANAL <span id="chan">01 · İSKELE</span></div>
+    <nav>Kemankeş Cd. 12, Karaköy</nav>
+  </header>
+  <div class="panel" id="panel" role="img" aria-label="Vapurdan Boğaz görüntüsü bozularak makineden akan espressoya geçiyor">
+    <div class="tc" id="tc">06.52.10</div>
+  </div>
+  <footer>
+    <h1 aria-label="Fincanın tezgâhta hazır.">
+      <span id="hA" aria-hidden="true">İskeleye<br><em>90 saniye.</em></span>
+      <span id="hB" aria-hidden="true">Fincanın<br><em>tezgâhta</em> hazır.</span>
+    </h1>
+    <p><b>Vapurdan inerken sipariş ver.</b> Kalkışa 6 dakika kala gelene sıra yok. Espresso ₺75.</p>
+  </footer>
+<script>
+  const panel = document.getElementById("panel");
+  const srcA = "../../assets/deniz.webp", srcB = "../../assets/espresso.webp";
+  // horizontal bands of uneven height; each band carries both pictures
+  const R = (s) => { let x = Math.sin(s * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  const bands = [];
+  let acc = 0; const hs = [];
+  for (let i = 0; i < 22; i++) { const h = 0.015 + R(i * 3.1) * 0.08; hs.push(h); acc += h; }
+  let y0 = 0;
+  hs.forEach((h, i) => {
+    const b = document.createElement("div"); b.className = "band";
+    const a = document.createElement("img"); a.src = srcA; a.alt = "";
+    const c = document.createElement("img"); c.src = srcB; c.alt = "";
+    b.append(a, c); panel.insertBefore(b, panel.firstChild);
+    bands.push({ b, a, c, top: y0 / acc, h: h / acc, sw: 0.36 + R(i * 7.7) * 0.2, i });
+    y0 += h;
+  });
+  const blocks = [];
+  for (let i = 0; i < 5; i++) { const d = document.createElement("div"); d.className = "block"; panel.appendChild(d); blocks.push(d); }
+  function layout() {
+    const H = panel.clientHeight;
+    bands.forEach(({ b, a, c, top, h }) => {
+      b.style.top = (top * H).toFixed(1) + "px"; b.style.height = (h * H + 1).toFixed(1) + "px";
+      [a, c].forEach((im) => { im.style.height = H + "px"; im.style.top = (-top * H).toFixed(1) + "px"; });
+    });
+  }
+  layout(); addEventListener("resize", layout);
+
+  const offR = document.getElementById("offR"), offB = document.getElementById("offB");
+  const hA = document.getElementById("hA"), hB = document.getElementById("hB");
+  const chan = document.getElementById("chan"), tc = document.getElementById("tc");
+  const bump = (p, a, m, b) => (p <= a || p >= b ? 0 : p < m ? (p - a) / (m - a) : 1 - (p - m) / (b - m));
+  // signal strength envelope: a small hiccup, the main break, a last twitch
+  const env = (p) => Math.max(0.35 * bump(p, 0.07, 0.11, 0.15), Math.min(1, 1.5 * bump(p, 0.2, 0.44, 0.66)), 0.3 * bump(p, 0.66, 0.7, 0.74));
+
+  window.demo = {
+    duration: 2600,
+    render(p) {
+      const e = env(p), tick = Math.floor(p * 70), W = panel.clientWidth, H = panel.clientHeight;
+      bands.forEach(({ b, a, c, sw, i }) => {
+        const showB = p >= sw || (e > 0.5 && R(i * 13 + tick) > 0.72);
+        a.style.visibility = showB ? "hidden" : "visible";
+        c.style.visibility = showB ? "visible" : "hidden";
+        const active = R(i * 5.3 + tick * 1.7) < 0.25 + e * 0.5;
+        const dx = active ? (R(i * 9.1 + tick * 3.3) * 2 - 1) * 180 * e : 0;
+        b.style.transform = `translateX(${dx.toFixed(1)}px)`;
+      });
+      blocks.forEach((d, k) => {
+        const on = e > 0.45 && R(k * 17 + tick * 2.1) > 0.35;
+        d.style.display = on ? "block" : "none";
+        if (!on) return;
+        const w = 80 + R(k * 3 + tick) * 260, h = 10 + R(k * 5 + tick) * 60;
+        const x = R(k * 7 + tick) * (W - w), y = R(k * 11 + tick) * (H - h);
+        Object.assign(d.style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px",
+          backgroundImage: `url(${R(k + tick) > 0.5 ? srcA : srcB})`, backgroundSize: `${W * 2.4}px auto`,
+          backgroundPosition: `${-x * 2.4 + R(k * 19 + tick) * 300}px ${-y * 2.4}px` });
+      });
+      const split = e * 22;
+      offR.setAttribute("dx", (split).toFixed(1)); offB.setAttribute("dx", (-split).toFixed(1));
+      offR.setAttribute("dy", (e * 3).toFixed(1));
+      panel.style.filter = e > 0.01 ? "url(#rgb)" : "none";
+      // headline cuts over with the picture, shaken by the same signal
+      const toB = p >= 0.47;
+      const jx = (R(tick * 2.3) * 2 - 1) * 26 * e;
+      hA.style.visibility = toB ? "hidden" : "visible"; hB.style.visibility = toB ? "visible" : "hidden";
+      (toB ? hB : hA).style.transform = `translateX(${jx.toFixed(1)}px)`;
+      (toB ? hB : hA).style.opacity = e > 0.6 && R(tick * 4.1) > 0.6 ? 0.35 : 1;
+      chan.textContent = e > 0.35 ? "SİNYAL ZAYIF" : toB ? "02 · TEZGÂH" : "01 · İSKELE";
+      const sec = Math.floor(p * 120);
+      tc.textContent = (toB ? "06.54." : "06.52.") + String(10 + (sec % 50)).padStart(2, "0");
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

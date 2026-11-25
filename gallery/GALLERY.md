@@ -187,6 +187,102 @@ Farklı boyda kutulardan oluşan ızgara. Uyar: yalnız içerik gerçekten modü
 
 Demo: [`demos/styles/bento.html`](demos/styles/bento.html)
 
+### Manga / anime paneli · Manga / anime panels
+
+Panel kareleri, ekran tonu, hız çizgileri, konuşma balonları. Uyar: anime, oyun, genç kültür, yaratıcı kişisel site.
+
+<img src="shots/manga-panel.webp" width="720" alt="Manga / anime panels">
+
+Demo: [`demos/styles/manga-panel.html`](demos/styles/manga-panel.html)
+
+### Pop art / çizgi roman · Pop art / comic
+
+Kalın kontur, Ben-Day noktaları, ses efekti yazıları, düz ana renkler. Uyar: eğlence, etkinlik, yiyecek.
+
+<img src="shots/pop-art-comic.webp" width="720" alt="Pop art / comic">
+
+Demo: [`demos/styles/pop-art-comic.html`](demos/styles/pop-art-comic.html)
+
+### İzometrik dünya · Isometric world
+
+Her şey izometrik çizilmiş küçük bir dünyada; bina, araç, nesne. Uyar: teknoloji ürünü, şehir, süreç anlatımı.
+
+<img src="shots/isometric-world.webp" width="720" alt="Isometric world">
+
+Demo: [`demos/styles/isometric-world.html`](demos/styles/isometric-world.html)
+
+### 3D sahne · 3D scene
+
+Derinlikli, dönen ya da içinde dolaşılan üç boyutlu bir sahne. Uyar: lansman, ürün, deneyim odaklı site.
+
+<img src="shots/css3d-scene.webp" width="720" alt="3D scene">
+
+Demo: [`demos/styles/css3d-scene.html`](demos/styles/css3d-scene.html)
+
+### Sonsuz tuval · Infinite canvas
+
+Sayfa yerine sürüklenip keşfedilen geniş bir pano. Uyar: portfolyo, arşiv, yaratıcı stüdyo.
+
+<img src="shots/infinite-canvas.webp" width="720" alt="Infinite canvas">
+
+Demo: [`demos/styles/infinite-canvas.html`](demos/styles/infinite-canvas.html)
+
+### Üretken sanat · Generative art
+
+Koddan, veriden üretilen desenler sayfanın görseli olur. Uyar: teknoloji, veri, müzik, kişisel geliştirici sitesi.
+
+<img src="shots/generative-art.webp" width="720" alt="Generative art">
+
+Demo: [`demos/styles/generative-art.html`](demos/styles/generative-art.html)
+
+### Sinematik karanlık · Cinematic dark
+
+Film afişi gibi; geniş kadraj, sinema yazısı, karanlık ve dramatik ışık. Uyar: otel, film, lansman, gece mekânı.
+
+<img src="shots/cinematic-dark.webp" width="720" alt="Cinematic dark">
+
+Demo: [`demos/styles/cinematic-dark.html`](demos/styles/cinematic-dark.html)
+
+### Fotokopi fanzin · Xerox zine
+
+Fotokopi lekesi, kesik yazılar, el yazısı notlar, punk enerji. Uyar: müzik, sanat, bağımsız mekân.
+
+<img src="shots/zine-xerox.webp" width="720" alt="Xerox zine">
+
+Demo: [`demos/styles/zine-xerox.html`](demos/styles/zine-xerox.html)
+
+### Art deco · Art deco
+
+Altın çizgiler, simetri, yelpaze motifleri, zarif uzun harfler. Uyar: otel, bar, mücevher, etkinlik.
+
+<img src="shots/art-deco.webp" width="720" alt="Art deco">
+
+Demo: [`demos/styles/art-deco.html`](demos/styles/art-deco.html)
+
+### Japon sadeliği · Japanese minimal (ma)
+
+Boşluk (ma), dikey yazı, mühür kırmızısı, kâğıt dokusu. Uyar: seramik, çay, el işi, sakin markalar.
+
+<img src="shots/japanese-minimal.webp" width="720" alt="Japanese minimal (ma)">
+
+Demo: [`demos/styles/japanese-minimal.html`](demos/styles/japanese-minimal.html)
+
+### Çıkartma kolajı · Sticker bomb
+
+Üst üste yapıştırılmış çıkartmalar, rozetler, etiketler. Uyar: sokak kültürü, genç marka, etkinlik.
+
+<img src="shots/sticker-bomb.webp" width="720" alt="Sticker bomb">
+
+Demo: [`demos/styles/sticker-bomb.html`](demos/styles/sticker-bomb.html)
+
+### Dijital bozulma · Glitch ⚠
+
+Kayan kanallar, bozuk pikseller, sinyal kesintisi. Uyar: müzik, oyun, gece hayatı (kolay klişeleşir).
+
+<img src="shots/glitch.webp" width="720" alt="Glitch">
+
+Demo: [`demos/styles/glitch.html`](demos/styles/glitch.html)
+
 ## Yazı hareketleri · Text motion
 
 ### Maskeli satır yükselişi · Line mask rise
@@ -252,6 +348,22 @@ Demo: [`demos/text/split-flap.html`](demos/text/split-flap.html)
 <img src="shots/handwriting-draw-strip.webp" width="100%" alt="Handwriting draw, four frames">
 
 Demo: [`demos/text/handwriting-draw.html`](demos/text/handwriting-draw.html)
+
+### Lastik yazı · Elastic type
+
+Harfler esneyip yaylanarak yerine oturur. Uyar: eğlenceli marka, çocuk, etkinlik. Araç: yay fiziği, Motion.
+
+<img src="shots/elastic-type-strip.webp" width="100%" alt="Elastic type, four frames">
+
+Demo: [`demos/text/elastic-type.html`](demos/text/elastic-type.html)
+
+### Sayaç tekerleği · Odometer roll
+
+Rakamlar mekanik sayaç gibi dönerek değişir. Uyar: fiyat, canlı veri, istatistik (gerçek sayılar). Araç: CSS.
+
+<img src="shots/odometer-strip.webp" width="100%" alt="Odometer roll, four frames">
+
+Demo: [`demos/text/odometer.html`](demos/text/odometer.html)
 
 ## Görselin oluşması · Image reveals and forming
 
@@ -353,6 +465,22 @@ Demo: [`demos/forming/svg-mask-wipe.html`](demos/forming/svg-mask-wipe.html)
 
 Demo: [`demos/forming/liquid-transition.html`](demos/forming/liquid-transition.html)
 
+### Bozulmalı geçiş · Glitch transition
+
+Görsel kısa bir sinyal bozulmasıyla diğerine geçer. Uyar: müzik, oyun, teknoloji. Araç: canvas, CSS.
+
+<img src="shots/glitch-transition-strip.webp" width="100%" alt="Glitch transition, four frames">
+
+Demo: [`demos/forming/glitch-transition.html`](demos/forming/glitch-transition.html)
+
+### Mürekkep yayılması · Ink bleed
+
+Görsel kâğıda dökülen mürekkep gibi yayılarak belirir. Uyar: el işi, sanat, yemek. Araç: SVG filtre, canvas.
+
+<img src="shots/ink-bleed-strip.webp" width="100%" alt="Ink bleed, four frames">
+
+Demo: [`demos/forming/ink-bleed.html`](demos/forming/ink-bleed.html)
+
 ## Kaydırma ve sayfa geçişleri · Scroll and page transitions
 
 ### Sabitlenmiş hikâye · Pinned story
@@ -419,6 +547,22 @@ Küçük görsel büyüyüp bir sonraki sayfanın açılışı olur. Uyar: portf
 
 Demo: [`demos/scroll/shared-element.html`](demos/scroll/shared-element.html)
 
+### Kaydırınca oynayan görüntü · Scroll-scrubbed sequence
+
+Kaydırdıkça bir görüntü dizisi kare kare ilerler. Uyar: ürün tanıtımı, süreç. Araç: canvas görüntü dizisi, ScrollTrigger.
+
+<img src="shots/video-scrub-strip.webp" width="100%" alt="Scroll-scrubbed sequence, four frames">
+
+Demo: [`demos/scroll/video-scrub.html`](demos/scroll/video-scrub.html)
+
+### 3D eğilen sayfa · 3D tilt on scroll
+
+Kartlar ve görseller kaydırırken derinlikte eğilip döner. Uyar: portfolyo, ürün. Araç: CSS 3D, ScrollTrigger.
+
+<img src="shots/tilt-3d-scroll-strip.webp" width="100%" alt="3D tilt on scroll, four frames">
+
+Demo: [`demos/scroll/tilt-3d-scroll.html`](demos/scroll/tilt-3d-scroll.html)
+
 ## Etkileşim · Interaction
 
 ### Mıknatıs buton · Magnetic control
@@ -452,6 +596,38 @@ Demo: [`demos/interaction/drag-inertia.html`](demos/interaction/drag-inertia.htm
 <img src="shots/hover-distortion-strip.webp" width="100%" alt="Hover distortion, four frames">
 
 Demo: [`demos/interaction/hover-distortion.html`](demos/interaction/hover-distortion.html)
+
+### Fenerle keşif · Cursor mask reveal
+
+İmlecin çevresinde alttaki ikinci görsel ya da metin açılır. Uyar: portfolyo, öncesi/sonrası. Araç: CSS mask, canvas.
+
+<img src="shots/cursor-mask-reveal-strip.webp" width="100%" alt="Cursor mask reveal, four frames">
+
+Demo: [`demos/interaction/cursor-mask-reveal.html`](demos/interaction/cursor-mask-reveal.html)
+
+### Büyüteç · Lens magnifier
+
+İmlecin altı büyür, detaylar okunur. Uyar: ürün, harita, sanat. Araç: CSS, canvas.
+
+<img src="shots/lens-magnifier-strip.webp" width="100%" alt="Lens magnifier, four frames">
+
+Demo: [`demos/interaction/lens-magnifier.html`](demos/interaction/lens-magnifier.html)
+
+### Karışan kart destesi · Card shuffle
+
+Kartlar deste gibi karışıp öne çıkar. Uyar: işler, ürünler, ekip. Araç: GSAP, Motion.
+
+<img src="shots/card-shuffle-strip.webp" width="100%" alt="Card shuffle, four frames">
+
+Demo: [`demos/interaction/card-shuffle.html`](demos/interaction/card-shuffle.html)
+
+### Sürüklenen sonsuz pano · Infinite drag grid
+
+Her yöne sürüklenen, kenarı olmayan görsel panosu. Uyar: portfolyo, arşiv, galeri. Araç: GSAP Draggable, canvas.
+
+<img src="shots/infinite-drag-strip.webp" width="100%" alt="Infinite drag grid, four frames">
+
+Demo: [`demos/interaction/infinite-drag.html`](demos/interaction/infinite-drag.html)
 
 ## Görsel işleme · Image treatments
 

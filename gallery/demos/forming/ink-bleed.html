@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mürekkep yayılması</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Familjen+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f1ebdf; --ink: #1d2540; --brown: #3b2a1f; --quiet: #7a6f62; --rust: #a8462a; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--paper); color: var(--brown); font: 400 15px/1.5 "Familjen Grotesk", system-ui, sans-serif;
+         overflow: hidden; display: grid; grid-template-columns: 0.82fr 1.18fr; }
+  .copy { padding: 7vh 0 7vh 5vw; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 2; }
+  .top { display: flex; justify-content: space-between; color: var(--quiet); font-size: 13px; letter-spacing: .03em; }
+  .top b { color: var(--ink); font-weight: 600; letter-spacing: .14em; }
+  h1 { font: 400 clamp(46px, 6.4vw, 96px)/.92 "Instrument Serif", Georgia, serif; color: var(--ink); letter-spacing: -.01em; }
+  h1 em { color: var(--rust); }
+  .foot p { max-width: 34ch; color: var(--quiet); margin-top: 14px; }
+  .foot p b { color: var(--brown); font-weight: 600; }
+  .price { display: flex; gap: 22px; align-items: baseline; border-top: 1px solid rgba(29,37,64,.25); padding-top: 14px; }
+  .price span { font: italic 400 30px/1 "Instrument Serif", Georgia, serif; color: var(--ink); }
+  .fade { will-change: opacity, transform; }
+  svg.sheet { width: 100%; height: 100%; display: block; }
+  @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; } .copy { padding: 18px; gap: 14px; } .foot p { display: none; } }
+</style>
+</head>
+<body>
+  <section class="copy">
+    <div class="top"><b>LODOS</b><span>Kavurma defteri · No. 3</span></div>
+    <h1 class="fade">Bir damla,<br><em>bütün</em> sabah.</h1>
+    <div class="foot fade">
+      <div class="price"><span>Etiyopya Guji</span>250 g · ₺560</div>
+      <p><b>Haftanın dört çekirdeğinden biri.</b> Her sabah 07.00'de, 12 kg'lık tek kazanda kavruluyor; çuvaldan fincana Karaköy'de.</p>
+    </div>
+  </section>
+  <svg class="sheet" viewBox="0 0 760 800" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Çuval bezi üstünde fincan ve kavrulmuş çekirdekler, kâğıda yayılan mürekkep lekesinin içinde">
+    <defs>
+      <!-- ragged, fibrous edge: blur + threshold makes drops merge, two displacement passes tear the rim -->
+      <filter id="bleed" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="soft"/>
+        <feComponentTransfer in="soft" result="hard"><feFuncA type="linear" slope="14" intercept="-6"/></feComponentTransfer>
+        <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="3" seed="11" result="big"/>
+        <feDisplacementMap in="hard" in2="big" scale="70" xChannelSelector="R" yChannelSelector="G" result="d1"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="4" result="fine"/>
+        <feDisplacementMap in="d1" in2="fine" scale="14" xChannelSelector="G" yChannelSelector="B"/>
+      </filter>
+      <filter id="paper" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="2" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.23  0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0.09 0"/>
+      </filter>
+      <mask id="mInk" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="800"><g id="gInk" filter="url(#bleed)" fill="#fff"></g></mask>
+      <mask id="mPhoto" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="800"><g id="gPhoto" filter="url(#bleed)" fill="#fff"></g></mask>
+    </defs>
+    
+    <rect id="inkLayer" width="760" height="800" fill="#1d2540" mask="url(#mInk)"/>
+    <image id="photo" href="../../assets/cekirdek.webp" x="-230" y="0" width="1220" height="800" preserveAspectRatio="xMidYMid slice" mask="url(#mPhoto)"/>
+  </svg>
+<script>
+  const NS = "http://www.w3.org/2000/svg";
+  // drops: x, y, final radius, when it lands, how long it spreads
+  const drops = [
+    [380, 400, 300, 0.00, 0.80],
+    [230, 250, 130, 0.10, 0.55],
+    [560, 560, 150, 0.16, 0.60],
+    [560, 220, 110, 0.24, 0.55],
+    [190, 600, 120, 0.30, 0.55],
+    [620, 390, 90, 0.34, 0.50],
+    [120, 400, 60, 0.42, 0.40],
+    [660, 690, 24, 0.06, 0.25],
+    [96, 170, 16, 0.12, 0.25],
+    [700, 120, 20, 0.20, 0.25],
+    [330, 730, 18, 0.26, 0.25],
+  ];
+  const mk = (g) => drops.map(([x, y]) => { const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", y); g.appendChild(c); return c; });
+  const inkC = mk(document.getElementById("gInk")), phC = mk(document.getElementById("gPhoto"));
+  const photo = document.getElementById("photo"), fades = document.querySelectorAll(".fade");
+  // ink spreads fast and slows down, like it is soaking into the paper
+  const soak = (t) => 1 - Math.pow(1 - t, 2.6);
+  window.demo = {
+    duration: 3200,
+    render(p) {
+      drops.forEach(([x, y, r, s, d], i) => {
+        const tInk = soak(gl.seg(p, s, s + d));
+        const tPh = soak(gl.seg(p, s + 0.14, s + d + 0.12));
+        inkC[i].setAttribute("r", (r * 1.06 * tInk).toFixed(1));
+        phC[i].setAttribute("r", Math.max(0, r * 1.06 * tPh - 9).toFixed(1));
+      });
+      photo.setAttribute("opacity", (0.55 + 0.45 * gl.seg(p, 0.2, 0.8)).toFixed(2));
+      fades.forEach((el, i) => {
+        const t = gl.easeOutQuart(gl.seg(p, 0.55 + i * 0.1, 0.95 + i * 0.05));
+        el.style.opacity = t.toFixed(3); el.style.transform = `translateY(${((1 - t) * 18).toFixed(1)}px)`;
+      });
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>

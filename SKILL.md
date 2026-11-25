@@ -33,10 +33,13 @@ file → ghost table → 3 directions" is a summary of this list, not permission
 3. **Reference board** of 6–10 real sites **found with web search in this session**, each with its
    URL and one technique to learn, in `KONU.md` (Phase 2). From memory doesn't count.
 4. **Ghost table** in `KONU.md` (Phase 2).
-5. **Gallery taste check:** run `scripts/gallery.mjs`, open it for the person, wait for their
-   choice in `tasarim/secimler.json` (Phase 2). Directions are built from what they liked.
-6. **Images:** collect the client's own, make visuals, fetch openly licensed ones
-   (`scripts/fetch-images.mjs`), and look at every candidate (Phase 3, `references/imagery.md`).
+5. **Images:** collect the client's own, make visuals, fetch openly licensed ones
+   (`scripts/fetch-images.mjs`), and look at every candidate (`references/imagery.md`).
+6. **Project sketches + gallery taste check:** build 8–12 quick first screens of **this project**
+   in different styles (with its real name, copy and the images from step 5) in
+   `tasarim/galeri/<nn-style>/index.html`, then run `scripts/gallery.mjs`: it shows them on top
+   ("Bu proje için") and the generic library below. Wait for the choice in `tasarim/secimler.json`.
+   Directions are built from what they liked (Phase 2).
 7. **Three directions** as hi-fi previews in `tasarim/yonler/<id>/index.html`, each from a
    different named style, with a hero visual and its own motion language (Phase 3).
 8. **Gate:** `node <skill-dir>/scripts/check.mjs` must pass (✓ everywhere) before you show anything.
@@ -93,13 +96,25 @@ Humans design from references. Models design from the average. Close that gap he
    say so and use your best knowledge of named studios and sites.
 2. **Ghost table:** write the autopilot design as a table, then plan to beat every row (see
    `references/subject.md`). Add a row for the *sterile escape* too, so you don't fall into it.
-3. **Taste check in the gallery.** Most people can't name styles or read component code, but
+3. **Project sketches.** A coffee-shop demo doesn't show how a style would look on *this*
+   project. Before the gallery, build 8–12 sketches of this project's first screen, one per style:
+   - pick styles from `references/styles.md` that could fit the subject and feeling, plus 2–3
+     unexpected ones, never ones the DESIGN-LOG rejected; spread them across energy levels;
+   - each is a real first screen: the project's name, real headline and facts, the images
+     collected in step 5 of "The run" (or made visuals), the style's typefaces and one entrance animation;
+   - use the matching library demo (`<skill-dir>/gallery/demos/styles/<id>.html`) as the
+     reference implementation, but rebuild it around this project's content;
+   - put each in `tasarim/galeri/<nn-style>/index.html` with `<title>` = short Turkish name,
+     `<meta name="ghostless-style" content="<style id>">` and `<meta name="description">`;
+   - split the work across subagents (3–4 sketches each) when they're available.
+   These are sketches for taste, not directions: one screen each, fast, but at real quality.
+4. **Taste check in the gallery.** Most people can't name styles or read component code, but
    they know what they like when they see it. Start the bundled picker and let them choose:
    ```bash
    node <skill-dir>/scripts/gallery.mjs --project "<name>" --wait     # run in the background
    ```
-   It serves a local page on a free port (from 5600, skipping busy and reserved ports) with ~60
-   live demos of one fictional client: visual styles, text motion, image reveals ("forming from
+   It serves a local page on a free port (from 5600, skipping busy and reserved ports): the
+   project sketches from `tasarim/galeri` on top, then the library of live demos of one fictional client: visual styles, text motion, image reveals ("forming from
    pixels"), scroll moves, interaction and image treatments. Open it where the person can see it
    (browser pane / their browser), tell them in one line what to do, and wait. They mark
    **Beğendim / Asla** and add a note; on "Seçimi gönder" the choice is written to

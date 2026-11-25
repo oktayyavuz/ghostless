@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D eğilen sayfa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --cobalt: #2242c4; --deep: #142a86; --cream: #f6eedf; --lemon: #f1d64a; --ink: #121633; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body { background: var(--cobalt); color: var(--cream); font: 400 15px/1.45 "Hanken Grotesk", system-ui, sans-serif; overflow: hidden; position: relative; }
+  header { position: absolute; left: 0; right: 0; top: 0; padding: 22px 60px 18px 40px; background: var(--cobalt); display: flex; justify-content: space-between; align-items: center; z-index: 5; }
+  header b { font: 800 24px/1 Syne, system-ui, sans-serif; letter-spacing: .01em; }
+  header nav { display: flex; gap: 26px; font-weight: 600; }
+  .scene { position: absolute; inset: 0; perspective: 1100px; perspective-origin: 50% 45%; }
+  .track { position: absolute; left: 0; right: 0; top: 0; transform-style: preserve-3d; will-change: transform; }
+  .intro { position: absolute; left: 40px; top: 120px; width: 46%; }
+  .intro h1 { font: 800 clamp(44px, 6.2vw, 88px)/.92 Syne, system-ui, sans-serif; letter-spacing: -.035em; }
+  .intro h1 em { font-style: normal; color: var(--lemon); }
+  .intro p { margin-top: 18px; max-width: 34ch; opacity: .85; }
+  .card { position: absolute; left: 50%; width: 640px; height: 370px; margin-left: -260px; border-radius: 14px; overflow: hidden; display: grid; grid-template-columns: 1.15fr 1fr;
+          background: var(--cream); color: var(--ink); box-shadow: 0 30px 60px -20px rgba(8,14,60,.55); transform-origin: 50% 50%; will-change: transform; backface-visibility: hidden; }
+  .card .ph { position: relative; overflow: hidden; }
+  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .card .tx { padding: 26px 26px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+  .card small { font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; color: var(--cobalt); }
+  .card h2 { font: 800 36px/.95 Syne, system-ui, sans-serif; letter-spacing: -.03em; margin-top: 8px; }
+  .card p { font-size: 15px; color: #3b3f5c; }
+  .card .pr { display: flex; justify-content: space-between; align-items: baseline; border-top: 1.5px solid var(--ink); padding-top: 10px; font-weight: 600; }
+  .card .pr span { font: 800 28px/1 Syne, system-ui, sans-serif; }
+  .card.c2 { background: var(--lemon); } .card.c4 { background: #fff; }
+  .bar { position: absolute; right: 22px; top: 80px; bottom: 40px; width: 4px; border-radius: 2px; background: rgba(246,238,223,.22); z-index: 5; }
+  .bar b { position: absolute; left: 0; width: 4px; height: 90px; border-radius: 2px; background: var(--cream); }
+  .count { position: absolute; left: 40px; bottom: 30px; font: 800 15px/1 Syne, system-ui, sans-serif; letter-spacing: .06em; z-index: 5; display: flex; gap: 14px; align-items: center; }
+  .count i { display: inline-block; width: 120px; height: 2px; background: rgba(246,238,223,.3); position: relative; }
+  .count i b { position: absolute; left: 0; top: 0; bottom: 0; background: var(--cream); }
+  @media (max-width: 700px) {
+    header { left: 16px; right: 30px; } header nav { display: none; } .intro { left: 16px; width: auto; right: 30px; }
+    .card { width: 300px; height: 380px; margin-left: -165px; grid-template-columns: 1fr; grid-template-rows: 160px 1fr; } .card h2 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+  <header><b>LODOS</b><nav><span>Çekirdekler</span><span>Kavurma</span><span>İskele</span></nav></header>
+  <div class="scene">
+    <div class="track" id="track">
+      <div class="intro" id="intro"><h1>Haftanın<br><em>dört</em><br>çekirdeği.</h1><p>Her sabah 07.00'de, 12 kg'lık tek kazanda kavruluyor. Aşağı kaydır, sırayla tanış.</p></div>
+      <article class="card c1"><div class="ph"><img src="../../assets/cekirdek.webp" alt="Çuval bezi üstünde çekirdekler"></div><div class="tx"><div><small>01 · Ev harmanı</small><h2>Lodos harmanı</h2></div><p>Gövdeli, bitter çikolata ve fındık. Sütlüye de sade içime de.</p><div class="pr">250 g<span>₺420</span></div></div></article>
+      <article class="card c2"><div class="ph"><img src="../../assets/fincan.webp" alt="Beyaz masada küçük fincan"></div><div class="tx"><div><small>02 · Tek köken</small><h2>Etiyopya Guji</h2></div><p>Çiçeksi ve parlak; bergamot, yaban mersini. Filtrede açılır.</p><div class="pr">250 g<span>₺560</span></div></div></article>
+      <article class="card c3"><div class="ph"><img src="../../assets/espresso.webp" alt="Makineden fincana akan espresso"></div><div class="tx"><div><small>03 · Tek köken</small><h2>Kolombiya Huila</h2></div><p>Karamel ve kırmızı elma. Espressoda yumuşak, dengeli.</p><div class="pr">250 g<span>Tezgâhta</span></div></div></article>
+      <article class="card c4"><div class="ph"><img src="../../assets/kavurucu.webp" alt="Eski teneke kahve kavurucu"></div><div class="tx"><div><small>04 · Cezve için</small><h2>Türk kahvesi kavrumu</h2></div><p>Orta kavrum, un gibi öğütülür. Bardak suyuyla birlikte gelir.</p><div class="pr">Fincan<span>₺80</span></div></div></article>
+    </div>
+  </div>
+  <div class="bar"><b id="thumb"></b></div>
+  <div class="count"><span id="num">01 / 04</span><i><b id="prog"></b></i><span>kaydır</span></div>
+<script>
+  const track = document.getElementById("track"), cards = [...document.querySelectorAll(".card")];
+  const thumb = document.getElementById("thumb"), bar = thumb.parentElement, num = document.getElementById("num"), prog = document.getElementById("prog");
+  const GAP = 470, FIRST = 640;
+  cards.forEach((c, i) => (c.style.top = FIRST + i * GAP + "px"));
+  window.demo = {
+    duration: 4200,
+    render(p) {
+      const H = innerHeight, ch = cards[0].offsetHeight;
+      // scroll from the intro down to the last card sitting in the middle
+      const travel = FIRST + (cards.length - 1) * GAP + ch / 2 - H * 0.52;
+      const y = -p * travel;
+      track.style.transform = `translateY(${y.toFixed(1)}px)`;
+      cards.forEach((c, i) => {
+        const cy = FIRST + i * GAP + ch / 2 + y;          // card centre on screen
+        const d = (cy - H * 0.52) / H;                    // 0 = centre, + below, − above
+        const side = i % 2 ? -1 : 1;
+        let rx, rz, ry, tz;
+        if (d > 0) { const k = Math.min(1.1, d * 1.5); rx = 64 * k; rz = side * 10 * k; ry = side * -14 * k; tz = -260 * k; }
+        else { const k = Math.min(1.1, -d * 1.4); rx = -42 * k; rz = side * -6 * k; ry = side * 10 * k; tz = -180 * k; }
+        c.style.transform = `translateZ(${tz.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+        c.style.opacity = d < -0.75 ? Math.max(0, 1 - (-d - 0.75) * 3).toFixed(2) : 1;
+      });
+      const intro = document.getElementById("intro");
+      intro.style.transform = `rotateX(${(-28 * gl.seg(p, 0.05, 0.4)).toFixed(1)}deg)`; intro.style.transformOrigin = "0 100%";
+      thumb.style.top = (p * (bar.clientHeight - 90)).toFixed(1) + "px";
+      const idx = Math.min(cards.length - 1, Math.max(0, Math.round((p * travel - (FIRST + ch / 2 - H * 0.52)) / GAP)));
+      num.textContent = `0${idx + 1} / 0${cards.length}`;
+      prog.style.width = (p * 100).toFixed(1) + "%";
+    },
+  };
+</script>
+<script src="../_runtime.js"></script>
+</body>
+</html>
