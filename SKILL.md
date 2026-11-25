@@ -21,6 +21,34 @@ The goal is neither of these. **The goal is work a top studio would put in its p
 striking at first sight, alive, clearly made for this client, and built with care down to the
 details. Avoiding tells is the floor. The bar is set by the ambition.
 
+## The run: every step, every time (New and Rescue modes)
+
+Skipping steps is how this skill fails: directions get invented from a template, nobody looked at
+real sites, the person never got to show their taste, and the previews have no real pictures.
+These are **not optional**, even when the request summarises the job in fewer words ("subject
+file → ghost table → 3 directions" is a summary of this list, not permission to skip the rest):
+
+1. **Read what's decided** (Phase 0), including the **live site** if one exists: open it and look.
+2. **Subject file** `tasarim/KONU.md`: target feeling, who/one action, real content, subject material (Phase 1).
+3. **Reference board** of 6–10 real sites **found with web search in this session**, each with its
+   URL and one technique to learn, in `KONU.md` (Phase 2). From memory doesn't count.
+4. **Ghost table** in `KONU.md` (Phase 2).
+5. **Gallery taste check:** run `scripts/gallery.mjs`, open it for the person, wait for their
+   choice in `tasarim/secimler.json` (Phase 2). Directions are built from what they liked.
+6. **Images:** collect the client's own, make visuals, fetch openly licensed ones
+   (`scripts/fetch-images.mjs`), and look at every candidate (Phase 3, `references/imagery.md`).
+7. **Three directions** as hi-fi previews in `tasarim/yonler/<id>/index.html`, each from a
+   different named style, with a hero visual and its own motion language (Phase 3).
+8. **Gate:** `node <skill-dir>/scripts/check.mjs` must pass (✓ everywhere) before you show anything.
+9. **Show them in the gallery** (`gallery.mjs --directions tasarim/yonler`), get the choice and the
+   reasons, log both in `DESIGN-LOG.md` (Phases 3, 8).
+
+Only the person can waive a step, in their own words. Then add `ghostless-waive: <gallery|references|images>`
+with their quote to `DESIGN-LOG.md` so the gate knows. Never waive a step on their behalf.
+
+If a round of directions is rejected, don't just make three more: go back to step 3 and step 5 with
+what you learned (new references, a second pass in the gallery with the rejection in mind).
+
 ## Modes
 
 | Mode | When | Phases |
@@ -35,7 +63,8 @@ The person's explicit words always win. Say which mode you're in, in one line.
 ## Phase 0 — Load what's decided
 
 Read `DESIGN.md`, `DESIGN-LOG.md` (decisions and **rejected directions with reasons**), brand
-files, tokens, a few components, and any memory about the person. Everything that was rejected
+files, tokens, a few components, and any memory about the person. If there is a live site or an
+older version, open it in a browser and look at it before proposing anything. Everything that was rejected
 is off the table, and so are its close relatives. If a whole *kind* of design was rejected (for
 example "dry document-like directions"), steer every new direction away from that kind.
 
@@ -77,8 +106,8 @@ Humans design from references. Models design from the average. Close that gap he
    `tasarim/secimler.json` and the process prints it and exits.
    Use it: liked styles and moves are the raw material for the three directions (spread them
    across bold / refined / wildcard); every "Asla" goes into `DESIGN-LOG.md` as a rejection, with
-   its close relatives. Skip this only if the person has already shown clear taste (a DESIGN-LOG,
-   reference sites they chose) or asks to skip it.
+   its close relatives. Don't skip it because a DESIGN-LOG exists or because you think you know
+   their taste; only the person can waive it (see "The run").
 
 ## Phase 3 — Three directions that really differ
 
@@ -202,6 +231,7 @@ and any later "I don't like this". Phase 0 reads it every time.
 | `references/ambition.md` | phases 2, 3, 6, 7: quality bar, reference sourcing, liveliness techniques, craft checklist, impact rubric |
 | `references/moves.md` | phase 3: additive moves + a few constraints |
 | `references/styles.md` | phase 3: named visual styles as starting vocabularies, with motion that suits each (with screenshots) |
+| `scripts/check.mjs` | gate before showing directions: verifies every step of "The run" left its file |
 | `gallery/` + `scripts/gallery.mjs` | phases 2–3: live picker for styles, motion and treatments; shows the directions and collects the choice |
 | `references/imagery.md` | phases 3, 4, 6: image density, source ladder, fetching openly licensed images, curation, treatment, credits |
 | `references/motion.md` | phases 3, 4, 6: motion language, ~50 named moves, verified libraries, component-kit warnings |

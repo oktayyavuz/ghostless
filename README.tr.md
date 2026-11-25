@@ -67,6 +67,12 @@ node ~/.claude/skills/ghostless/scripts/fetch-images.mjs "solder joint macro" --
 Aramalar sektör adından değil konudan gelir ("iş dünyası" değil "gece yağmurda çekici vinci"), ve her
 aday kullanılmadan önce gözle kontrol edilir.
 
+## Adım kontrolü
+
+Yönler gösterilmeden önce `node ~/.claude/skills/ghostless/scripts/check.mjs` çalışır: konu dosyası, gerçek
+sitelerden referans panosu, galeri seçimi, toplanan görseller ve üç yönün görsel + hareket içerdiği
+kontrol edilir. Bir adım ancak kişi kendi sözüyle vazgeçerse atlanır.
+
 ## Kurulum
 
 ```bash

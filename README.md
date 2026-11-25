@@ -103,6 +103,7 @@ references/system.md      tokens with roles, hierarchy scales, DESIGN.md / DESIG
 references/copy.md        copy rules + EN/TR filler lexicon
 references/critique.md    visual tests, report format
 scripts/slop-scan.mjs     scanner
+scripts/check.mjs         gate: checks every step ran (references, gallery choice, images, 3 directions)
 scripts/gallery.mjs       local picker server (styles, motion, treatments, directions)
 gallery/                  demos, catalog, screenshots (GALLERY.md), shots.mjs, build-docs.mjs
 scripts/fetch-images.mjs  finds openly licensed images (Openverse, Wikimedia Commons, NASA, Pexels), downloads them, writes credits
