@@ -256,6 +256,31 @@ keyboard use and real devices yourself: most of these are young.
 | **KABOOM! UI** | github.com/Gorupa/kaboom-ui-kit | MIT | pure CSS comic book: ink frames, offset CMYK shadows, halftone | tiny project; keep halftone off full-page backgrounds |
 | **mo.js** | npm `@mojs/core` | MIT | burst, shape and spring engine: build your own impact moment (the custom route to a sakuga feel) | last release 2023; design your own shapes, avoid stock sparkles |
 
+**Whole component sets with character** (shadcn-compatible unless noted; checked 2026-11-26)
+
+| Library | Demo · get it | License | What it feels like | Watch out |
+|---|---|---|---|---|
+| **Bevel** | bevel-ui.vercel.app · github.com/hiteshbandhu/bevel | MIT | 50 skeuomorphic parts modelled on real objects: keycap buttons, lever toggles, latch checkboxes, car-radio preset tabs, detent knobs, DIP switches, split-flap board, stamp, ticket, receipt | very new; check the "lamp" parts for glow |
+| **audio-ui** | audio-ui.dev · ouestlabs/audio-ui | MIT | studio hardware: knobs, faders, XY pad, rocker switches, needle meters, LCDs; headless core for React/Vue/Svelte/web | keep spectrum/waveform colours off neon |
+| **Tactile UI (free part)** | github.com/cipriantitire/tactile-ui-free | MIT | vanilla mechanical parts: odometer, compass, pull-cord bulb, engraved plates (paid kit has 190+) | small free set |
+| **Looseleaf** | kevintngo.github.io/looseleaf · kevintngo/looseleaf | MIT (code, drawings, font) | 123 shadcn components drawn by hand on paper, same props as shadcn (swap without touching JSX), stickers, doodles, a mascot, reduced-motion + RTL | the most complete hand-drawn set |
+| **Sketchbook UI** | sarthakrawat-1.github.io/sketchbook-ui · npm `sketchbook-ui` | MIT | 20 wobbly pencil-and-paper React components | — |
+| **NeoBrutalism / neobrutalism.dev** | neobrutalism.com · neobrutalism.dev (ekmas/neobrutalism-components) | MIT | thick outlines, hard shadows, buttons that shift when pressed; theme builder | skip their bento and "AI" blocks |
+| **1st-Pouf** | 1st-pouf.worksonmy.dev | MIT | claymorphic pastel kit, buttons sink when pressed | skip the dashboard/CRM templates (fake dashboard) |
+| **React95** | react95.github.io/React95 | MIT (Windows art is Microsoft's) | full Windows 95 component set for React | easily becomes a costume |
+| **Pixelore** | pixelore-ui.vercel.app · RPG demo pixelore-rpg.vercel.app | MIT | 8-bit design system: heart bars, battle screen, inventory, save slots | tiny project |
+| **Fancy Components** | fancycomponents.dev · danielpetho/fancy | MIT | playful motion: letter swap, variable-font proximity, scramble, text along path, gravity (physics), elastic line, gooey and pixelate filters | skip "animated gradient with SVG"; pixel trail with care |
+| **Animate UI** | animate-ui.com | MIT + Commons Clause | spring-animated tabs, switches, accordions (the primitives are the good part) | skip background effects and shimmering/gradient text |
+| **SmoothUI**, **Skiper UI**, Unlumen UI | smoothui.dev · skiper-ui.com · ui.unlumen.com | MIT / mixed / MIT | Motion-based component collections, scroll effects, interactive cards | pick piece by piece |
+| Kokonut UI ⚠, Eldora UI ⚠, Uiverse ⚠ | kokonutui.com · eldoraui.site · uiverse.io | MIT | Magic-UI-style collections / community buttons | mostly shimmer, gradient text, particles, neon: avoid by default |
+
+**Animated icons:** lucide-animated (lucide-animated.com, MIT, React + ports), AnimateIcons
+(animateicons.in, MIT, React/Vue/Angular/vanilla), itshover (itshover.com, Apache-2.0). Low risk;
+use for icons that react on hover/press instead of static icon tiles.
+
+**3D UI:** pmndrs/uikit (flexbox UI inside a React Three Fiber scene; skip its glass/visionOS kit),
+Threlte (Svelte 3D), Matter.js (physics engine behind "falling/gravity" UIs).
+
 **Hand-drawn**
 
 | Library | Get it | License | What it does | Watch out |
