@@ -249,7 +249,7 @@ and any later "I don't like this". Phase 0 reads it every time.
 | `scripts/check.mjs` | gate before showing directions: verifies every step of "The run" left its file |
 | `gallery/` + `scripts/gallery.mjs` | phases 2–3: live picker for styles, motion and treatments; shows the directions and collects the choice |
 | `references/imagery.md` | phases 3, 4, 6: image density, source ladder, fetching openly licensed images, curation, treatment, credits |
-| `references/motion.md` | phases 3, 4, 6: motion language, ~50 named moves, verified libraries, component-kit warnings |
+| `references/motion.md` | phases 3, 4, 6: motion language, named moves, verified libraries, component-kit warnings, interaction libraries with personality (sakuga-vfx, Jelly UI, Rough Notation, UI sound/haptics) |
 | `references/tells.md` | phases 2, 7: template tells **and** sterile-escape tells |
 | `references/subject.md` | phases 1–2: subject material, ghost table, examples |
 | `references/system.md` | phase 4: tokens, scales, imagery/motion systems, file templates |

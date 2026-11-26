@@ -238,7 +238,59 @@ their default tokens, and never use the components in the left column.
 
 The scanner flags the left-column names (`kit-slop`).
 
-## 6. Where to learn a move
+## 6. Interaction with personality (checked 2026-11-26)
+
+Component sets and effect engines whose controls *react*: a press squashes, a toggle bursts, a
+success has a sound. Unlike the kits in §5, the personality is the point. Use one where the
+subject and the target feeling ask for it (playful, anime, game, comic, craft), keep it to the
+interactive moments, and restyle colours through their variables. Check reduced motion,
+keyboard use and real devices yourself: most of these are young.
+
+**Anime / comic / physical feel**
+
+| Library | Get it | License | What it does | Watch out |
+|---|---|---|---|---|
+| **sakuga-vfx** | github.com/finktheartist/sakuga-vfx · demo sakuga-vfx.vercel.app · `npx shadcn add finktheartist/sakuga-vfx/<name>` or copy the file + `<script>` (no npm package) | MIT | dependency-free web components (button, toggle, slider, checkbox, radio, input, tabs, progress, rating, toast, tooltip) that play anime impact frames: squash/stretch springs, speed lines, bursts, smoke rings, ドン!-style sound words, all on one shared canvas; colours via `--sk-*` | very new (Nov 2026, few commits), tested only in headless Chromium; the effect canvas sits on top (can cover modals/sticky headers), `overflow:hidden` parents clip it; toggle file is ~500 KB, others ~45 KB; reduced motion turns effects off |
+| **Jelly UI** | github.com/jelly-org/ui · jelly-ui.com (script include, no npm name) | MIT | ~40 web components with soft-body physics: they wobble and spring like jelly | single maintainer, 2026 |
+| **react-manga-effects** | npm `react-manga-effects` | MIT | manga focus/speed lines, iris-wipe transitions | early (0.1.x) |
+| **KABOOM! UI** | github.com/Gorupa/kaboom-ui-kit | MIT | pure CSS comic book: ink frames, offset CMYK shadows, halftone | tiny project; keep halftone off full-page backgrounds |
+| **mo.js** | npm `@mojs/core` | MIT | burst, shape and spring engine: build your own impact moment (the custom route to a sakuga feel) | last release 2023; design your own shapes, avoid stock sparkles |
+
+**Hand-drawn**
+
+| Library | Get it | License | What it does | Watch out |
+|---|---|---|---|---|
+| **Rough Notation** | npm `rough-notation` | MIT | hand-drawn underline, circle, highlight drawn live over real text | none; a great "meaningful motion" for editorial and craft |
+| **Rough.js** | npm `roughjs` | MIT | sketchy shapes on canvas/SVG: make your own frames and illustrations | — |
+| **Wired Elements** | npm `wired-elements` | MIT | sketch-style web components, slightly different each render | last code 2021, still RC |
+| DoodleCSS, PaperCSS | chr15m.github.io/DoodleCSS · npm `papercss` | MIT / ISC | hand-drawn borders on plain HTML | alone they drift into the dry, monochrome look: pair with real colour and images |
+
+**Retro / pixel / OS**
+
+| Library | Get it | License | What it does | Watch out |
+|---|---|---|---|---|
+| **NES.css** | npm `nes.css` | MIT | 8-bit frames, buttons, icons | — |
+| **8bitcn/ui** | 8bitcn.com (shadcn registry) | MIT | accessible 8-bit components on shadcn, fits Next/React | — |
+| **98.css**, system.css | npm `98.css`, `@sakun/system.css` | MIT | Windows 98 / classic Mac | — |
+| XP.css ⚠, 7.css ⚠ | npm `xp.css`, `7.css` | MIT | Windows XP / 7 | XP has gradient title bars, 7 has Aero glass: both hit common rejections |
+| **augmented-ui** | npm `augmented-ui` | BSD-2 | CSS cut-corner "mech" frames | don't pair it with neon glow |
+| Arwes ⚠ | github.com/arwes/arwes | MIT | animated sci-fi frames, text decode, sounds | unmaintained, React 18 only, default look is neon glow + grid: reference only |
+
+**Sound and haptics** (the layer sakuga-vfx doesn't have)
+
+| Library | Get it | License | What it does | Watch out |
+|---|---|---|---|---|
+| **UI SFX** | uisfx.com · npm `uisfx` | code MIT, sounds CC0 | 78 semantic UI sound cues (success, level-up…) in 12 packs, synthesised with Web Audio | sound off by default; let people mute |
+| **ZzFX** | npm `zzfx` | MIT | ~1 KB retro game sound synth | pixel/game sites |
+| **use-sound** / **Howler** | npm `use-sound`, `howler` | MIT | play your own sound files (React hook / engine) | — |
+| **web-haptics** | npm `web-haptics` | MIT | mobile vibration presets (success, nudge, error) for React/Vue/Svelte/vanilla | iOS support relies on a workaround: test on a real phone |
+
+**Bursts and particles ⚠** (`canvas-confetti`, `js-confetti`, `party-js`, `react-rewards`, `@tsparticles/engine`):
+confetti and sparkle presets are the AI-site celebration cliché, and tsParticles' default node
+network reads as an ambient background. Use only for one deliberate moment, with custom shapes
+from the subject (beans, tickets, pixels), never as decoration.
+
+## 7. Where to learn a move
 
 - **Codrops** (tympanus.net/codrops): demos with source. Good starting points: free GSAP plugin
   demos (SplitText → MorphSVG, 2025), real-time dithering shader (2025), Bayer dithering

@@ -99,7 +99,7 @@ references/subject.md     dossier method, ghost table, worked examples
 references/ambition.md   quality bar, references, liveliness, craft, impact rubric
 references/moves.md       additive moves + a few constraints
 references/styles.md      named visual styles (editorial, Swiss, risograph, dithered, terminal…)
-references/motion.md      motion language, ~50 named moves, verified libraries, kit warnings
+references/motion.md      motion language, named moves, verified libraries, kit warnings, personality UI (sakuga-vfx & co.)
 references/imagery.md     image density, source ladder, fetching + curating + treating openly licensed images
 references/system.md      tokens with roles, hierarchy scales, DESIGN.md / DESIGN-LOG.md templates
 references/copy.md        copy rules + EN/TR filler lexicon
